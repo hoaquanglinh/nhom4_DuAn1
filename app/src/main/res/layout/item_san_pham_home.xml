@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="190dp"
+    android:layout_height="240dp"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/khung_button">
+
+    <ImageView
+        android:id="@+id/imageHome"
+        android:layout_width="100dp"
+        android:layout_height="120dp"
+        android:src="@drawable/redmi"
+        android:layout_gravity="center"
+        android:scaleType="fitXY"/>
+
+    <TextView
+        android:id="@+id/tvTenspHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="tensp"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:id="@+id/tvGiaHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="giasp"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="10dp"/>
+
+</LinearLayout>
