@@ -2,6 +2,7 @@ package com.example.myapplication.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.model.SanPham;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class SanPhamHomeAdapter extends RecyclerView.Adapter<SanPhamHomeAdapter.ViewHolder>{
@@ -37,8 +39,11 @@ public class SanPhamHomeAdapter extends RecyclerView.Adapter<SanPhamHomeAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        NumberFormat numberFormat = NumberFormat.getNumberInstance();
+        String giaviet = numberFormat.format(list.get(position).getGiasp());
         holder.tvTenSP.setText(list.get(position).getTensp());
-        holder.tvGiaSP.setText(String.valueOf(list.get(position).getGiasp()));
+
+        holder.tvGiaSP.setText(giaviet + " đ");
 
         Uri imageUri = Uri.parse(list.get(position).getAnh());
         holder.imageHome.setImageURI(imageUri);
@@ -58,5 +63,16 @@ public class SanPhamHomeAdapter extends RecyclerView.Adapter<SanPhamHomeAdapter.
             tvTenSP =itemView.findViewById(R.id.tvTenspHome);
             tvGiaSP =itemView.findViewById(R.id.tvGiaHome);
         }
+    }
+
+    public static class SpaceItemDecoration extends RecyclerView.ItemDecoration {
+        private int spacing;
+        private int spanCount;
+
+        public SpaceItemDecoration(int spacing, int spanCount) {
+            this.spacing = spacing;
+            this.spanCount = spanCount;
+        }
+
     }
 }

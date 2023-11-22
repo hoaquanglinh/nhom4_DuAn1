@@ -9,19 +9,22 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#85000000"
+        android:layout_height="50dp"
+        android:background="#444444"
         android:elevation="4dp"
+        android:layout_marginBottom="2dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
         <!-- Thanh tìm kiếm -->
         <EditText
             android:id="@+id/searchEditText"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
+            android:layout_width="320dp"
+            android:layout_height="40dp"
             android:background="@drawable/khung_button"
+            android:paddingLeft="15dp"
+            android:drawablePadding="15dp"
             android:drawableLeft="@drawable/baseline_search_24"
-            android:hint="   Tìm kiếm" />
+            android:hint="Tìm kiếm" />
 
         <!-- Nút thông báo -->
         <ImageButton
@@ -30,13 +33,13 @@
             android:layout_height="match_parent"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="15dp"
-            android:src="@drawable/baseline_notifications_none_24" />
+            android:src="@drawable/baseline_notifications_none_24"/>
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="250dp" />
+        android:layout_height="160dp"/>
 
     <!-- TabLayout để hiển thị đánh dấu vị trí hiện tại -->
     <com.google.android.material.tabs.TabLayout
@@ -45,9 +48,17 @@
         android:layout_height="2dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:layout_marginBottom="5dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewHang"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="15dp"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

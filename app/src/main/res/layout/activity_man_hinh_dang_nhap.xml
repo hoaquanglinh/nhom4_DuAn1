@@ -11,9 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Chào mừng bạn trở lại với FastPhone"
-        android:textColor="@color/black"
+        android:textColor="#444444"
         android:textStyle="bold"
-        android:textSize="35dp"
+        android:textSize="30dp"
         android:layout_marginBottom="25dp"/>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -24,8 +24,9 @@
             android:id="@+id/edUserName"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@drawable/khung_dangnhap"
-            android:hint="   Tên đăng nhập"/>
+            android:background="@drawable/khung_button"
+            android:padding="15dp"
+            android:hint="Tên đăng nhập"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -39,9 +40,10 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:inputType="textPassword"
-            android:background="@drawable/khung_dangnhap"
+            android:background="@drawable/khung_button"
             android:maxLines="1"
-            android:hint="   Mật khẩu"/>
+            android:padding="15dp"
+            android:hint="Mật khẩu"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <CheckBox
@@ -59,10 +61,10 @@
         android:layout_marginBottom="15dp"
         android:layout_marginTop="25dp"
         android:textColor="@color/white"
-        android:background="@drawable/khung_dangnhap"
+        android:background="@drawable/khung_button"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:backgroundTint="@color/black"/>
+        android:backgroundTint="#444444"/>
 
     <Button
         android:id="@+id/btnDangKy"
@@ -70,9 +72,9 @@
         android:layout_height="56dp"
         android:text="ĐĂNG KÝ"
         android:layout_marginBottom="10dp"
-        android:textColor="@color/black"
-        android:background="@drawable/khung_dangnhap"
+        android:textColor="#444444"
+        android:background="@drawable/khung_button"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:backgroundTint="#DDDDDD"/>
+        android:backgroundTint="#DDE1EA"/>
 </LinearLayout>

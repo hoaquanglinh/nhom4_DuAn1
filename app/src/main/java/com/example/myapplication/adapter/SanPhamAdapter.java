@@ -41,6 +41,7 @@ import com.example.myapplication.model.SanPham;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -84,6 +85,7 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
             v = inflater.inflate(R.layout.item_product, null);
         }
         final SanPham item = list.get(position);
+        NumberFormat numberFormat = NumberFormat.getNumberInstance();
         if (item != null) {
             tvtensp = v.findViewById(R.id.tvTensp);
             tvtensp.setText(item.getTensp());
@@ -94,7 +96,8 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
             tvmau.setText("Màu: " + mauSac.getTenMau());
 
             tvgiasp = v.findViewById(R.id.tvGia);
-            tvgiasp.setText("Giá: " + item.getGiasp());
+            String giaviet = numberFormat.format(item.getGiasp());
+            tvgiasp.setText("Giá: " + giaviet + " đ");
 
             tvkhohang = v.findViewById(R.id.tvKho);
             tvkhohang.setText("Kho: " + item.getKhoHang());

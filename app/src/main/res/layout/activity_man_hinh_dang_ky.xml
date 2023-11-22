@@ -11,12 +11,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Đăng ký tài khoản mới "
-        android:textColor="@color/black"
-        android:textSize="35dp"
-        android:textStyle="bold"
         android:layout_marginBottom="20dp"
-        />
+        android:text="Đăng ký tài khoản "
+        android:textColor="#444444"
+        android:textSize="35dp"
+        android:textStyle="bold" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -26,8 +25,10 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edUserNameDK"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Tên đăng nhập"/>
+            android:layout_height="55dp"
+            android:hint="Tên đăng nhập"
+            android:padding="15dp"
+            android:background="@drawable/khung_button"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -39,8 +40,10 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edPasswordDK"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Mật khẩu"/>
+            android:layout_height="55dp"
+            android:hint="Mật khẩu"
+            android:padding="15dp"
+            android:background="@drawable/khung_button"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -52,8 +55,10 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edRePasswordDK"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nhập lại mật khẩu"/>
+            android:layout_height="55dp"
+            android:hint="Nhập lại mật khẩu"
+            android:padding="15dp"
+            android:background="@drawable/khung_button"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -62,12 +67,13 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:text="ĐĂNG Ký"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="15dp"
         android:textColor="@color/white"
-        android:background="@drawable/khung_dangnhap"
+        android:background="@drawable/khung_button"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:backgroundTint="@color/black"/>
+        android:backgroundTint="#444444"/>
 
     <Button
         android:id="@+id/btnCancelDK"
@@ -75,9 +81,9 @@
         android:layout_height="56dp"
         android:text="trở về"
         android:layout_marginBottom="10dp"
-        android:textColor="@color/black"
-        android:background="@drawable/khung_dangnhap"
+        android:textColor="#444444"
+        android:background="@drawable/khung_button"
         android:textSize="18dp"
         android:textStyle="bold"
-        android:backgroundTint="#B6B6B6"/>
+        android:backgroundTint="#E5E7ED"/>
 </LinearLayout>
