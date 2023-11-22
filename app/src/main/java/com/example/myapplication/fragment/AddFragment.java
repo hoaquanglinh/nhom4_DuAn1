@@ -12,6 +12,9 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
@@ -66,8 +69,8 @@ public class AddFragment extends Fragment {
 
     Context context;
     Uri selectedImageUri;
-    private static final int PICK_IMAGE_REQUEST = 1;
-
+    public int PICK_IMAGE_REQUEST = 1;
+    int REQUEST_CODE = 2;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -152,21 +155,48 @@ public class AddFragment extends Fragment {
                 } else {
                     Toast.makeText(context, "Thêm thất bại", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
         btnaddanh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Tạo Intent để chọn ảnh từ bộ nhớ
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, PICK_IMAGE_REQUEST);
+                 // Tạo Intent để chọn ảnh từ bộ nhớ
+                 // Kiểm tra và yêu cầu quyền truy cập vào bộ nhớ ngoài
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    // Yêu cầu quyền truy cập vào bộ nhớ ngoài
+                    ActivityCompat.requestPermissions(getActivity(),
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            REQUEST_CODE);
+                } else {
+                    openImagePicker();
+                }
             }
         });
 
         return view;
     }
+
+    private void openImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Quyền đã được cấp, mở picker ảnh
+                openImagePicker();
+            } else {
+                // Quyền không được cấp, thông báo cho người dùng
+                Toast.makeText(context, "Bạn cần cấp quyền để chọn ảnh", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -174,9 +204,7 @@ public class AddFragment extends Fragment {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
             // Nhận Uri của ảnh đã chọn
             selectedImageUri = data.getData();
-
             Log.d("Image", "Image URI: " + selectedImageUri.toString());
-
             // Tiến hành xử lý ảnh, ví dụ: hiển thị ảnh lên ImageView
             try {
                 InputStream inputStream = this.context.getContentResolver().openInputStream(selectedImageUri);
@@ -189,19 +217,4 @@ public class AddFragment extends Fragment {
             }
         }
     }
-
-    private String getRealPathFromURI(Uri contentUri) {
-        String filePath = null;
-        String[] projection = { MediaStore.Images.Media.DATA };
-        try (Cursor cursor = getActivity().getContentResolver().query(contentUri, projection, null, null, null)) {
-            if (cursor != null && cursor.moveToFirst()) {
-                int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                filePath = cursor.getString(columnIndex);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return filePath;
-    }
-
 }

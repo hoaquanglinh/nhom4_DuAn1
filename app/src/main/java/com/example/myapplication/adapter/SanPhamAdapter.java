@@ -1,11 +1,20 @@
 package com.example.myapplication.adapter;
 
+import static android.app.Activity.RESULT_OK;
+import static androidx.core.app.ActivityCompat.startActivityForResult;
+import static androidx.core.content.ContextCompat.startActivities;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +39,8 @@ import com.example.myapplication.model.Hang;
 import com.example.myapplication.model.MauSac;
 import com.example.myapplication.model.SanPham;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -46,20 +57,22 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
     ProductFragment fragment;
     private ArrayList<SanPham> list;
     TextView tvtensp, tvgiasp, tvmau, tvkhohang;
-    Button btnsua, btnxoa;
-
+    Button btnsua, btnxoa, chonAnh;
     EditText edTenSp, edGiaSp, edKhohang, edMota;
     Spinner spmamau, spmahang;
 
-    ImageView imageView;
+    ImageView imageView, imageUd;
+    private Activity activity;
 
-    public SanPhamAdapter(@NonNull Context context, ProductFragment fragment, ArrayList<SanPham> list) {
+    private static final int REQUEST_IMAGE = 1;
+
+    public SanPhamAdapter(@NonNull Context context, ProductFragment fragment, ArrayList<SanPham> list, Activity activity) {
         super(context, 0, list);
         this.context = context;
         this.list = list;
         this.fragment = fragment;
+        this.activity = activity;
         sanPhamDAO = new SanPhamDAO(context);
-
     }
 
     @NonNull
@@ -92,6 +105,7 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
 
             btnsua=v.findViewById(R.id.btnSua);
             btnxoa = v.findViewById(R.id.btnXoa);
+
         }
 
         btnsua.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +137,8 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
         Dialog dialog = builder.create();
         dialog.show();
 
+        imageUd = view.findViewById(R.id.imageUD);
+
         edTenSp = view.findViewById(R.id.edTenSp_sua);
         edGiaSp = view.findViewById(R.id.edGiaSp_sua);
         edKhohang = view.findViewById(R.id.edKhohang_sua);
@@ -130,6 +146,9 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
         spmahang = view.findViewById(R.id.spMaHang_sua);
         spmamau = view.findViewById(R.id.spMaMau_sua);
         Button btnSave = view.findViewById(R.id.btnSave_suaSP);
+
+        Uri imageUri = Uri.parse(sp.getAnh());
+        imageUd.setImageURI(imageUri);
 
         edTenSp.setText(sp.getTensp());
         edGiaSp.setText(String.valueOf(sp.getGiasp()));
@@ -148,6 +167,14 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
         spmahang.setAdapter(hangSpinerAdapter);
         spmahang.setSelection(getHangPosition(sp.getMahang())); // Chọn hãng tương ứng với sản phẩm
 
+        view.findViewById(R.id.chonAnh).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                activity.startActivityForResult(intent, 1);
+            }
+        });
+
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,10 +183,12 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
                 String khohangStr = edKhohang.getText().toString();
                 String motasp = edMota.getText().toString();
 
+
                 if (tensp.isEmpty() || giaStr.isEmpty() || khohangStr.isEmpty()) {
                     Toast.makeText(context, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
 
                 double gia = Double.parseDouble(giaStr);
                 int khohang = Integer.parseInt(khohangStr);
@@ -182,6 +211,21 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
                 }
             }
         });
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_IMAGE && resultCode == RESULT_OK && data != null) {
+            Uri selectedImage = data.getData();
+            try {
+                InputStream inputStream = context.getContentResolver().openInputStream(selectedImage);
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                if (bitmap != null) {
+                    imageUd.setImageBitmap(bitmap);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private int getMauSacPosition(int mamau) {

@@ -1,20 +1,38 @@
 package com.example.myapplication.fragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.myapplication.DAO.HangDAO;
+import com.example.myapplication.DAO.MauSacDAO;
 import com.example.myapplication.DAO.SanPhamDAO;
 import com.example.myapplication.R;
+import com.example.myapplication.adapter.HangSpinerAdapter;
+import com.example.myapplication.adapter.MauSacSpinerAdapter;
 import com.example.myapplication.adapter.SanPhamAdapter;
+import com.example.myapplication.model.Hang;
+import com.example.myapplication.model.MauSac;
 import com.example.myapplication.model.SanPham;
 
 import java.util.ArrayList;
@@ -24,8 +42,8 @@ public class ProductFragment extends Fragment {
     ArrayList<SanPham> list;
     static SanPhamDAO dao;
     SanPhamAdapter adapter;
-    SanPham item;
-
+    private static final int REQUEST_IMAGE = 1;
+    private static final int RESULT_OK = -1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,7 +57,7 @@ public class ProductFragment extends Fragment {
 
     void capNhatlv() {
         list = (ArrayList<SanPham>) dao.getAll();
-        adapter = new SanPhamAdapter(getActivity(), this, list);
+        adapter = new SanPhamAdapter(getContext(),this, list, getActivity());
         lvproduct.setAdapter(adapter);
     }
 
@@ -68,4 +86,13 @@ public class ProductFragment extends Fragment {
         AlertDialog alert = builder.create();
         builder.show();
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
+            adapter.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
 }

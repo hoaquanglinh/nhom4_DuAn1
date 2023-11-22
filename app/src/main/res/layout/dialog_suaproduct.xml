@@ -5,13 +5,19 @@
     android:orientation="vertical"
     android:padding="15dp">
 
-
     <ImageView
+        android:id="@+id/imageUD"
         android:layout_width="150dp"
         android:layout_height="170dp"
         android:layout_gravity="center"
         android:scaleType="fitXY"
-        android:src="@drawable/redmi" />
+        android:src="@drawable/redmi"/>
+
+    <Button
+        android:id="@+id/chonAnh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thêm ảnh"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -92,6 +98,5 @@
         android:background="@drawable/khung_button"
         android:text="Lưu"
         android:textColor="@color/white" />
-
 
 </LinearLayout>
