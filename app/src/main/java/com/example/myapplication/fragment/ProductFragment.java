@@ -43,7 +43,6 @@ public class ProductFragment extends Fragment {
     static SanPhamDAO dao;
     SanPhamAdapter adapter;
     private static final int REQUEST_IMAGE = 1;
-    private static final int RESULT_OK = -1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -90,9 +89,7 @@ public class ProductFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE && resultCode == Activity.RESULT_OK && data != null) {
-            adapter.onActivityResult(requestCode, resultCode, data);
-        }
+        adapter.onActivityResult(requestCode, resultCode, data);
     }
 
 }
