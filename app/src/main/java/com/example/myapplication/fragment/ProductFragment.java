@@ -40,7 +40,12 @@ public class ProductFragment extends Fragment {
         dao = new SanPhamDAO(getActivity());
         item = new SanPham();
         capNhatlv();
+        lvproduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+            }
+        });
         return view;
     }
 
@@ -75,5 +80,6 @@ public class ProductFragment extends Fragment {
         AlertDialog alert = builder.create();
         builder.show();
     }
+
 
 }

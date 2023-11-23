@@ -1,32 +1,18 @@
 package com.example.myapplication.adapter;
 
-import static android.app.Activity.RESULT_OK;
-import static androidx.core.app.ActivityCompat.startActivityForResult;
-import static androidx.core.content.ContextCompat.startActivities;
-
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,15 +25,13 @@ import com.example.myapplication.DAO.MauSacDAO;
 import com.example.myapplication.DAO.SanPhamDAO;
 import com.example.myapplication.R;
 import com.example.myapplication.fragment.ProductFragment;
+import com.example.myapplication.fragment.ThongTinChiTietFragment;
 import com.example.myapplication.fragment.UpdateFragment;
 import com.example.myapplication.model.Hang;
 import com.example.myapplication.model.MauSac;
 import com.example.myapplication.model.SanPham;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class SanPhamAdapter extends ArrayAdapter<SanPham> {
@@ -89,6 +73,7 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
             v = inflater.inflate(R.layout.item_product, null);
         }
 
+        FragmentManager fragmentManager = fragment.getParentFragmentManager();
         final SanPham item = list.get(position);
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
 
@@ -130,9 +115,35 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
                     notifyDataSetChanged();
                 }
             });
+
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   open(item);
+                }
+            });
         }
 
         return v;
+    }
+    private void open(final SanPham sanPham) {
+        // Tạo Bundle và truyền thông tin sản phẩm vào Bundle
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("sanPhamChiTiet", sanPham);
+
+        // Tạo Fragment và truyền Bundle vào Fragment
+        ThongTinChiTietFragment thongTinChiTietFragment = new ThongTinChiTietFragment();
+        thongTinChiTietFragment.setArguments(bundle);
+
+        // Gửi sự kiện tới FragmentActivity để thay thế Fragment hiện tại bằng Fragment chỉnh sửa
+        if (activity instanceof FragmentActivity) {
+            FragmentActivity fragmentActivity = (FragmentActivity) activity;
+            FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.flContent, thongTinChiTietFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
     }
 
     private void openEditProductFragment(final SanPham sanPham) {

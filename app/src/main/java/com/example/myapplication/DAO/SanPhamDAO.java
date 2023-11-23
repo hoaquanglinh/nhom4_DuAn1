@@ -20,13 +20,26 @@ public class SanPhamDAO {
         DBHelper dbHelper = new DBHelper(context);
         db = dbHelper.getWritableDatabase();
     }
+    @SuppressLint("Range")
+    public int getMatkndFromTaikhoannd() {
+        String sql = "SELECT matknd FROM taikhoanND";
+        Cursor cursor = db.rawQuery(sql, null);
+
+        int matknd = 0;
+        if (cursor.moveToFirst()) {
+            matknd = cursor.getInt(cursor.getColumnIndex("matknd"));
+        }
+
+        cursor.close();
+        return matknd;
+    }
 
     public long insert(SanPham obj) {
         ContentValues values = new ContentValues();
         values.put("mamau", obj.getMamau());
         values.put("mahang", obj.getMahang());
         values.put("tensp", obj.getTensp());
-        values.put("matknd", obj.getMatknd());
+        values.put("matknd", getMatkndFromTaikhoannd());
         values.put("gia", obj.getGiasp());
         values.put("khohang", obj.getKhoHang());
         values.put("mota", obj.getMota());
@@ -39,7 +52,6 @@ public class SanPhamDAO {
         values.put("mamau", obj.getMamau());
         values.put("mahang", obj.getMahang());
         values.put("tensp", obj.getTensp());
-        values.put("matknd", obj.getMatknd());
         values.put("gia", obj.getGiasp());
         values.put("khohang", obj.getKhoHang());
         values.put("mota", obj.getMota());
@@ -71,7 +83,7 @@ public class SanPhamDAO {
             obj.setMasp(Integer.parseInt(cursor.getString(cursor.getColumnIndex("masp"))));
             obj.setMamau(Integer.parseInt(cursor.getString(cursor.getColumnIndex("mamau"))));
             obj.setMahang(Integer.parseInt(cursor.getString(cursor.getColumnIndex("mahang"))));
-            obj.setMahang(Integer.parseInt(cursor.getString(cursor.getColumnIndex("matknd"))));
+            obj.setMatknd(Integer.parseInt(cursor.getString(cursor.getColumnIndex("matknd"))));
             obj.setTensp(cursor.getString(cursor.getColumnIndex("tensp")));
             obj.setGiasp(Double.parseDouble(cursor.getString(cursor.getColumnIndex("gia"))));
             obj.setKhoHang(Integer.parseInt(cursor.getString(cursor.getColumnIndex("khohang"))));

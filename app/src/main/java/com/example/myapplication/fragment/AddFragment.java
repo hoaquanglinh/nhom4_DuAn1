@@ -42,8 +42,10 @@ import com.example.myapplication.model.SanPham;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class AddFragment extends Fragment {
     EditText edTenSp, edGiaSp, edKhohang, edMota;

@@ -17,6 +17,7 @@
             android:id="@+id/imageSP"
             android:layout_width="120dp"
             android:layout_height="130dp"
+            android:layout_marginRight="5dp"
             android:src="@drawable/redmi"
             android:scaleType="fitXY"/>
 
@@ -31,15 +32,17 @@
                 android:layout_height="wrap_content"
                 android:text="tensp"
                 android:textStyle="bold"
-                android:textSize="20dp"
+                android:textSize="18dp"
+                android:textColor="#444444"
                 android:layout_marginBottom="10dp"/>
             <TextView
                 android:id="@+id/tvGia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="giasp"
+                android:textColor="#E53935"
                 android:textStyle="bold"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:layout_marginBottom="10dp"/>
             <TextView
                 android:id="@+id/tvMau"
