@@ -146,7 +146,8 @@ public class AddFragment extends Fragment {
                 item.setGiasp(giasp);
                 item.setKhoHang(khohang);
                 item.setMota(motasp);
-                item.setAnh(selectedImageUri.toString());
+                String imagePath = getPathFromUri(selectedImageUri);
+                item.setAnh(imagePath);
 
                 long insert = dao.insert(item);
 
@@ -197,6 +198,20 @@ public class AddFragment extends Fragment {
         }
     }
 
+    private String getPathFromUri(Uri contentUri) {
+        String filePath;
+        Cursor cursor = context.getContentResolver().query(contentUri, null, null, null, null);
+        if (cursor == null) {
+            filePath = contentUri.getPath();
+        } else {
+            cursor.moveToFirst();
+            int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            filePath = cursor.getString(index);
+            cursor.close();
+        }
+        return filePath;
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -216,4 +231,5 @@ public class AddFragment extends Fragment {
             }
         }
     }
+
 }
