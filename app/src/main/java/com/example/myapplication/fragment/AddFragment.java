@@ -54,7 +54,6 @@ public class AddFragment extends Fragment {
     MauSacSpinerAdapter mauSacSpinerAdapter;
     ArrayList<MauSac> listMauSac;
     MauSacDAO mauSacDAO;
-    MauSac mauSac;
     int maMauSac;
 
     SanPhamDAO dao;
@@ -63,11 +62,7 @@ public class AddFragment extends Fragment {
     HangSpinerAdapter hangSpinerAdapter;
     ArrayList<Hang> listHang;
     HangDAO hangDAO;
-    Hang hang;
     int maHang;
-    int positionMau, positionHang;
-
-    Context context;
     Uri selectedImageUri;
     public int PICK_IMAGE_REQUEST = 1;
     int REQUEST_CODE = 2;
@@ -79,7 +74,6 @@ public class AddFragment extends Fragment {
 
         dao = new SanPhamDAO(getActivity());
 
-        context = getContext();
         edTenSp = view.findViewById(R.id.edTenSp);
         edGiaSp = view.findViewById(R.id.edGiaSp);
         edKhohang = view.findViewById(R.id.edKhohang);
@@ -92,7 +86,7 @@ public class AddFragment extends Fragment {
         mauSacDAO = new MauSacDAO(getContext());
         listMauSac = new ArrayList<>();
         listMauSac = (ArrayList<MauSac>) mauSacDAO.getAll();
-        mauSacSpinerAdapter = new MauSacSpinerAdapter(context, listMauSac);
+        mauSacSpinerAdapter = new MauSacSpinerAdapter(getContext(), listMauSac);
         spmamau.setAdapter(mauSacSpinerAdapter);
         spmamau.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -109,7 +103,7 @@ public class AddFragment extends Fragment {
         hangDAO = new HangDAO(getContext());
         listHang = new ArrayList<>();
         listHang = (ArrayList<Hang>) hangDAO.getAll();
-        hangSpinerAdapter = new HangSpinerAdapter(context, listHang);
+        hangSpinerAdapter = new HangSpinerAdapter(getContext(), listHang);
         spmahang.setAdapter(hangSpinerAdapter);
         spmahang.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -132,7 +126,7 @@ public class AddFragment extends Fragment {
                 String motasp = edMota.getText().toString();
 
                 if (tensp.isEmpty() || giaStr.isEmpty() || khohangStr.isEmpty()) {
-                    Toast.makeText(context, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -152,9 +146,9 @@ public class AddFragment extends Fragment {
                 long insert = dao.insert(item);
 
                 if (insert > 0) {
-                    Toast.makeText(context, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(context, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -193,14 +187,14 @@ public class AddFragment extends Fragment {
                 openImagePicker();
             } else {
                 // Quyền không được cấp, thông báo cho người dùng
-                Toast.makeText(context, "Bạn cần cấp quyền để chọn ảnh", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Bạn cần cấp quyền để chọn ảnh", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
     private String getPathFromUri(Uri contentUri) {
         String filePath;
-        Cursor cursor = context.getContentResolver().query(contentUri, null, null, null, null);
+        Cursor cursor = getContext().getContentResolver().query(contentUri, null, null, null, null);
         if (cursor == null) {
             filePath = contentUri.getPath();
         } else {
@@ -221,7 +215,7 @@ public class AddFragment extends Fragment {
             Log.d("Image", "Image URI: " + selectedImageUri.toString());
             // Tiến hành xử lý ảnh, ví dụ: hiển thị ảnh lên ImageView
             try {
-                InputStream inputStream = this.context.getContentResolver().openInputStream(selectedImageUri);
+                InputStream inputStream = getContext().getContentResolver().openInputStream(selectedImageUri);
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 if (bitmap != null) {
                     imageView.setImageBitmap(bitmap);
@@ -231,5 +225,4 @@ public class AddFragment extends Fragment {
             }
         }
     }
-
 }

@@ -1,38 +1,25 @@
 package com.example.myapplication.fragment;
 
-import android.app.Activity;
+import static android.app.Activity.RESULT_OK;
+
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
-import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.myapplication.DAO.HangDAO;
-import com.example.myapplication.DAO.MauSacDAO;
 import com.example.myapplication.DAO.SanPhamDAO;
 import com.example.myapplication.R;
-import com.example.myapplication.adapter.HangSpinerAdapter;
-import com.example.myapplication.adapter.MauSacSpinerAdapter;
-import com.example.myapplication.adapter.SanPhamAdapter;
-import com.example.myapplication.model.Hang;
-import com.example.myapplication.model.MauSac;
+import com.example.myapplication.adapter.SanPhamAdapter;;
 import com.example.myapplication.model.SanPham;
 
 import java.util.ArrayList;
@@ -42,6 +29,7 @@ public class ProductFragment extends Fragment {
     ArrayList<SanPham> list;
     static SanPhamDAO dao;
     SanPhamAdapter adapter;
+    public SanPham item;
     private static final int REQUEST_IMAGE = 1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,7 +38,9 @@ public class ProductFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_product, container, false);
         lvproduct = view.findViewById(R.id.lvProduct);
         dao = new SanPhamDAO(getActivity());
+        item = new SanPham();
         capNhatlv();
+
         return view;
     }
 
@@ -84,12 +74,6 @@ public class ProductFragment extends Fragment {
         });
         AlertDialog alert = builder.create();
         builder.show();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        adapter.onActivityResult(requestCode, resultCode, data);
     }
 
 }
