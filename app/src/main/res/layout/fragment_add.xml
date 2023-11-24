@@ -91,7 +91,8 @@
                 android:id="@+id/edMoTa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Mô tả" />
+                android:hint="Mô tả"
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 

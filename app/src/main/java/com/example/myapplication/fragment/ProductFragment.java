@@ -35,12 +35,12 @@ public class ProductFragment extends Fragment {
     public SanPham item;
     int matknd;
     TaiKhoanNDDAO nddao;
-    private static final int REQUEST_IMAGE = 1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product, container, false);
         requireActivity().findViewById(R.id.navigation).setVisibility(View.VISIBLE);
+
         lvproduct = view.findViewById(R.id.lvProduct);
         dao = new SanPhamDAO(getActivity());
         nddao = new TaiKhoanNDDAO(getActivity());
