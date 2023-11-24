@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class ProductFragment extends Fragment {
     ListView lvproduct;
     ArrayList<SanPham> list;
-    static SanPhamDAO dao;
+    SanPhamDAO dao;
     SanPhamAdapter adapter;
     public SanPham item;
     int matknd;
@@ -44,6 +44,7 @@ public class ProductFragment extends Fragment {
 
         lvproduct = view.findViewById(R.id.lvProduct);
         dao = new SanPhamDAO(getActivity());
+
         nddao = new TaiKhoanNDDAO(getActivity());
         item = new SanPham();
 
@@ -59,34 +60,8 @@ public class ProductFragment extends Fragment {
 
     void capNhatlv() {
         list = (ArrayList<SanPham>) dao.getAllByMAtknd(matknd);
-        adapter = new SanPhamAdapter(getContext(),this, list, getActivity());
+        adapter = new SanPhamAdapter(getContext(),this, list, getActivity(), dao);
         lvproduct.setAdapter(adapter);
-    }
-
-
-    public void xoa(final String Id) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Delete");
-        builder.setMessage("Bạn có muốn xóa không?");
-        builder.setCancelable(true);
-
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dao.delete(Id);
-                capNhatlv();
-                dialog.cancel();
-                Toast.makeText(getContext(), "Đã xóa", Toast.LENGTH_SHORT).show();
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        AlertDialog alert = builder.create();
-        builder.show();
     }
 
 }

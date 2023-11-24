@@ -30,16 +30,15 @@ public class QuanLySPFragment extends ProductFragment  {
 
         listView = view.findViewById(R.id.lvQLSP);
         dao = new SanPhamDAO(getActivity());
-        dao = new SanPhamDAO(getActivity());
-        item = new SanPham();
 
-        capNhatlv();
+        capNhat();
         return view;
     }
 
-    void capNhatlv() {
+    void capNhat() {
         list = (ArrayList<SanPham>) dao.getAll();
-        adapter = new SanPhamAdapter(getContext(),this, list, getActivity());
+        adapter = new SanPhamAdapter(getContext(),this, list, getActivity(), dao);
         listView.setAdapter(adapter);
     }
+
 }

@@ -1,7 +1,9 @@
 package com.example.myapplication.adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,7 +40,7 @@ import java.util.ArrayList;
 public class SanPhamAdapter extends ArrayAdapter<SanPham> {
     private Context context;
     MauSacDAO mauSacDAO;
-    SanPhamDAO sanPhamDAO;
+    SanPhamDAO dao;
     ProductFragment fragment;
     private ArrayList<SanPham> list;
     TextView tvtensp, tvgiasp, tvmau, tvkhohang;
@@ -46,13 +49,13 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
     private Activity activity;
 
 
-    public SanPhamAdapter(@NonNull Context context, ProductFragment fragment, ArrayList<SanPham> list, Activity activity) {
+    public SanPhamAdapter(@NonNull Context context, ProductFragment fragment, ArrayList<SanPham> list, Activity activity, SanPhamDAO dao) {
         super(context, 0, list);
         this.context = context;
         this.list = list;
         this.fragment = fragment;
         this.activity = activity;
-        sanPhamDAO = new SanPhamDAO(context);
+        this.dao = dao;
     }
     @NonNull
     @Override
@@ -99,9 +102,32 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
             btnxoa.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SanPham item = list.get(position);
-                    fragment.xoa(String.valueOf(item.getMasp()));
-                    notifyDataSetChanged();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Delete");
+                    builder.setMessage("Bạn có muốn xóa không?");
+                    builder.setCancelable(true);
+
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            int id = list.get(position).getMasp();
+                            dao.delete(String.valueOf(id));
+                            list.clear();
+                            list.addAll(dao.getAll());
+                            notifyDataSetChanged();
+                            dialog.cancel();
+                            Toast.makeText(getContext(), "Đã xóa", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog alert = builder.create();
+                    builder.show();
+
                 }
             });
 
