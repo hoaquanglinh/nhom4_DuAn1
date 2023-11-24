@@ -4,25 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="15dp"
-    tools:context=".fragment.AddFragment">
+    tools:context=".fragment.AddFragment"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/ivImage"
-            android:layout_width="150dp"
-            android:layout_height="170dp"
+            android:layout_width="190dp"
+            android:layout_height="190dp"
             android:layout_gravity="center"
-            android:scaleType="fitXY" />
-
-        <Button
-            android:id="@+id/btnAddAnh"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Thêm ảnh" />
+            android:src="@drawable/img_4"
+            android:background="#FFFFFF"
+            android:scaleType="fitCenter"
+            android:layout_marginBottom="10dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"

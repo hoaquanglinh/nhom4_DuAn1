@@ -13,7 +13,7 @@
         android:layout_width="155dp"
         android:layout_height="155dp"
         android:layout_gravity="center"
-        android:scaleType="fitXY"
+        android:scaleType="fitCenter"
         android:src="@drawable/redmi" />
 
     <TextView

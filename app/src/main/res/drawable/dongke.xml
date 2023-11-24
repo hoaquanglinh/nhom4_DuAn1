@@ -1,0 +1,4 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <stroke android:color="#000000" /> <!-- Màu sắc của dòng kẻ -->
+    <size android:height="1dp" /> <!-- Chiều cao của dòng kẻ -->
+</shape>

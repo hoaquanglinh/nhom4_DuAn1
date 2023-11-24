@@ -10,6 +10,10 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -21,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -43,7 +48,7 @@ import java.util.ArrayList;
 public class UpdateFragment extends Fragment {
     EditText edTenSp, edGiaSp, edKhohang, edMota;
     Spinner spmamau, spmahang;
-    ImageView imageUd;
+    ImageButton imageUd;
     SanPham item;
     MauSacSpinerAdapter mauSacSpinerAdapter;
     ArrayList<MauSac> listMauSac;
@@ -51,6 +56,7 @@ public class UpdateFragment extends Fragment {
     HangSpinerAdapter hangSpinerAdapter;
     ArrayList<Hang> listHang;
     HangDAO hangDAO;
+    Toolbar toolbar;
     private static int PICK_IMAGE_REQUEST = 1;
     SanPhamDAO dao;
     ArrayList<SanPham> list;
@@ -67,6 +73,14 @@ public class UpdateFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_update, container, false);
+
+        toolbar = view.findViewById(R.id.toolbarUpdate);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        activity.getSupportActionBar().setTitle("Cập nhật sản phẩm");
+
+        requireActivity().findViewById(R.id.navigation).setVisibility(View.GONE);
 
         list = new ArrayList<>();
         dao = new SanPhamDAO(getContext());
@@ -100,7 +114,7 @@ public class UpdateFragment extends Fragment {
         spmahang.setAdapter(hangSpinerAdapter);
         spmahang.setSelection(getHangPosition(item.getMahang()));
 
-        view.findViewById(R.id.chonAnh).setOnClickListener(new View.OnClickListener() {
+        imageUd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -204,5 +218,16 @@ public class UpdateFragment extends Fragment {
             cursor.close();
         }
         return filePath;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().popBackStack();
+            }
+        });
     }
 }

@@ -1,124 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragment.ThongTinChiTietFragment">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarSanPham"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarSanPham"
-            android:layout_width="match_parent"
-            android:background="#444444"
-            android:layout_height="50dp" />
-
-        <ImageView
-            android:id="@+id/imageViewSanPham"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:src="@drawable/redmi" />
-
-        <TextView
-            android:id="@+id/tvTenSPCT"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:text="Ten san pham"
-            android:textColor="#444444"
-            android:textSize="25dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvGiaSPCT"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:text="Gia san pham"
-            android:textColor="#E53935"
-            android:textSize="26dp"
-            android:textStyle="bold" />
+        android:layout_below="@+id/toolbarSanPham"
+        android:layout_above="@+id/layoutduoi">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/ibNguoiDung"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center"
+            <ImageView
+                android:id="@+id/imageViewSanPham"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:src="@drawable/redmi" />
+
+            <TextView
+                android:id="@+id/tvTenSPCT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp" />
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:text="Ten san pham"
+                android:textColor="#444444"
+                android:textSize="24dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/tvGiaSPCT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:text="Gia san pham"
+                android:textColor="#E53935"
+                android:textSize="24dp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:layout_height="100dp">
 
-                <TextView
-                    android:id="@+id/tvtentknd"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:text="Ten nguoi dung"
-                    android:textSize="17dp" />
+                <ImageButton
+                    android:id="@+id/ibNguoiDung"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp" />
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:text="Danh gia"
-                    android:textSize="17dp" />
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvtentknd"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:text="Ten nguoi dung"
+                        android:textSize="17dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:text="Danh gia"
+                        android:textSize="17dp" />
+                </LinearLayout>
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvMauSPCT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="Mau sac"
+                android:textColor="#333333"
+                android:textSize="18dp"
+                android:layout_marginTop="2dp"/>
+
+            <TextView
+                android:layout_marginTop="3dp"
+                android:id="@+id/tvHangSPCT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="Hang"
+                android:textColor="#333333"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="Mô tả"
+                android:textColor="#333333"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_marginTop="2dp"
+                android:id="@+id/tvMotaSPCT"
+                android:textSize="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
+            <View
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="Bài đăng khác: "
+                android:textColor="#333333"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewSPCT"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvMauSPCT"
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/layoutduoi"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:visibility="visible">
+
+        <Button
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/goidien"/>
+
+        <Button
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/giohang"/>
+
+        <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:textSize="17dp"
-            android:textColor="#333333"
-            android:text="Mau sac"/>
-        <TextView
-            android:id="@+id/tvHangSPCT"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:textSize="17dp"
-            android:textColor="#333333"
-            android:text="Hang"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:textColor="#333333"
-            android:text="Mô tả"/>
-        <TextView
-            android:id="@+id/tvMotaSPCT"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_marginLeft="10dp"
-            android:text="Bài đăng khác: "
-            android:textSize="15dp"
-            android:textStyle="bold"
-            android:textColor="#333333"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewSPCT"
-            android:layout_margin="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:text="Mua ngay"
+            android:textColor="@color/white"
+            android:background="#F4511E"/>
     </LinearLayout>
-</ScrollView>
+</RelativeLayout>

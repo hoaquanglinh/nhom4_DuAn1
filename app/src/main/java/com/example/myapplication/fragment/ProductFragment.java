@@ -36,6 +36,7 @@ public class ProductFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_product, container, false);
+        requireActivity().findViewById(R.id.navigation).setVisibility(View.VISIBLE);
         lvproduct = view.findViewById(R.id.lvProduct);
         dao = new SanPhamDAO(getActivity());
         item = new SanPham();
@@ -80,6 +81,5 @@ public class ProductFragment extends Fragment {
         AlertDialog alert = builder.create();
         builder.show();
     }
-
 
 }

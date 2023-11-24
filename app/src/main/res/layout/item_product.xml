@@ -19,7 +19,7 @@
             android:layout_height="130dp"
             android:layout_marginRight="5dp"
             android:src="@drawable/redmi"
-            android:scaleType="fitXY"/>
+            android:scaleType="fitCenter"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -65,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="10dp">
         <Button
             android:id="@+id/btnSua"
             android:layout_width="100dp"

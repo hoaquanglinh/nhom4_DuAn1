@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,7 +18,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +28,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -50,17 +54,13 @@ import java.util.Locale;
 public class AddFragment extends Fragment {
     EditText edTenSp, edGiaSp, edKhohang, edMota;
     Spinner spmamau, spmahang;
-
-    Button btnaddanh;
-    ImageView imageView;
+    ImageButton imageView;
     MauSacSpinerAdapter mauSacSpinerAdapter;
     ArrayList<MauSac> listMauSac;
     MauSacDAO mauSacDAO;
     int maMauSac;
-
     SanPhamDAO dao;
     SanPham item;
-
     HangSpinerAdapter hangSpinerAdapter;
     ArrayList<Hang> listHang;
     HangDAO hangDAO;
@@ -82,7 +82,6 @@ public class AddFragment extends Fragment {
         edMota = view.findViewById(R.id.edMoTa);
         spmahang = view.findViewById(R.id.spMaHang);
         spmamau = view.findViewById(R.id.spMaMau);
-        btnaddanh = view.findViewById(R.id.btnAddAnh);
         imageView = view.findViewById(R.id.ivImage);
 
         mauSacDAO = new MauSacDAO(getContext());
@@ -112,7 +111,6 @@ public class AddFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 maHang = listHang.get(position).getMahang();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -155,20 +153,29 @@ public class AddFragment extends Fragment {
             }
         });
 
-        btnaddanh.setOnClickListener(new View.OnClickListener() {
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 // Tạo Intent để chọn ảnh từ bộ nhớ
-                 // Kiểm tra và yêu cầu quyền truy cập vào bộ nhớ ngoài
-                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    // Yêu cầu quyền truy cập vào bộ nhớ ngoài
-                    ActivityCompat.requestPermissions(getActivity(),
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            REQUEST_CODE);
+               if (Build.VERSION.SDK_INT > Build.VERSION_CODES.S) {
+                   // Kiểm tra và yêu cầu quyền truy cập vào bộ nhớ ngoài
+                    if (!Environment.isExternalStorageManager()) {
+                        Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                        startActivity(intent);
+                        return;
+                    }
                 } else {
-                    openImagePicker();
+                    // Kiểm tra và yêu cầu quyền truy cập vào bộ nhớ ngoài
+                    if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        // Yêu cầu quyền truy cập vào bộ nhớ ngoài
+                        ActivityCompat.requestPermissions(requireActivity(),
+                                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                REQUEST_CODE);
+                        return;
+                    }
                 }
+                // Mở trình chọn ảnh
+                openImagePicker();
             }
         });
 

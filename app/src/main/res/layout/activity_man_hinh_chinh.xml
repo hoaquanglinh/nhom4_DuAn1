@@ -7,11 +7,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ManHinhChinh">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarTop"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"/>
-
     <FrameLayout
         android:id="@+id/flContent"
         android:layout_width="match_parent"
