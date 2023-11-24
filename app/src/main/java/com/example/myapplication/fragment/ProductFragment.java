@@ -53,10 +53,6 @@ public class ProductFragment extends Fragment {
 
         matknd = nddao.getMatkndFromTaikhoannd(user, pass);
 
-//        if(user.equals("admin")){
-//            requireActivity().findViewById(R.id.toolbarSanPham).setVisibility(View.GONE);
-//        }
-
         capNhatlv();
         return view;
     }

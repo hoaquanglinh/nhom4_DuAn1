@@ -30,6 +30,7 @@ public class ManHinhChinh extends AppCompatActivity {
     Fragment fragment;
     BottomNavigationView bottomNavigationView;
     NavigationView navigationView;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +38,7 @@ public class ManHinhChinh extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.navigation);
         navigationView = findViewById(R.id.navigationView1);
+        toolbar = findViewById(R.id.toolbarQTV);
 
         SharedPreferences pref = getSharedPreferences("USER_FILE", MODE_PRIVATE);
         String user = pref.getString("USERNAME", "");
@@ -45,7 +47,6 @@ public class ManHinhChinh extends AppCompatActivity {
             bottomNavigationView.setVisibility(View.GONE);
             navigationView.setVisibility(View.VISIBLE);
 
-            Toolbar toolbar = findViewById(R.id.toolbarQTV);
             DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -94,6 +95,9 @@ public class ManHinhChinh extends AppCompatActivity {
         }else{
             bottomNavigationView.setVisibility(View.VISIBLE);
             navigationView.setVisibility(View.GONE);
+
+            toolbar = findViewById(R.id.toolbarQTV);
+            toolbar.setVisibility(View.GONE);
 
             bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override

@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,6 +51,8 @@ public class ThongTinChiTietFragment extends Fragment {
     TaiKhoanNDDAO nddao;
     Uri selectedImageUri;
     LinearLayout layoutduoi;
+    TextView baidangkhac;
+    RecyclerView recyclerViewSPCT;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,13 +73,16 @@ public class ThongTinChiTietFragment extends Fragment {
 
         toolbar = view.findViewById(R.id.toolbarSanPham);
         layoutduoi = view.findViewById(R.id.layoutduoi);
+        baidangkhac = view.findViewById(R.id.baidangkhac);
+        recyclerViewSPCT = view.findViewById(R.id.recyclerViewSPCT);
 
         SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
         String user = pref.getString("USERNAME", "");
 
         if(user.equals("admin")){
-            toolbar.setVisibility(View.GONE);
             layoutduoi.setVisibility(View.GONE);
+            baidangkhac.setVisibility(View.GONE);
+            recyclerViewSPCT.setVisibility(View.GONE);
         }
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
