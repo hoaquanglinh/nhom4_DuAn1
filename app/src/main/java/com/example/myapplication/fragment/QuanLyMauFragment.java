@@ -1,5 +1,7 @@
 package com.example.myapplication.fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -163,12 +165,12 @@ public class QuanLyMauFragment extends Fragment {
                             dialog.dismiss();
                         } else {
                             for (MauSac mau: list){
-                                if(initialColor == mau.getMamau()){
+                                if(initialColor == mau.getMamau() || edTenMau.getText().toString().equalsIgnoreCase(mau.getTenMau())){
                                      dem = 1;
                                 }
                             }
                             if(dem == 1){
-                                Toast.makeText(context, "Màu này đã tồn tại", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Tên màu hoặc mã màu đã tồn tại", Toast.LENGTH_SHORT).show();
                             }else{
                                 Toast.makeText(context, "Chưa chọn màu", Toast.LENGTH_SHORT).show();
                             }

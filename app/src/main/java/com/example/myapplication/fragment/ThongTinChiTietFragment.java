@@ -1,5 +1,8 @@
 package com.example.myapplication.fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.myapplication.DAO.HangDAO;
@@ -45,6 +49,7 @@ public class ThongTinChiTietFragment extends Fragment {
     ImageView imageViewSanPham;
     TaiKhoanNDDAO nddao;
     Uri selectedImageUri;
+    LinearLayout layoutduoi;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +69,16 @@ public class ThongTinChiTietFragment extends Fragment {
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
 
         toolbar = view.findViewById(R.id.toolbarSanPham);
+        layoutduoi = view.findViewById(R.id.layoutduoi);
+
+        SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
+        String user = pref.getString("USERNAME", "");
+
+        if(user.equals("admin")){
+            toolbar.setVisibility(View.GONE);
+            layoutduoi.setVisibility(View.GONE);
+        }
+
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);

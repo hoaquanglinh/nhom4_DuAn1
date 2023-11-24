@@ -41,7 +41,7 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
     ProductFragment fragment;
     private ArrayList<SanPham> list;
     TextView tvtensp, tvgiasp, tvmau, tvkhohang;
-    Button btnsua, btnxoa;
+    Button btnxoa;
     ImageView imageView;
     private Activity activity;
 
@@ -86,13 +86,13 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
             imageView = v.findViewById(R.id.imageSP);
             imageView.setImageURI(imageUri);
 
-            btnsua=v.findViewById(R.id.btnSua);
             btnxoa = v.findViewById(R.id.btnXoa);
 
-            btnsua.setOnClickListener(new View.OnClickListener() {
+            v.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public void onClick(View view) {
+                public boolean onLongClick(View view) {
                     openEditProductFragment(item);
+                    return false;
                 }
             });
 

@@ -86,14 +86,14 @@ public class ManHinhDangNhap extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Login thành công", Toast.LENGTH_SHORT).show();
                 rememberUser(strUser, strPass, chkRememberPass.isChecked());
 
-                if(strUser.equalsIgnoreCase("admin")){
-                    Intent intent = new Intent(getApplicationContext(), ManHinhQTV.class);
-                    startActivity(intent);
-                }else{
+//                if(strUser.equalsIgnoreCase("admin")){
+//                    Intent intent = new Intent(getApplicationContext(), ManHinhQTV.class);
+//                    startActivity(intent);
+//                }else{
                     Intent intent = new Intent(getApplicationContext(), ManHinhChinh.class);
                     intent.putExtra("user", strUser);
                     startActivity(intent);
-                }
+//                }
                 finish();
             } else {
                 Toast.makeText(this, "Tên đăng nhập hoặc mật khẩu không đúng", Toast.LENGTH_SHORT).show();

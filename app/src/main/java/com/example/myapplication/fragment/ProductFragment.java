@@ -5,6 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -51,6 +52,10 @@ public class ProductFragment extends Fragment {
         String pass = pref.getString("PASSWORD", "");
 
         matknd = nddao.getMatkndFromTaikhoannd(user, pass);
+
+//        if(user.equals("admin")){
+//            requireActivity().findViewById(R.id.toolbarSanPham).setVisibility(View.GONE);
+//        }
 
         capNhatlv();
         return view;
