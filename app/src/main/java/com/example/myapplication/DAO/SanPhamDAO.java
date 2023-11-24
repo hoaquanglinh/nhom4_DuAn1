@@ -20,26 +20,13 @@ public class SanPhamDAO {
         DBHelper dbHelper = new DBHelper(context);
         db = dbHelper.getWritableDatabase();
     }
-    @SuppressLint("Range")
-    public int getMatkndFromTaikhoannd() {
-        String sql = "SELECT matknd FROM taikhoanND";
-        Cursor cursor = db.rawQuery(sql, null);
 
-        int matknd = 0;
-        if (cursor.moveToFirst()) {
-            matknd = cursor.getInt(cursor.getColumnIndex("matknd"));
-        }
-
-        cursor.close();
-        return matknd;
-    }
-
-    public long insert(SanPham obj) {
+    public long insert(SanPham obj, int matk) {
         ContentValues values = new ContentValues();
         values.put("mamau", obj.getMamau());
         values.put("mahang", obj.getMahang());
         values.put("tensp", obj.getTensp());
-        values.put("matknd", getMatkndFromTaikhoannd());
+        values.put("matknd", matk);
         values.put("gia", obj.getGiasp());
         values.put("khohang", obj.getKhoHang());
         values.put("mota", obj.getMota());
@@ -66,6 +53,12 @@ public class SanPhamDAO {
     public List<SanPham> getAll() {
         String sql = "SELECT * FROM sanpham";
         return getData(sql);
+    }
+
+    public List<SanPham> getAllByMAtknd(int matk) {
+        String sql = "SELECT * FROM sanpham WHERE matknd = ?";
+        String[] selectionArgs = {String.valueOf(matk)};
+        return getData(sql, selectionArgs);
     }
 
     public SanPham getID(String id) {

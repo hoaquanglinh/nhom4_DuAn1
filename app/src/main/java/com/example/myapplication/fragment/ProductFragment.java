@@ -1,9 +1,11 @@
 package com.example.myapplication.fragment;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.MODE_PRIVATE;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,6 +20,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.myapplication.DAO.SanPhamDAO;
+import com.example.myapplication.DAO.TaiKhoanNDDAO;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.SanPhamAdapter;;
 import com.example.myapplication.model.SanPham;
@@ -30,6 +33,8 @@ public class ProductFragment extends Fragment {
     static SanPhamDAO dao;
     SanPhamAdapter adapter;
     public SanPham item;
+    int matknd, matk;
+    TaiKhoanNDDAO nddao;
     private static final int REQUEST_IMAGE = 1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,19 +44,21 @@ public class ProductFragment extends Fragment {
         requireActivity().findViewById(R.id.navigation).setVisibility(View.VISIBLE);
         lvproduct = view.findViewById(R.id.lvProduct);
         dao = new SanPhamDAO(getActivity());
+        nddao = new TaiKhoanNDDAO(getActivity());
         item = new SanPham();
-        capNhatlv();
-        lvproduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            }
-        });
+        SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
+        String user = pref.getString("USERNAME", "");
+        String pass = pref.getString("PASSWORD", "");
+
+        matknd = nddao.getMatkndFromTaikhoannd(user, pass);
+
+        capNhatlv();
         return view;
     }
 
     void capNhatlv() {
-        list = (ArrayList<SanPham>) dao.getAll();
+        list = (ArrayList<SanPham>) dao.getAllByMAtknd(matknd);
         adapter = new SanPhamAdapter(getContext(),this, list, getActivity());
         lvproduct.setAdapter(adapter);
     }

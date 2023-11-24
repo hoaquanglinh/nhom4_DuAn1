@@ -5,13 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.myapplication.DAO.SanPhamDAO;
 import com.example.myapplication.DAO.TaiKhoanNDDAO;
+import com.example.myapplication.model.SanPham;
 
 public class ManHinhDangNhap extends AppCompatActivity {
     EditText edUserName, edPassword;
@@ -19,6 +22,7 @@ public class ManHinhDangNhap extends AppCompatActivity {
     CheckBox chkRememberPass;
     TaiKhoanNDDAO nddao;
     String strUser, strPass;
+    int matk;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +55,8 @@ public class ManHinhDangNhap extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkLogin();
+                matk = nddao.getMatkndFromTaikhoannd(edUserName.getText().toString(), edPassword.getText().toString());
+                Log.d("123", "tkmd = "+matk);
             }
         });
     }

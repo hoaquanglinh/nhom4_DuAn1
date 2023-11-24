@@ -1,6 +1,7 @@
 package com.example.myapplication.fragment;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.MODE_PRIVATE;
 
 import android.Manifest;
 import android.content.Context;
@@ -40,6 +41,7 @@ import com.example.myapplication.DAO.HangDAO;
 import com.example.myapplication.DAO.MauSacDAO;
 import com.example.myapplication.DAO.SanPhamDAO;
 
+import com.example.myapplication.DAO.TaiKhoanNDDAO;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.HangSpinerAdapter;
 import com.example.myapplication.adapter.MauSacSpinerAdapter;
@@ -73,6 +75,7 @@ public class AddFragment extends Fragment {
     int REQUEST_CODE = 2;
     int initialColor= Color.RED;
     SharedPreferences sp;
+    TaiKhoanNDDAO nddao;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -177,7 +180,14 @@ public class AddFragment extends Fragment {
                 String imagePath = getPathFromUri(selectedImageUri);
                 item.setAnh(imagePath);
 
-                long insert = dao.insert(item);
+                SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
+                String user = pref.getString("USERNAME", "");
+                String pass = pref.getString("PASSWORD", "");
+
+                nddao = new TaiKhoanNDDAO(getActivity());
+                int matknd = nddao.getMatkndFromTaikhoannd(user, pass);
+                Log.d("tk", "tk =" + matknd);
+                long insert = dao.insert(item, matknd);
 
                 if (insert > 0) {
                     Toast.makeText(getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
