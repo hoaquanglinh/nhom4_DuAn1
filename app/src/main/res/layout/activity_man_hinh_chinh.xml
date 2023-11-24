@@ -7,19 +7,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ManHinhChinh">
 
-    <FrameLayout
-        android:id="@+id/flContent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/navigation"/>
+        <FrameLayout
+            android:id="@+id/flContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/navigation"/>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        app:itemIconTint="@color/white"
-        android:background="#444444"
-        app:menu="@menu/menu_bottom_navigation" />
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            app:itemIconTint="@color/white"
+            android:background="#444444"
+            app:menu="@menu/menu_bottom_navigation" />
 
 </RelativeLayout>

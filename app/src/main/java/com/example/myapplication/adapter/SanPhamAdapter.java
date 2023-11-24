@@ -36,25 +36,15 @@ import java.util.ArrayList;
 
 public class SanPhamAdapter extends ArrayAdapter<SanPham> {
     private Context context;
-    MauSacSpinerAdapter mauSacSpinerAdapter;
-    ArrayList<MauSac> listMauSac;
     MauSacDAO mauSacDAO;
     SanPhamDAO sanPhamDAO;
-    HangSpinerAdapter hangSpinerAdapter;
-    ArrayList<Hang> listHang;
-    HangDAO hangDAO;
-    Hang hang;
     ProductFragment fragment;
     private ArrayList<SanPham> list;
     TextView tvtensp, tvgiasp, tvmau, tvkhohang;
-    Button btnsua, btnxoa, chonAnh;
-    EditText edTenSp, edGiaSp, edKhohang, edMota;
-    Spinner spmamau, spmahang;
-
-    ImageView imageView, imageUd;
+    Button btnsua, btnxoa;
+    ImageView imageView;
     private Activity activity;
 
-    private static final int REQUEST_IMAGE = 1;
 
     public SanPhamAdapter(@NonNull Context context, ProductFragment fragment, ArrayList<SanPham> list, Activity activity) {
         super(context, 0, list);
@@ -73,7 +63,6 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
             v = inflater.inflate(R.layout.item_product, null);
         }
 
-        FragmentManager fragmentManager = fragment.getParentFragmentManager();
         final SanPham item = list.get(position);
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
 
