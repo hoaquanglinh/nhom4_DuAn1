@@ -36,10 +36,16 @@
             android:src="@drawable/baseline_notifications_none_24"/>
     </androidx.appcompat.widget.Toolbar>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewHang"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="5dp"/>
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="160dp"/>
+        android:layout_height="170dp"/>
 
     <!-- TabLayout để hiển thị đánh dấu vị trí hiện tại -->
     <com.google.android.material.tabs.TabLayout
@@ -49,12 +55,7 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:layout_marginBottom="5dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewHang"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"/>
+        android:layout_marginBottom="10dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginLeft="5dp"

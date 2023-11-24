@@ -14,13 +14,17 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.myapplication.DAO.HangDAO;
 import com.example.myapplication.DAO.SanPhamDAO;
 import com.example.myapplication.R;
+import com.example.myapplication.adapter.HangAdapter;
 import com.example.myapplication.adapter.SanPhamHomeAdapter;
 import com.example.myapplication.adapter.SlidePagerAdapter;
+import com.example.myapplication.model.Hang;
 import com.example.myapplication.model.SanPham;
 import com.example.myapplication.model.Slide;
 import com.google.android.material.tabs.TabLayout;
@@ -31,11 +35,13 @@ import java.util.List;
 public class HomeFragment extends Fragment {
     private ViewPager viewPager;
     private SlidePagerAdapter slidePagerAdapter;
-    RecyclerView recyclerView;
+    RecyclerView recyclerView, recyclerViewHang;
     SanPhamDAO dao;
     ArrayList<SanPham> list;
     SanPhamHomeAdapter adapter;
-
+    HangAdapter hangAdapter;
+    ArrayList<Hang> listHang;
+    HangDAO hangDAO;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -75,6 +81,16 @@ public class HomeFragment extends Fragment {
             }
         };
         handler.postDelayed(runnable, 3000); // Thời gian chờ trước khi chuyển đổi tự động (3 giây)
+
+        hangDAO = new HangDAO(getActivity());
+        listHang = (ArrayList<Hang>) hangDAO.getAll();
+
+        recyclerViewHang = rootView.findViewById(R.id.recyclerViewHang);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewHang.setLayoutManager(layoutManager);
+
+        hangAdapter = new HangAdapter(getContext(), listHang);
+        recyclerViewHang.setAdapter(hangAdapter);
 
         recyclerView = rootView.findViewById(R.id.recyclerView);
         dao = new SanPhamDAO(getActivity());

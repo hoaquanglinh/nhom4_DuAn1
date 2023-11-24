@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,7 +20,8 @@ public class MauSacSpinerAdapter extends ArrayAdapter<MauSac> {
     private Context context;
     ArrayList<MauSac> list;
 
-    TextView tvmamau, tvtenmau;
+    TextView tvtenmau;
+    ImageView tvmamau;
     public MauSacSpinerAdapter(@NonNull Context context, ArrayList<MauSac> list) {
         super(context, 0, list);
         this.context = context;
@@ -38,7 +40,7 @@ public class MauSacSpinerAdapter extends ArrayAdapter<MauSac> {
         final MauSac item = list.get(position);
         if (item != null) {
             tvmamau = v.findViewById(R.id.tvMaMau);
-            tvmamau.setText(item.getMamau() + ". ");
+            tvmamau.setBackgroundColor(item.getMamau());
 
             tvtenmau = v.findViewById(R.id.tvTenMau);
             tvtenmau.setText(item.getTenMau());
@@ -57,7 +59,7 @@ public class MauSacSpinerAdapter extends ArrayAdapter<MauSac> {
         final MauSac item = list.get(position);
         if (item != null) {
             tvmamau = v.findViewById(R.id.tvMaMau);
-            tvmamau.setText(item.getMamau() + ". ");
+            tvmamau.setBackgroundColor(item.getMamau());
 
             tvtenmau = v.findViewById(R.id.tvTenMau);
             tvtenmau.setText(item.getTenMau());

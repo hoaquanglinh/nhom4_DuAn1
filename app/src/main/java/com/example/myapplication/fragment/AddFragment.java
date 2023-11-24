@@ -5,10 +5,12 @@ import static android.app.Activity.RESULT_OK;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,6 +33,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.DAO.HangDAO;
@@ -46,15 +49,15 @@ import com.example.myapplication.model.SanPham;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+
+import yuku.ambilwarna.AmbilWarnaDialog;
+
 
 public class AddFragment extends Fragment {
     EditText edTenSp, edGiaSp, edKhohang, edMota;
     Spinner spmamau, spmahang;
-    ImageButton imageView;
+    ImageButton imageView, colorPickerButton;
     MauSacSpinerAdapter mauSacSpinerAdapter;
     ArrayList<MauSac> listMauSac;
     MauSacDAO mauSacDAO;
@@ -68,6 +71,8 @@ public class AddFragment extends Fragment {
     Uri selectedImageUri;
     public int PICK_IMAGE_REQUEST = 1;
     int REQUEST_CODE = 2;
+    int initialColor= Color.RED;
+    SharedPreferences sp;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -83,6 +88,35 @@ public class AddFragment extends Fragment {
         spmahang = view.findViewById(R.id.spMaHang);
         spmamau = view.findViewById(R.id.spMaMau);
         imageView = view.findViewById(R.id.ivImage);
+
+        colorPickerButton = view.findViewById(R.id.colorPickerButton);
+
+        sp = getActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
+        if(sp.getString("color", "").equals("")){
+
+        }else{
+            initialColor = (int) Double.parseDouble(sp.getString("color", ""));
+        }
+        colorPickerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AmbilWarnaDialog dialog1= new AmbilWarnaDialog(getActivity(), initialColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+                    @Override
+                    public void onOk(AmbilWarnaDialog dialog, int color) {
+                        colorPickerButton.setBackgroundColor(color);
+                        initialColor = color;
+                        Log.d("sanpham", "color" + initialColor);
+                        sp.edit().putString("color", String.valueOf(color)).commit();
+                    }
+
+                    @Override
+                    public void onCancel(AmbilWarnaDialog dialog) {
+                        // cancel was selected by the user
+                    }
+                });
+                dialog1.show();
+            }
+        });
 
         mauSacDAO = new MauSacDAO(getContext());
         listMauSac = new ArrayList<>();
@@ -234,4 +268,5 @@ public class AddFragment extends Fragment {
             }
         }
     }
+
 }
