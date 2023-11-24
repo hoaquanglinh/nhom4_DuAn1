@@ -67,6 +67,13 @@ public class SanPhamDAO {
         return list.get(0);
     }
 
+    public List<SanPham> getAllByMaHang(int maHang) {
+        String sql = "SELECT * FROM sanpham WHERE mahang = ?";
+        String[] selectionArgs = {String.valueOf(maHang)};
+        return getData(sql, selectionArgs);
+    }
+
+
     @SuppressLint("Range")
     private List<SanPham> getData(String sql, String... selectionArgs) {
         List<SanPham> list = new ArrayList<>();

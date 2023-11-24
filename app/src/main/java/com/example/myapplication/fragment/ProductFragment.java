@@ -33,13 +33,12 @@ public class ProductFragment extends Fragment {
     static SanPhamDAO dao;
     SanPhamAdapter adapter;
     public SanPham item;
-    int matknd, matk;
+    int matknd;
     TaiKhoanNDDAO nddao;
     private static final int REQUEST_IMAGE = 1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_product, container, false);
         requireActivity().findViewById(R.id.navigation).setVisibility(View.VISIBLE);
         lvproduct = view.findViewById(R.id.lvProduct);

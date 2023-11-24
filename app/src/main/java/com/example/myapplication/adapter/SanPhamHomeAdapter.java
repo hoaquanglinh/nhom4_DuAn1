@@ -4,16 +4,22 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.fragment.ThongTinChiTietFragment;
 import com.example.myapplication.model.SanPham;
 
 import java.text.NumberFormat;
@@ -22,10 +28,12 @@ import java.util.ArrayList;
 public class SanPhamHomeAdapter extends RecyclerView.Adapter<SanPhamHomeAdapter.ViewHolder>{
 
     private Context context;
+    private Activity activity;
     private ArrayList<SanPham> list;
 
-    public SanPhamHomeAdapter(Context context, ArrayList<SanPham> list) {
+    public SanPhamHomeAdapter(Context context, Activity activity, ArrayList<SanPham> list) {
         this.context = context;
+        this.activity = activity;
         this.list = list;
     }
 
@@ -47,6 +55,13 @@ public class SanPhamHomeAdapter extends RecyclerView.Adapter<SanPhamHomeAdapter.
 
         Uri imageUri = Uri.parse(list.get(position).getAnh());
         holder.imageHome.setImageURI(imageUri);
+
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openChiTiet(list.get(position));
+            }
+        });
     }
 
     @Override
@@ -57,22 +72,34 @@ public class SanPhamHomeAdapter extends RecyclerView.Adapter<SanPhamHomeAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView tvTenSP,tvGiaSP;
         ImageView imageHome;
+        LinearLayout layout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            layout = itemView.findViewById(R.id.linear);
             imageHome = itemView.findViewById(R.id.imageHome);
             tvTenSP =itemView.findViewById(R.id.tvTenspHome);
             tvGiaSP =itemView.findViewById(R.id.tvGiaHome);
         }
     }
 
-    public static class SpaceItemDecoration extends RecyclerView.ItemDecoration {
-        private int spacing;
-        private int spanCount;
+    private void openChiTiet(final SanPham sanPham) {
+        // Tạo Bundle và truyền thông tin sản phẩm vào Bundle
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("sanPhamChiTiet", sanPham);
 
-        public SpaceItemDecoration(int spacing, int spanCount) {
-            this.spacing = spacing;
-            this.spanCount = spanCount;
+        // Tạo Fragment và truyền Bundle vào Fragment
+        ThongTinChiTietFragment thongTinChiTietFragment = new ThongTinChiTietFragment();
+        thongTinChiTietFragment.setArguments(bundle);
+
+        // Gửi sự kiện tới FragmentActivity để thay thế Fragment hiện tại bằng Fragment chỉnh sửa
+        if (activity instanceof FragmentActivity) {
+            FragmentActivity fragmentActivity = (FragmentActivity) activity;
+            FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.flContent, thongTinChiTietFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
         }
-
     }
+
 }

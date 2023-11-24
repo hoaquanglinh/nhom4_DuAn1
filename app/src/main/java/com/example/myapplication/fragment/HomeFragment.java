@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.myapplication.ClickItem;
 import com.example.myapplication.DAO.HangDAO;
 import com.example.myapplication.DAO.SanPhamDAO;
 import com.example.myapplication.R;
@@ -42,6 +43,7 @@ public class HomeFragment extends Fragment {
     HangAdapter hangAdapter;
     ArrayList<Hang> listHang;
     HangDAO hangDAO;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -82,29 +84,25 @@ public class HomeFragment extends Fragment {
         };
         handler.postDelayed(runnable, 3000); // Thời gian chờ trước khi chuyển đổi tự động (3 giây)
 
+        requireActivity().findViewById(R.id.navigation).setVisibility(View.VISIBLE);
+
         hangDAO = new HangDAO(getActivity());
         listHang = (ArrayList<Hang>) hangDAO.getAll();
-
         recyclerViewHang = rootView.findViewById(R.id.recyclerViewHang);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerViewHang.setLayoutManager(layoutManager);
-
         hangAdapter = new HangAdapter(getContext(), listHang);
         recyclerViewHang.setAdapter(hangAdapter);
 
         recyclerView = rootView.findViewById(R.id.recyclerView);
         dao = new SanPhamDAO(getActivity());
         list = (ArrayList<SanPham>) dao.getAll();
-
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
-
-        adapter = new SanPhamHomeAdapter(getContext(), list);
+        adapter = new SanPhamHomeAdapter(getContext(), getActivity(), list);
         recyclerView.setAdapter(adapter);
 
         return rootView;
     }
 
 }
-
-

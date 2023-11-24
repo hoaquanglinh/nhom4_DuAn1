@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +18,7 @@ import java.util.ArrayList;
 public class HangAdapter extends RecyclerView.Adapter<HangAdapter.ViewHolder>{
     private Context context;
     private ArrayList<Hang> list;
-
+    public String tenHang;
     public HangAdapter(Context context, ArrayList<Hang> list) {
         this.context = context;
         this.list = list;
@@ -37,6 +35,13 @@ public class HangAdapter extends RecyclerView.Adapter<HangAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.btnHang.setText(list.get(position).getTenHang());
+        tenHang = list.get(position).getTenHang();
+        holder.btnHang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     @Override

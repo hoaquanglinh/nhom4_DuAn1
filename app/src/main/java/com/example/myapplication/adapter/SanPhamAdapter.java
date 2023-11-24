@@ -147,6 +147,7 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
     }
 
     private void openEditProductFragment(final SanPham sanPham) {
+
         // Tạo Bundle và truyền thông tin sản phẩm vào Bundle
         Bundle bundle = new Bundle();
         bundle.putSerializable("sanPham", sanPham);
