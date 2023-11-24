@@ -59,7 +59,7 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 public class AddFragment extends Fragment {
     EditText edTenSp, edGiaSp, edKhohang, edMota;
     Spinner spmamau, spmahang;
-    ImageButton imageView, colorPickerButton;
+    ImageButton imageView;
     MauSacSpinerAdapter mauSacSpinerAdapter;
     ArrayList<MauSac> listMauSac;
     MauSacDAO mauSacDAO;
@@ -74,7 +74,6 @@ public class AddFragment extends Fragment {
     public int PICK_IMAGE_REQUEST = 1;
     int REQUEST_CODE = 2;
     int initialColor= Color.RED;
-    SharedPreferences sp;
     TaiKhoanNDDAO nddao;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,35 +90,6 @@ public class AddFragment extends Fragment {
         spmahang = view.findViewById(R.id.spMaHang);
         spmamau = view.findViewById(R.id.spMaMau);
         imageView = view.findViewById(R.id.ivImage);
-
-        colorPickerButton = view.findViewById(R.id.colorPickerButton);
-
-        sp = getActivity().getSharedPreferences("sp", Context.MODE_PRIVATE);
-        if(sp.getString("color", "").equals("")){
-
-        }else{
-            initialColor = (int) Double.parseDouble(sp.getString("color", ""));
-        }
-        colorPickerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AmbilWarnaDialog dialog1= new AmbilWarnaDialog(getActivity(), initialColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
-                    @Override
-                    public void onOk(AmbilWarnaDialog dialog, int color) {
-                        colorPickerButton.setBackgroundColor(color);
-                        initialColor = color;
-                        Log.d("sanpham", "color" + initialColor);
-                        sp.edit().putString("color", String.valueOf(color)).commit();
-                    }
-
-                    @Override
-                    public void onCancel(AmbilWarnaDialog dialog) {
-                        // cancel was selected by the user
-                    }
-                });
-                dialog1.show();
-            }
-        });
 
         mauSacDAO = new MauSacDAO(getContext());
         listMauSac = new ArrayList<>();

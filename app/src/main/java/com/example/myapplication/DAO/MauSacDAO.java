@@ -1,6 +1,7 @@
 package com.example.myapplication.DAO;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,12 +9,30 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.myapplication.database.DBHelper;
 import com.example.myapplication.model.Hang;
 import com.example.myapplication.model.MauSac;
+import com.example.myapplication.model.SanPham;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MauSacDAO {
     private SQLiteDatabase db;
+
+    public long insert(MauSac obj) {
+        ContentValues values = new ContentValues();
+        values.put("mamau", obj.getMamau());
+        values.put("tenmau", obj.getTenMau());
+        return db.insert("mausac", null, values);
+    }
+
+    public long update(MauSac obj) {
+        ContentValues values = new ContentValues();
+        values.put("tenmau", obj.getTenMau());
+        return db.update("mausac", values, "mamau = ?", new String[]{String.valueOf(obj.getMamau())});
+    }
+
+    public long delete(String id) {
+        return db.delete("mausac", "mamau = ?", new String[]{String.valueOf(id)});
+    }
 
     public MauSacDAO(Context context) {
         DBHelper dbHelper = new DBHelper(context);

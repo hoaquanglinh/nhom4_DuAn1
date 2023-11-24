@@ -54,6 +54,20 @@ public class MauAdapter extends ArrayAdapter<MauSac> {
             imageViewMau.setBackgroundColor(item.getMamau());
         }
 
+        v.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                return false;
+            }
+        });
+
+        v.findViewById(R.id.btnXoaMau).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fragment.xoa(String.valueOf(item.getMamau()));
+            }
+        });
+
         return v;
     }
 }
