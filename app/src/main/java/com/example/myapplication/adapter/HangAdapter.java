@@ -23,6 +23,15 @@ public class HangAdapter extends RecyclerView.Adapter<HangAdapter.ViewHolder>{
         this.context = context;
         this.list = list;
     }
+    private OnButtonClickListener buttonClickListener;
+
+    public void setOnButtonClickListener(OnButtonClickListener listener) {
+        this.buttonClickListener = listener;
+    }
+
+    public interface OnButtonClickListener {
+        void onButtonClick(int position, int maHang);
+    }
 
     @NonNull
     @Override
@@ -35,11 +44,16 @@ public class HangAdapter extends RecyclerView.Adapter<HangAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.btnHang.setText(list.get(position).getTenHang());
-        tenHang = list.get(position).getTenHang();
+        int mahang = list.get(position).getMahang();
         holder.btnHang.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View v) {
+                if (buttonClickListener != null) {
+                    int position = holder.getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        buttonClickListener.onButtonClick(position, mahang);
+                    }
+                }
             }
         });
     }

@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -91,6 +92,18 @@ public class HomeFragment extends Fragment {
         list = (ArrayList<SanPham>) dao.getAll();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
+
+        hangAdapter.setOnButtonClickListener(new HangAdapter.OnButtonClickListener() {
+            @Override
+            public void onButtonClick(int position, int maHang) {
+                ArrayList<SanPham> listSP = new ArrayList<>();
+                listSP = (ArrayList<SanPham>) dao.getAllByMaHang(maHang);
+                list.clear();
+                list.addAll(listSP);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
         adapter = new SanPhamHomeAdapter(getContext(), getActivity(), list);
         recyclerView.setAdapter(adapter);
 

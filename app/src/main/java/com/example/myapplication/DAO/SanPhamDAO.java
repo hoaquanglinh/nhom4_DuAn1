@@ -73,7 +73,6 @@ public class SanPhamDAO {
         return getData(sql, selectionArgs);
     }
 
-
     @SuppressLint("Range")
     private List<SanPham> getData(String sql, String... selectionArgs) {
         List<SanPham> list = new ArrayList<>();
