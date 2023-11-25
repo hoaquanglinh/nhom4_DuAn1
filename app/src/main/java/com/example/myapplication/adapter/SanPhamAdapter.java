@@ -46,8 +46,6 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
     Button btnxoa;
     ImageView imageView;
     private Activity activity;
-
-
     public SanPhamAdapter(@NonNull Context context, ArrayList<SanPham> list, Activity activity, SanPhamDAO dao) {
         super(context, 0, list);
         this.context = context;

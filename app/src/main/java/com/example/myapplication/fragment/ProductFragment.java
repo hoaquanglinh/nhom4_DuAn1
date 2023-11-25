@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.DAO.SanPhamDAO;
 import com.example.myapplication.DAO.TaiKhoanNDDAO;
+import com.example.myapplication.ManHinhChinh;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.SanPhamAdapter;;
 import com.example.myapplication.model.SanPham;
@@ -36,6 +37,8 @@ public class ProductFragment extends Fragment {
     public SanPham item;
     int matknd;
     TaiKhoanNDDAO nddao;
+    int maAn = 1;
+    ManHinhChinh manHinhChinh;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

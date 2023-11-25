@@ -37,7 +37,7 @@ public class HomeFragment extends Fragment {
     HangAdapter hangAdapter;
     ArrayList<Hang> listHang;
     HangDAO hangDAO;
-
+    int maAnn = 2;
     public HomeFragment() {
     }
 

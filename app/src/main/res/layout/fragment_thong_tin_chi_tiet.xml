@@ -13,10 +13,9 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:layout_below="@+id/toolbarSanPham"
-        android:layout_above="@+id/layoutduoi">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -127,57 +126,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp" />
 
-            <View
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black" />
-
-            <TextView
-                android:id="@+id/baidangkhac"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="Bài đăng khác: "
-                android:textColor="#333333"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewSPCT"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="15dp" />
         </LinearLayout>
 
     </ScrollView>
 
-    <LinearLayout
-        android:id="@+id/layoutduoi"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dp"
-        android:visibility="visible">
-
-        <Button
-            android:id="@+id/btngoidien"
-            android:layout_width="110dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/goidien"/>
-
-        <Button
-            android:id="@+id/btnGioHang"
-            android:layout_width="110dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/giohang"/>
-
-        <Button
-            android:id="@+id/btnMuaNgay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Mua ngay"
-            android:textColor="@color/white"
-            android:background="#F4511E"/>
-    </LinearLayout>
 </RelativeLayout>

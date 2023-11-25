@@ -33,8 +33,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_alignParentBottom="true"
-                    app:itemIconTint="@color/white"
-                    android:background="#444444"
+                    android:background="#F9F7F7"
+                    app:itemIconSize="33dp"
+                    app:itemIconTint="#2E2D2D"
                     app:menu="@menu/menu_bottom_navigation" />
 
         </LinearLayout>

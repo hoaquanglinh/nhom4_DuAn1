@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -23,6 +24,7 @@ import com.example.myapplication.fragment.ProductFragment;
 import com.example.myapplication.fragment.QuanLyMauFragment;
 import com.example.myapplication.fragment.QuanLyNguoiDungFragment;
 import com.example.myapplication.fragment.QuanLySPFragment;
+import com.example.myapplication.fragment.ThongTinChiTietFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -31,6 +33,7 @@ public class ManHinhChinh extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     NavigationView navigationView;
     Toolbar toolbar;
+    public int maAn = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,6 +119,7 @@ public class ManHinhChinh extends AppCompatActivity {
                         ft.replace(R.id.flContent, fragment);
                         ft.commit();
                     }
+
                     return true;
                 }
             });
@@ -127,6 +131,5 @@ public class ManHinhChinh extends AppCompatActivity {
             ft.replace(R.id.flContent, fragment);
             ft.commit();
         }
-
     }
 }

@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.fragment.ThongTinChiTiet1Fragment;
 import com.example.myapplication.fragment.ThongTinChiTietFragment;
 import com.example.myapplication.model.SanPham;
 
@@ -83,20 +84,17 @@ public class SanPhamHomeAdapter extends RecyclerView.Adapter<SanPhamHomeAdapter.
     }
 
     private void openChiTiet(final SanPham sanPham) {
-        // Tạo Bundle và truyền thông tin sản phẩm vào Bundle
         Bundle bundle = new Bundle();
         bundle.putSerializable("sanPhamChiTiet", sanPham);
 
-        // Tạo Fragment và truyền Bundle vào Fragment
-        ThongTinChiTietFragment thongTinChiTietFragment = new ThongTinChiTietFragment();
-        thongTinChiTietFragment.setArguments(bundle);
+        ThongTinChiTiet1Fragment thongTinChiTietFragment1 = new ThongTinChiTiet1Fragment();
+        thongTinChiTietFragment1.setArguments(bundle);
 
-        // Gửi sự kiện tới FragmentActivity để thay thế Fragment hiện tại bằng Fragment chỉnh sửa
         if (activity instanceof FragmentActivity) {
             FragmentActivity fragmentActivity = (FragmentActivity) activity;
             FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.flContent, thongTinChiTietFragment);
+            fragmentTransaction.replace(R.id.flContent, thongTinChiTietFragment1);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }

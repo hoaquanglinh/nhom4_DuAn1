@@ -10,7 +10,6 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#444444"
         android:elevation="4dp"
         android:layout_marginBottom="2dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
@@ -20,7 +19,7 @@
             android:id="@+id/searchEditText"
             android:layout_width="320dp"
             android:layout_height="40dp"
-            android:background="@drawable/khung_button"
+            android:background="@drawable/khung_seach"
             android:paddingLeft="15dp"
             android:drawablePadding="15dp"
             android:drawableLeft="@drawable/baseline_search_24"
