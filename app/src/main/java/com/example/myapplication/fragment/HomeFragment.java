@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment {
         hangAdapter.setOnButtonClickListener(new HangAdapter.OnButtonClickListener() {
             @Override
             public void onButtonClick(int position, int maHang) {
-                ArrayList<SanPham> listSP = new ArrayList<>();
+                ArrayList<SanPham> listSP = new ArrayList<SanPham>();
                 listSP = (ArrayList<SanPham>) dao.getAllByMaHang(maHang);
                 list.clear();
                 list.addAll(listSP);
