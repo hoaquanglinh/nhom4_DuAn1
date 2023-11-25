@@ -17,7 +17,7 @@ import com.example.myapplication.model.SanPham;
 
 import java.util.ArrayList;
 
-public class QuanLySPFragment extends ProductFragment  {
+public class QuanLySPFragment extends Fragment  {
     ListView listView;
     SanPhamDAO dao;
     SanPhamAdapter adapter;
@@ -37,7 +37,7 @@ public class QuanLySPFragment extends ProductFragment  {
 
     void capNhat() {
         list = (ArrayList<SanPham>) dao.getAll();
-        adapter = new SanPhamAdapter(getContext(),this, list, getActivity(), dao);
+        adapter = new SanPhamAdapter(getContext(), list, getActivity(), dao);
         listView.setAdapter(adapter);
     }
 

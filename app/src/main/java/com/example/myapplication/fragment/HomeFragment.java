@@ -45,7 +45,6 @@ public class HomeFragment extends Fragment {
     HangDAO hangDAO;
 
     public HomeFragment() {
-        // Required empty public constructor
     }
 
     @Override

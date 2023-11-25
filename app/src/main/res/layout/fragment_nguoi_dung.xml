@@ -4,33 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:padding="5dp"
     tools:context=".fragment.NguoiDungFragment">
 
-    <LinearLayout
+    <ListView
+        android:id="@+id/lvNguoiDung"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/imageNguoiDung"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/img_3"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp">
-            <TextView
-                android:id="@+id/tvTenND"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <Button
-                android:id="@+id/tvSuaThongTin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Sửa thông tin"/>
-        </LinearLayout>
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:divider="#444444"
+        android:dividerHeight="1dp"/>
 
 </LinearLayout>

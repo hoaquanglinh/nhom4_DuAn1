@@ -26,13 +26,9 @@ import android.widget.Toast;
 import com.example.myapplication.DAO.MauSacDAO;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.MauAdapter;
-import com.example.myapplication.adapter.SanPhamAdapter;
 import com.example.myapplication.model.MauSac;
-import com.example.myapplication.model.SanPham;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.lang.reflect.Array;
-import java.math.BigInteger;
 import java.util.ArrayList;
 
 import yuku.ambilwarna.AmbilWarnaDialog;

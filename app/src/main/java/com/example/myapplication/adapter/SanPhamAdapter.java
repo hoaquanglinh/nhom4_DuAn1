@@ -41,7 +41,6 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
     private Context context;
     MauSacDAO mauSacDAO;
     SanPhamDAO dao;
-    ProductFragment fragment;
     private ArrayList<SanPham> list;
     TextView tvtensp, tvgiasp, tvmau, tvkhohang;
     Button btnxoa;
@@ -49,11 +48,10 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
     private Activity activity;
 
 
-    public SanPhamAdapter(@NonNull Context context, ProductFragment fragment, ArrayList<SanPham> list, Activity activity, SanPhamDAO dao) {
+    public SanPhamAdapter(@NonNull Context context, ArrayList<SanPham> list, Activity activity, SanPhamDAO dao) {
         super(context, 0, list);
         this.context = context;
         this.list = list;
-        this.fragment = fragment;
         this.activity = activity;
         this.dao = dao;
     }

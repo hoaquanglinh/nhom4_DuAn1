@@ -2,7 +2,6 @@ package com.example.myapplication.fragment;
 
 import static android.app.Activity.RESULT_OK;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -26,7 +25,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -36,7 +35,6 @@ import com.example.myapplication.DAO.SanPhamDAO;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.HangSpinerAdapter;
 import com.example.myapplication.adapter.MauSacSpinerAdapter;
-import com.example.myapplication.adapter.SanPhamAdapter;
 import com.example.myapplication.model.Hang;
 import com.example.myapplication.model.MauSac;
 import com.example.myapplication.model.SanPham;
