@@ -52,9 +52,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String createTableSanPham = "create table sanpham (" +
                 "masp integer primary key autoincrement, " +
-                "mamau TEXT REFERENCES mausac(mamau)," +
-                "mahang TEXT REFERENCES hang(mahang)," +
-                "matknd TEXT REFERENCES taikhoanND(matknd)," +
+                "mamau bigint REFERENCES mausac(mamau)," +
+                "mahang integer REFERENCES hang(mahang)," +
+                "matknd integer REFERENCES taikhoanND(matknd)," +
                 "tensp text not null, " +
                 "gia real not null," +
                 "khohang integer not null," +
