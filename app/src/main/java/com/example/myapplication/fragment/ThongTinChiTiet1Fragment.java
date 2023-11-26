@@ -36,6 +36,8 @@ import com.example.myapplication.model.SanPham;
 import com.example.myapplication.model.TaiKhoanND;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ThongTinChiTiet1Fragment extends Fragment {
     SanPham item;
@@ -120,18 +122,30 @@ public class ThongTinChiTiet1Fragment extends Fragment {
         view.findViewById(R.id.btnGioHang).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                openChiTietGioHang(item);
                 gioHang.setMasp(item.getMasp());
-                Log.d("tag", "ma sp = "+ item.getMasp());
                 gioHang.setMatknd(matknd);
-                Log.d("tag", "ma sp = "+ matknd);
 
-                long insert = gioHangDao.insert(gioHang);
-                if (insert > 0) {
-                    Toast.makeText(getContext(), "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                boolean cos = false;
+                ArrayList<SanPham> listSPGH = (ArrayList<SanPham>) gioHangDao.getSanPhamInGioHangByMatkd(matknd);
+                for (SanPham product : listSPGH) {
+                    if (product.getMasp() == item.getMasp()) {
+                        cos = true;
+                        break;
+                    }
                 }
+
+                if (cos) {
+                    Toast.makeText(activity, "Sản phẩm này đã có trong giỏ hàng", Toast.LENGTH_SHORT).show();
+                } else {
+                    listSPGH.add(item);
+                    long insert = gioHangDao.insert(gioHang);
+                    if (insert > 0) {
+                        Toast.makeText(getContext(), "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
             }
         });
 

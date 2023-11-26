@@ -46,7 +46,8 @@ public class SanPhamDAO {
         values.put("soluong", obj.getSoluong());
         values.put("anh", obj.getAnh());
         long row = db.update("sanpham", values, "masp=?", new String[]{String.valueOf(obj.getMasp())});
-        return (row > 0);    }
+        return (row > 0);
+    }
 
     public long delete(String id) {
         return db.delete("sanpham", "masp = ?", new String[]{id});
@@ -96,12 +97,18 @@ public class SanPhamDAO {
         return list;
     }
 
-    public void updateSoLuongSanPham(int sanPhamId, int soLuongMoi) {
+//    public void updateSoLuongSanPham(int sanPhamId, int soLuongMoi) {
+//        ContentValues values = new ContentValues();
+//        values.put("soluong", soLuongMoi);
+//        String whereClause = "masp = ?";
+//        String[] whereArgs = {String.valueOf(sanPhamId)};
+//        db.update("sanpham", values, whereClause, whereArgs);
+//        db.close();
+//    }
+
+    public long updateSL(int ma, int soLuongMoi) {
         ContentValues values = new ContentValues();
-        values.put("soluong", soLuongMoi);
-        String whereClause = "masp = ?";
-        String[] whereArgs = {String.valueOf(sanPhamId)};
-        db.update("sanpham", values, whereClause, whereArgs);
-        db.close();
+        values.put("soluong", soLuongMoi);;
+        return db.update("sanpham", values, "masp=?", new String[]{String.valueOf(ma)});
     }
 }

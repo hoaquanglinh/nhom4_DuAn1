@@ -1,5 +1,8 @@
 package com.example.myapplication.fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +18,7 @@ import android.widget.ListView;
 
 import com.example.myapplication.DAO.GioHangDao;
 import com.example.myapplication.DAO.SanPhamDAO;
+import com.example.myapplication.DAO.TaiKhoanNDDAO;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.SanPhamAdapter;
 import com.example.myapplication.adapter.SanPhamGioHangAdapter;
@@ -29,7 +33,9 @@ public class GioHangFragment extends Fragment {
     GioHangDao gioHangDao;
     SanPhamGioHangAdapter adapter;
     ArrayList<SanPham> list;
-    Toolbar toolbar;
+    TaiKhoanNDDAO nddao;
+    private int matknd;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,14 +47,19 @@ public class GioHangFragment extends Fragment {
         dao = new SanPhamDAO(getActivity());
         gioHangDao = new GioHangDao(getActivity());
 
-        capNhat();
+        nddao = new TaiKhoanNDDAO(getActivity());
+
+        SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
+        String user = pref.getString("USERNAME", "");
+        String pass = pref.getString("PASSWORD", "");
+
+        matknd = nddao.getMatkndFromTaikhoannd(user, pass);
+
+        list = (ArrayList<SanPham>) gioHangDao.getSanPhamInGioHangByMatkd(matknd);
+        adapter = new SanPhamGioHangAdapter(getContext(), list, getActivity(), dao);
+        adapter.notifyDataSetChanged();
+        listView.setAdapter(adapter);
+
         return view;
     }
-
-    void capNhat() {
-        list = (ArrayList<SanPham>) gioHangDao.getSanPhamInGioHang();
-        adapter = new SanPhamGioHangAdapter(getContext(), list, getActivity(), dao);
-        listView.setAdapter(adapter);
-    }
-
 }

@@ -47,17 +47,17 @@ public class GioHangDao {
     }
 
     @SuppressLint("Range")
-    public List<SanPham> getSanPhamInGioHang() {
+    public List<SanPham> getSanPhamInGioHangByMatkd(int matkd) {
         List<SanPham> listSanPham = new ArrayList<>();
 
         String query = "SELECT sanpham.* " +
                 "FROM sanpham " +
-                "INNER JOIN giohang ON sanpham.masp = giohang.masp";
+                "INNER JOIN giohang ON sanpham.masp = giohang.masp " +
+                "WHERE giohang.matknd = ?";
 
-        Cursor cursor = db.rawQuery(query, null);
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(matkd)});
         while (cursor.moveToNext()) {
             SanPham sanPham = new SanPham();
-
             sanPham.setMasp(Integer.parseInt(cursor.getString(cursor.getColumnIndex("masp"))));
             sanPham.setMamau(Integer.parseInt(cursor.getString(cursor.getColumnIndex("mamau"))));
             sanPham.setMahang(Integer.parseInt(cursor.getString(cursor.getColumnIndex("mahang"))));
@@ -68,12 +68,65 @@ public class GioHangDao {
             sanPham.setMota(cursor.getString(cursor.getColumnIndex("mota")));
             sanPham.setSoluong(Integer.parseInt(cursor.getString(cursor.getColumnIndex("soluong"))));
             sanPham.setAnh(cursor.getString(cursor.getColumnIndex("anh")));
-
             listSanPham.add(sanPham);
         }
 
         cursor.close();
         return listSanPham;
+    }
+
+    @SuppressLint("Range")
+    public int layIDSP(int id) {
+        int productId = -1;
+        String query = "SELECT masp FROM giohang WHERE magh = ?";
+        String[] selectionArgs = {String.valueOf(id)};
+
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery(query, selectionArgs);
+            if (cursor.moveToFirst()) {
+                productId = cursor.getInt(cursor.getColumnIndex("masp"));
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return productId;
+    }
+
+    @SuppressLint("Range")
+    public List<Integer> getAllMaghFromDatabase() {
+        List<Integer> maghList = new ArrayList<>();
+
+        String query = "SELECT magh FROM giohang";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int magh = cursor.getInt(cursor.getColumnIndex("magh"));
+                maghList.add(magh);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        return maghList;
+    }
+
+    @SuppressLint("Range")
+    public int layMaTKNDTuGioHang(int magh) {
+        int matknd = -1;
+
+        String selectQuery = "SELECT matknd FROM giohang WHERE magh = ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[] { String.valueOf(magh) });
+
+        if (cursor.moveToFirst()) {
+            matknd = cursor.getInt(cursor.getColumnIndex("matknd"));
+        }
+
+        cursor.close();
+        return matknd;
     }
 
 }

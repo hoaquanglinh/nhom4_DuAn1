@@ -75,7 +75,7 @@
                         android:gravity="center">
                         <Button
                             android:layout_gravity="center"
-                            android:id="@+id/btngiam"
+                            android:id="@+id/btngiam1"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:background="@drawable/tru"/>

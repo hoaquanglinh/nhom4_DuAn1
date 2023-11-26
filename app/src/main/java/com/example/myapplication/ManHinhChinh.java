@@ -35,7 +35,8 @@ public class ManHinhChinh extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     NavigationView navigationView;
     Toolbar toolbar;
-    public int maAn = 2;
+    public int sl;
+    GioHangFragment gioHangFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -2,6 +2,8 @@ package com.example.myapplication.adapter;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -9,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +27,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.myapplication.DAO.GioHangDao;
 import com.example.myapplication.DAO.MauSacDAO;
 import com.example.myapplication.DAO.SanPhamDAO;
 import com.example.myapplication.DAO.TaiKhoanNDDAO;
@@ -46,7 +50,8 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
     private Activity activity;
     TaiKhoanNDDAO nddao;
 
-    int soLuong = 1;
+    GioHangDao gioHangDao;
+
     public SanPhamGioHangAdapter(@NonNull Context context, ArrayList<SanPham> list, Activity activity, SanPhamDAO dao) {
         super(context, 0, list);
         this.context = context;
@@ -63,6 +68,8 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = inflater.inflate(R.layout.item_sanpham_giohang, null);
         }
+
+        gioHangDao = new GioHangDao(context);
 
         final SanPham item = list.get(position);
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
@@ -89,22 +96,64 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
             v.findViewById(R.id.btntang1).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    soLuong = item.getSoluong() + 1;
-                    item.setSoluong(soLuong);
+                    item.setSoluong(item.getSoluong() + 1);
+                    dao.updateSL(item.getMasp(), item.getSoluong());
                     notifyDataSetChanged();
                 }
             });
 
-            tvsoluong.setText(String.valueOf(soLuong));
+            v.findViewById(R.id.btngiam1).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    item.setSoluong(item.getSoluong() - 1);
+                    dao.updateSL(item.getMasp(), item.getSoluong());
+                    notifyDataSetChanged();
+                }
+            });
+            tvsoluong.setText(String.valueOf(item.getSoluong()));
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     open(item);
                 }
             });
+            SharedPreferences pref = activity.getSharedPreferences("USER_FILE", MODE_PRIVATE);
+            String user = pref.getString("USERNAME", "");
+            String pass = pref.getString("PASSWORD", "");
+            nddao = new TaiKhoanNDDAO(context);
+            int matknd = nddao.getMatkndFromTaikhoannd(user, pass);
+            v.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Delete");
+                    builder.setMessage("Bạn có muốn xóa không?");
+                    builder.setCancelable(true);
 
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            int id = list.get(position).getMasp();
+                            dao.delete(String.valueOf(id));
+                            list.clear();
+                            list.addAll(gioHangDao.getSanPhamInGioHangByMatkd(matknd));
+                            notifyDataSetChanged();
+                            dialog.cancel();
+                            Toast.makeText(getContext(), "Đã xóa", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog alert = builder.create();
+                    builder.show();
+                    return false;
+                }
+            });
         }
-
         return v;
     }
 
