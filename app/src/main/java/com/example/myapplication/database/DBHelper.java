@@ -26,7 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "diachi text not null, " +
                 "sdt text not null," +
                 "email text not null," +
-                "matknd TEXT REFERENCES taikhoanND(matknd))";
+                "matknd integer REFERENCES taikhoanND(matknd))";
         db.execSQL(createTableNguoiDung);
         db.execSQL("insert into nguoidung (mand,ten, gioitinh, namsinh, diachi, sdt, email, matknd) values (1,'Người dùng 1', 'Nam', 1990, 'Địa chỉ 1', '0123456789', 'nguoidung1@example.com', 1)");
         db.execSQL("insert into nguoidung (mand, ten, gioitinh, namsinh, diachi, sdt, email, matknd) values (2,'Người dùng 2', 'Nữ', 1995, 'Địa chỉ 2', '0987654321', 'nguoidung2@example.com', 2)");

@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.example.myapplication.DAO.GioHangDao;
 import com.example.myapplication.DAO.HangDAO;
 import com.example.myapplication.DAO.MauSacDAO;
+import com.example.myapplication.DAO.SanPhamDAO;
 import com.example.myapplication.DAO.TaiKhoanNDDAO;
 import com.example.myapplication.R;
 import com.example.myapplication.model.GioHang;
@@ -53,6 +54,7 @@ public class ThongTinChiTiet1Fragment extends Fragment {
     GioHangDao gioHangDao;
     private int matknd;
     GioHang gioHang;
+    SanPhamDAO dao;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +74,7 @@ public class ThongTinChiTiet1Fragment extends Fragment {
         toolbar = view.findViewById(R.id.toolbarSanPham1);
         gioHangDao = new GioHangDao(getContext());
         gioHang = new GioHang();
+        dao = new SanPhamDAO(getActivity());
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
@@ -119,6 +122,15 @@ public class ThongTinChiTiet1Fragment extends Fragment {
 
         matknd = nddao.getMatkndFromTaikhoannd(user, pass);
 
+        ArrayList<SanPham> listSPGH = (ArrayList<SanPham>) gioHangDao.getSanPhamInGioHangByMatkd(matknd);
+
+        for (SanPham product : listSPGH) {
+            if (product.getMatknd() != matknd) {
+                dao.updateSL(product.getMasp(), 1);
+                break;
+            }
+        }
+
         view.findViewById(R.id.btnGioHang).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,7 +138,7 @@ public class ThongTinChiTiet1Fragment extends Fragment {
                 gioHang.setMatknd(matknd);
 
                 boolean cos = false;
-                ArrayList<SanPham> listSPGH = (ArrayList<SanPham>) gioHangDao.getSanPhamInGioHangByMatkd(matknd);
+
                 for (SanPham product : listSPGH) {
                     if (product.getMasp() == item.getMasp()) {
                         cos = true;

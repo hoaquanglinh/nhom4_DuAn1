@@ -97,24 +97,6 @@ public class GioHangDao {
     }
 
     @SuppressLint("Range")
-    public List<Integer> getAllMaghFromDatabase() {
-        List<Integer> maghList = new ArrayList<>();
-
-        String query = "SELECT magh FROM giohang";
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                int magh = cursor.getInt(cursor.getColumnIndex("magh"));
-                maghList.add(magh);
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-        return maghList;
-    }
-
-    @SuppressLint("Range")
     public int layMaTKNDTuGioHang(int magh) {
         int matknd = -1;
 

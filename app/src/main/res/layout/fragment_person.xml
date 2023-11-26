@@ -93,7 +93,8 @@
         android:gravity="center"
         android:layout_margin="5dp"
         android:background="@drawable/khung_dangnhap"/>
-    <TextView
+    <Button
+        android:id="@+id/btnDangXuat"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:text="Đăng xuất"
