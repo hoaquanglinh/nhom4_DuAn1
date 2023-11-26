@@ -156,9 +156,8 @@ public class AddFragment extends Fragment {
 
                 nddao = new TaiKhoanNDDAO(getActivity());
                 int matknd = nddao.getMatkndFromTaikhoannd(user, pass);
-                Log.d("tk", "tk =" + matknd);
-                long insert = dao.insert(item, matknd);
 
+                long insert = dao.insert(item, matknd);
                 if (insert > 0) {
                     Toast.makeText(getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
                 } else {

@@ -21,7 +21,6 @@ public class QuanLySPFragment extends Fragment  {
     ListView listView;
     SanPhamDAO dao;
     SanPhamAdapter adapter;
-    SanPham item;
     ArrayList<SanPham> list;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

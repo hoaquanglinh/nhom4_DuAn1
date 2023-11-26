@@ -1,5 +1,8 @@
 package com.example.myapplication.fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -8,6 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,11 +22,14 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.myapplication.DAO.GioHangDao;
 import com.example.myapplication.DAO.HangDAO;
 import com.example.myapplication.DAO.MauSacDAO;
 import com.example.myapplication.DAO.TaiKhoanNDDAO;
 import com.example.myapplication.R;
+import com.example.myapplication.model.GioHang;
 import com.example.myapplication.model.Hang;
 import com.example.myapplication.model.MauSac;
 import com.example.myapplication.model.SanPham;
@@ -39,6 +48,9 @@ public class ThongTinChiTiet1Fragment extends Fragment {
     ImageView imageViewSanPham;
     TaiKhoanNDDAO nddao;
     Uri selectedImageUri;
+    GioHangDao gioHangDao;
+    private int matknd;
+    GioHang gioHang;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +68,8 @@ public class ThongTinChiTiet1Fragment extends Fragment {
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
 
         toolbar = view.findViewById(R.id.toolbarSanPham1);
+        gioHangDao = new GioHangDao(getContext());
+        gioHang = new GioHang();
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
@@ -97,10 +111,27 @@ public class ThongTinChiTiet1Fragment extends Fragment {
             motaspct.setText(item.getMota());
         }
 
+        SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
+        String user = pref.getString("USERNAME", "");
+        String pass = pref.getString("PASSWORD", "");
+
+        matknd = nddao.getMatkndFromTaikhoannd(user, pass);
+
         view.findViewById(R.id.btnGioHang).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                openChiTietGioHang(item);
+                gioHang.setMasp(item.getMasp());
+                Log.d("tag", "ma sp = "+ item.getMasp());
+                gioHang.setMatknd(matknd);
+                Log.d("tag", "ma sp = "+ matknd);
 
+                long insert = gioHangDao.insert(gioHang);
+                if (insert > 0) {
+                    Toast.makeText(getContext(), "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -115,5 +146,22 @@ public class ThongTinChiTiet1Fragment extends Fragment {
                 getFragmentManager().popBackStack();
             }
         });
+    }
+
+    private void openChiTietGioHang(final SanPham sanPham) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("sanPhamChiTiet", sanPham);
+
+        GioHangFragment gioHangFragment = new GioHangFragment();
+        gioHangFragment.setArguments(bundle);
+
+        if (getActivity() instanceof FragmentActivity) {
+            FragmentActivity fragmentActivity = (FragmentActivity) getActivity();
+            FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.flContent, gioHangFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
     }
 }

@@ -17,6 +17,10 @@ import java.util.List;
 public class MauSacDAO {
     private SQLiteDatabase db;
 
+    public MauSacDAO(Context context) {
+        DBHelper dbHelper = new DBHelper(context);
+        db = dbHelper.getWritableDatabase();
+    }
     public long insert(MauSac obj) {
         ContentValues values = new ContentValues();
         values.put("mamau", obj.getMamau());
@@ -32,11 +36,6 @@ public class MauSacDAO {
 
     public long delete(String id) {
         return db.delete("mausac", "mamau = ?", new String[]{String.valueOf(id)});
-    }
-
-    public MauSacDAO(Context context) {
-        DBHelper dbHelper = new DBHelper(context);
-        db = dbHelper.getWritableDatabase();
     }
 
     public List<MauSac> getAll() {

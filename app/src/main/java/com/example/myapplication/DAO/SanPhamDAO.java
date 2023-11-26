@@ -95,4 +95,13 @@ public class SanPhamDAO {
         }
         return list;
     }
+
+    public void updateSoLuongSanPham(int sanPhamId, int soLuongMoi) {
+        ContentValues values = new ContentValues();
+        values.put("soluong", soLuongMoi);
+        String whereClause = "masp = ?";
+        String[] whereArgs = {String.valueOf(sanPhamId)};
+        db.update("sanpham", values, whereClause, whereArgs);
+        db.close();
+    }
 }

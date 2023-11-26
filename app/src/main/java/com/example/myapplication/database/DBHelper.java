@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import com.example.myapplication.R;
 
 public class DBHelper extends SQLiteOpenHelper {
-    public static final String DB_NAME = "FastPhone3";
+    public static final String DB_NAME = "FastPhone6 ";
     public static final int DB_VERSION = 2;
 
     public DBHelper(@Nullable Context context) {
@@ -65,15 +65,10 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(createTableSanPham);
 
         String createTableGioHang = "CREATE TABLE giohang (" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "masp INTEGER NOT NULL, " +
-                "tensp TEXT NOT NULL, " +
-                "soluong INTEGER NOT NULL, " +
-                "gia REAL NOT NULL, " +
-                "thanhtien REAL NOT NULL, " +
-                "FOREIGN KEY(masp) REFERENCES sanpham(masp))";
+                "magh integer PRIMARY KEY AUTOINCREMENT, " +
+                "masp integer REFERENCES sanpham(masp)," +
+                "matknd integer REFERENCES taikhoanND(matknd))";
         db.execSQL(createTableGioHang);
-
 
     }
     @Override
@@ -84,6 +79,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS mausac");
         db.execSQL("DROP TABLE IF EXISTS hang");
         db.execSQL("DROP TABLE IF EXISTS sanpham");
+        db.execSQL("DROP TABLE IF EXISTS createTableDonViVanChuyen");
 
         // Tạo lại các bảng mới
         onCreate(db);

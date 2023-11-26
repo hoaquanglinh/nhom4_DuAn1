@@ -47,7 +47,7 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
     MauSacDAO mauSacDAO;
     SanPhamDAO dao;
     private ArrayList<SanPham> list;
-    TextView tvtensp, tvgiasp, tvmau, tvkhohang;
+    private TextView tvtensp, tvgiasp, tvmau, tvkhohang, tvsoluong;
     Button btnxoa;
     ImageView imageView;
     private Activity activity;
@@ -169,7 +169,6 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
     }
 
     private void openEditProductFragment(final SanPham sanPham) {
-
         // Tạo Bundle và truyền thông tin sản phẩm vào Bundle
         Bundle bundle = new Bundle();
         bundle.putSerializable("sanPham", sanPham);

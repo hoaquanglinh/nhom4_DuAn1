@@ -50,9 +50,6 @@ public class ThongTinChiTietFragment extends Fragment {
     ImageView imageViewSanPham;
     TaiKhoanNDDAO nddao;
     Uri selectedImageUri;
-    LinearLayout layoutduoi;
-    TextView baidangkhac;
-    RecyclerView recyclerViewSPCT;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

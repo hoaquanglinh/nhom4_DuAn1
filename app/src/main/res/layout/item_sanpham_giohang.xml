@@ -16,18 +16,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <CheckBox
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:background="#666666"
-                    android:layout_gravity="center"/>
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="5dp"/>
 
                 <ImageView
-                    android:id="@+id/imageSP"
+                    android:id="@+id/imageSP1"
                     android:layout_width="120dp"
                     android:layout_height="130dp"
                     android:layout_marginRight="5dp"
+                    android:layout_marginLeft="3dp"
                     android:src="@drawable/redmi"
                     android:scaleType="fitCenter"/>
 
@@ -37,7 +37,7 @@
                     android:orientation="vertical"
                     android:layout_marginLeft="10dp">
                     <TextView
-                        android:id="@+id/tvTensp"
+                        android:id="@+id/tvTensp1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="tensp"
@@ -46,7 +46,7 @@
                         android:textColor="#444444"
                         android:layout_marginBottom="10dp"/>
                     <TextView
-                        android:id="@+id/tvGia"
+                        android:id="@+id/tvGia1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="giasp"
@@ -58,7 +58,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <TextView
-                            android:id="@+id/tvMau"
+                            android:id="@+id/tvMau1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="mausp"
@@ -66,12 +66,19 @@
                             android:layout_marginBottom="10dp"
                             android:layout_marginRight="80dp"/>
 
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
                         <Button
                             android:layout_gravity="center"
                             android:id="@+id/btngiam"
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:background="@color/black"/>
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/tru"/>
 
                         <TextView
                             android:id="@+id/tvsoluong"
@@ -80,27 +87,20 @@
                             android:layout_height="wrap_content"
                             android:text="soluong"
                             android:textSize="16dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
                             android:layout_marginBottom="10dp"/>
 
                         <Button
                             android:layout_gravity="center"
-                            android:id="@+id/btntang"
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:background="@color/black"/>
+                            android:id="@+id/btntang1"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/cong"
+                            android:layout_marginRight="50dp"/>
                     </LinearLayout>
-                    <TextView
-                        android:id="@+id/tvKho"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="khohang"
-                        android:textSize="16dp"
-                        android:layout_marginBottom="10dp"/>
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
-
     </LinearLayout>
 </LinearLayout>
