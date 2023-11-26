@@ -72,18 +72,6 @@ public class ThongTinChiTietFragment extends Fragment {
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
 
         toolbar = view.findViewById(R.id.toolbarSanPham);
-        layoutduoi = view.findViewById(R.id.layoutduoi);
-        baidangkhac = view.findViewById(R.id.baidangkhac);
-        recyclerViewSPCT = view.findViewById(R.id.recyclerViewSPCT);
-
-        SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
-        String user = pref.getString("USERNAME", "");
-
-        if(user.equals("admin")){
-            layoutduoi.setVisibility(View.GONE);
-            baidangkhac.setVisibility(View.GONE);
-            recyclerViewSPCT.setVisibility(View.GONE);
-        }
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
@@ -128,15 +116,6 @@ public class ThongTinChiTietFragment extends Fragment {
         return view;
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId() == android.R.id.home) {
-//            // Xử lý sự kiện click vào mũi tên back ở đây
-//            getActivity().onBackPressed(); // Hoặc thực hiện các hành động khác
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

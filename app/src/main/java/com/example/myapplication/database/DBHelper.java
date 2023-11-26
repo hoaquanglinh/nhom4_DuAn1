@@ -10,7 +10,7 @@ import com.example.myapplication.R;
 
 public class DBHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "FastPhone3";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 2;
 
     public DBHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -60,6 +60,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "gia real not null," +
                 "khohang integer not null," +
                 "mota text not null," +
+                "soluong integer not null," +
                 "anh text not null)";
         db.execSQL(createTableSanPham);
 

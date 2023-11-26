@@ -11,11 +11,12 @@ public class SanPham implements Serializable {
     private Double giasp;
     private int khoHang;
     private String mota;
+    private int soluong;
     private String anh;
     public SanPham() {
     }
 
-    public SanPham(int masp, int mamau, int mahang, int matknd, String tensp, Double giasp, int khoHang, String mota, String anh) {
+    public SanPham(int masp, int mamau, int mahang, int matknd, String tensp, Double giasp, int khoHang, String mota, int soluong, String anh) {
         this.masp = masp;
         this.mamau = mamau;
         this.mahang = mahang;
@@ -24,7 +25,16 @@ public class SanPham implements Serializable {
         this.giasp = giasp;
         this.khoHang = khoHang;
         this.mota = mota;
+        this.soluong = soluong;
         this.anh = anh;
+    }
+
+    public int getSoluong() {
+        return soluong;
+    }
+
+    public void setSoluong(int soluong) {
+        this.soluong = soluong;
     }
 
     public int getMatknd() {

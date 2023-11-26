@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/lineargiohang"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/llBottom">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_marginTop="5dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <CheckBox
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:background="#666666"
+                    android:layout_gravity="center"/>
+
+                <ImageView
+                    android:id="@+id/imageSP"
+                    android:layout_width="120dp"
+                    android:layout_height="130dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/redmi"
+                    android:scaleType="fitCenter"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp">
+                    <TextView
+                        android:id="@+id/tvTensp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="tensp"
+                        android:textStyle="bold"
+                        android:textSize="18dp"
+                        android:textColor="#444444"
+                        android:layout_marginBottom="10dp"/>
+                    <TextView
+                        android:id="@+id/tvGia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="giasp"
+                        android:textColor="#E53935"
+                        android:textStyle="bold"
+                        android:textSize="18dp"
+                        android:layout_marginBottom="10dp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/tvMau"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="mausp"
+                            android:textSize="16dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginRight="80dp"/>
+
+                        <Button
+                            android:layout_gravity="center"
+                            android:id="@+id/btngiam"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:background="@color/black"/>
+
+                        <TextView
+                            android:id="@+id/tvsoluong"
+                            android:layout_marginTop="8dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="soluong"
+                            android:textSize="16dp"
+                            android:layout_marginBottom="10dp"/>
+
+                        <Button
+                            android:layout_gravity="center"
+                            android:id="@+id/btntang"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:background="@color/black"/>
+                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/tvKho"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="khohang"
+                        android:textSize="16dp"
+                        android:layout_marginBottom="10dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

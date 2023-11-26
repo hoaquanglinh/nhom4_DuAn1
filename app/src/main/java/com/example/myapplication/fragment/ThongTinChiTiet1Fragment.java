@@ -97,6 +97,13 @@ public class ThongTinChiTiet1Fragment extends Fragment {
             motaspct.setText(item.getMota());
         }
 
+        view.findViewById(R.id.btnGioHang).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         return view;
     }
     @Override

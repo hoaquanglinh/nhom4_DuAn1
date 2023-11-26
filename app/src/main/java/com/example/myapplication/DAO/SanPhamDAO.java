@@ -30,6 +30,7 @@ public class SanPhamDAO {
         values.put("gia", obj.getGiasp());
         values.put("khohang", obj.getKhoHang());
         values.put("mota", obj.getMota());
+        values.put("soluong", 1);
         values.put("anh", obj.getAnh());
         return db.insert("sanpham", null, values);
     }
@@ -42,6 +43,7 @@ public class SanPhamDAO {
         values.put("gia", obj.getGiasp());
         values.put("khohang", obj.getKhoHang());
         values.put("mota", obj.getMota());
+        values.put("soluong", obj.getSoluong());
         values.put("anh", obj.getAnh());
         long row = db.update("sanpham", values, "masp=?", new String[]{String.valueOf(obj.getMasp())});
         return (row > 0);    }
@@ -87,6 +89,7 @@ public class SanPhamDAO {
             obj.setGiasp(Double.parseDouble(cursor.getString(cursor.getColumnIndex("gia"))));
             obj.setKhoHang(Integer.parseInt(cursor.getString(cursor.getColumnIndex("khohang"))));
             obj.setMota(cursor.getString(cursor.getColumnIndex("mota")));
+            obj.setSoluong(Integer.parseInt(cursor.getString(cursor.getColumnIndex("soluong"))));
             obj.setAnh(cursor.getString(cursor.getColumnIndex("anh")));
             list.add(obj);
         }

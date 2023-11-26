@@ -1,9 +1,12 @@
 package com.example.myapplication.adapter;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,7 +28,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.myapplication.DAO.HangDAO;
 import com.example.myapplication.DAO.MauSacDAO;
+import com.example.myapplication.DAO.NguoiDungDAO;
 import com.example.myapplication.DAO.SanPhamDAO;
+import com.example.myapplication.DAO.TaiKhoanNDDAO;
 import com.example.myapplication.R;
 import com.example.myapplication.fragment.ProductFragment;
 import com.example.myapplication.fragment.ThongTinChiTietFragment;
@@ -46,6 +51,7 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
     Button btnxoa;
     ImageView imageView;
     private Activity activity;
+    TaiKhoanNDDAO nddao;
     public SanPhamAdapter(@NonNull Context context, ArrayList<SanPham> list, Activity activity, SanPhamDAO dao) {
         super(context, 0, list);
         this.context = context;
@@ -95,6 +101,11 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
                 }
             });
 
+            SharedPreferences pref = activity.getSharedPreferences("USER_FILE", MODE_PRIVATE);
+            String user = pref.getString("USERNAME", "");
+            String pass = pref.getString("PASSWORD", "");
+            nddao = new TaiKhoanNDDAO(context);
+            int matknd = nddao.getMatkndFromTaikhoannd(user, pass);
             btnxoa.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -109,7 +120,7 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
                             int id = list.get(position).getMasp();
                             dao.delete(String.valueOf(id));
                             list.clear();
-                            list.addAll(dao.getAll());
+                            list.addAll(dao.getAllByMAtknd(matknd));
                             notifyDataSetChanged();
                             dialog.cancel();
                             Toast.makeText(getContext(), "Đã xóa", Toast.LENGTH_SHORT).show();

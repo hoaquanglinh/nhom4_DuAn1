@@ -64,6 +64,7 @@ public class ProductFragment extends Fragment {
     void capNhatlv() {
         list = (ArrayList<SanPham>) dao.getAllByMAtknd(matknd);
         adapter = new SanPhamAdapter(getContext(), list, getActivity(), dao);
+        adapter.notifyDataSetChanged();
         lvproduct.setAdapter(adapter);
     }
 
