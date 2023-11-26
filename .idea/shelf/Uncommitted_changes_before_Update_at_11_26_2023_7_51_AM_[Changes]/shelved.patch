@@ -1,0 +1,1288 @@
+Index: app/src/main/java/com/example/myapplication/database/DBHelper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication.database;\r\n\r\nimport android.content.Context;\r\nimport android.database.sqlite.SQLiteDatabase;\r\nimport android.database.sqlite.SQLiteOpenHelper;\r\n\r\nimport androidx.annotation.Nullable;\r\n\r\nimport com.example.myapplication.R;\r\n\r\npublic class DBHelper extends SQLiteOpenHelper {\r\n    public static final String DB_NAME = \"FastPhone3\";\r\n    public static final int DB_VERSION = 1;\r\n\r\n    public DBHelper(@Nullable Context context) {\r\n        super(context, DB_NAME, null, DB_VERSION);\r\n    }\r\n\r\n    @Override\r\n    public void onCreate(SQLiteDatabase db) {\r\n        String createTableNguoiDung = \"create table nguoidung (\" +\r\n                \"mand integer primary key autoincrement, \" +\r\n                \"ten text not null, \" +\r\n                \"gioitinh text not null, \" +\r\n                \"namsinh integer not null, \" +\r\n                \"diachi text not null, \" +\r\n                \"sdt text not null,\" +\r\n                \"email text not null,\" +\r\n                \"matknd TEXT REFERENCES taikhoanND(matknd))\";\r\n        db.execSQL(createTableNguoiDung);\r\n        db.execSQL(\"insert into nguoidung (mand,ten, gioitinh, namsinh, diachi, sdt, email, matknd) values (1,'Người dùng 1', 'Nam', 1990, 'Địa chỉ 1', '0123456789', 'nguoidung1@example.com', 1)\");\r\n        db.execSQL(\"insert into nguoidung (mand, ten, gioitinh, namsinh, diachi, sdt, email, matknd) values (2,'Người dùng 2', 'Nữ', 1995, 'Địa chỉ 2', '0987654321', 'nguoidung2@example.com', 2)\");\r\n        String createTableTaiKhoanNguoiDung = \"create table taikhoanND (\" +\r\n                \"matknd integer primary key autoincrement, \" +\r\n                \"taikhoannd text not null, \" +\r\n                \"matkhaund text not null)\";\r\n        db.execSQL(createTableTaiKhoanNguoiDung);\r\n\r\n        db.execSQL(\"insert into taikhoanND values (1, 'admin', 'admin')\");\r\n        db.execSQL(\"insert into taikhoanND values (2, 'linh', '123')\");\r\n\r\n        String createTableQuanTriVien = \"create table taikhoanQTV(taikhoanadmin text primary key, tenadmin text not null, matkhauadmin text not null)\";\r\n        db.execSQL(createTableQuanTriVien);\r\n\r\n        String createTableMau = \"create table mausac(mamau bigint primary key, tenmau text not null)\";\r\n        db.execSQL(createTableMau);\r\n        db.execSQL(\"insert into mausac values (-16711936, 'Xanh'), (-65536, 'Đỏ'),(-7829368, 'Xám'),(-16777216, 'Đen'), (-1, 'Trắng')\");\r\n\r\n        String createTableHang = \"create table hang(mahang integer primary key autoincrement, tenhang text not null)\";\r\n        db.execSQL(createTableHang);\r\n        db.execSQL(\"insert into hang values (1, 'SamSung'), (2, 'iphone'),(3, 'Xiaomi'),(4, 'Realme'), (5, 'Nokia')\");\r\n\r\n        String createTableSanPham = \"create table sanpham (\" +\r\n                \"masp integer primary key autoincrement, \" +\r\n                \"mamau TEXT REFERENCES mausac(mamau),\" +\r\n                \"mahang TEXT REFERENCES hang(mahang),\" +\r\n                \"matknd TEXT REFERENCES taikhoanND(matknd),\" +\r\n                \"tensp text not null, \" +\r\n                \"gia real not null,\" +\r\n                \"khohang integer not null,\" +\r\n                \"mota text not null,\" +\r\n                \"anh text not null)\";\r\n        db.execSQL(createTableSanPham);\r\n    }\r\n    @Override\r\n    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {\r\n        db.execSQL(\"DROP TABLE IF EXISTS nguoidung\");\r\n        db.execSQL(\"DROP TABLE IF EXISTS taikhoanND\");\r\n        db.execSQL(\"DROP TABLE IF EXISTS taikhoanQTV\");\r\n        db.execSQL(\"DROP TABLE IF EXISTS mausac\");\r\n        db.execSQL(\"DROP TABLE IF EXISTS hang\");\r\n        db.execSQL(\"DROP TABLE IF EXISTS sanpham\");\r\n\r\n        // Tạo lại các bảng mới\r\n        onCreate(db);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/database/DBHelper.java b/app/src/main/java/com/example/myapplication/database/DBHelper.java
+--- a/app/src/main/java/com/example/myapplication/database/DBHelper.java	(revision af0025709e93d4b1cfba9495c5ec5314488f6b9e)
++++ b/app/src/main/java/com/example/myapplication/database/DBHelper.java	(date 1700959778778)
+@@ -30,18 +30,15 @@
+         db.execSQL(createTableNguoiDung);
+         db.execSQL("insert into nguoidung (mand,ten, gioitinh, namsinh, diachi, sdt, email, matknd) values (1,'Người dùng 1', 'Nam', 1990, 'Địa chỉ 1', '0123456789', 'nguoidung1@example.com', 1)");
+         db.execSQL("insert into nguoidung (mand, ten, gioitinh, namsinh, diachi, sdt, email, matknd) values (2,'Người dùng 2', 'Nữ', 1995, 'Địa chỉ 2', '0987654321', 'nguoidung2@example.com', 2)");
++
+         String createTableTaiKhoanNguoiDung = "create table taikhoanND (" +
+                 "matknd integer primary key autoincrement, " +
+                 "taikhoannd text not null, " +
+                 "matkhaund text not null)";
+         db.execSQL(createTableTaiKhoanNguoiDung);
+-
+         db.execSQL("insert into taikhoanND values (1, 'admin', 'admin')");
+         db.execSQL("insert into taikhoanND values (2, 'linh', '123')");
+ 
+-        String createTableQuanTriVien = "create table taikhoanQTV(taikhoanadmin text primary key, tenadmin text not null, matkhauadmin text not null)";
+-        db.execSQL(createTableQuanTriVien);
+-
+         String createTableMau = "create table mausac(mamau bigint primary key, tenmau text not null)";
+         db.execSQL(createTableMau);
+         db.execSQL("insert into mausac values (-16711936, 'Xanh'), (-65536, 'Đỏ'),(-7829368, 'Xám'),(-16777216, 'Đen'), (-1, 'Trắng')");
+@@ -50,6 +47,10 @@
+         db.execSQL(createTableHang);
+         db.execSQL("insert into hang values (1, 'SamSung'), (2, 'iphone'),(3, 'Xiaomi'),(4, 'Realme'), (5, 'Nokia')");
+ 
++        String createTableDonViVanChuyen = "create table donvivanchuyen (madvvc integer primary key autoincrement, tendvvc text not null, giaship real not null)";
++        db.execSQL(createTableDonViVanChuyen);
++        db.execSQL("insert into donvivanchuyen values (1, 'Vnexpress', 30000), (2, 'Giao hang tiet kiem', 10000)");
++
+         String createTableSanPham = "create table sanpham (" +
+                 "masp integer primary key autoincrement, " +
+                 "mamau TEXT REFERENCES mausac(mamau)," +
+@@ -61,6 +62,18 @@
+                 "mota text not null," +
+                 "anh text not null)";
+         db.execSQL(createTableSanPham);
++
++        String createTableGioHang = "CREATE TABLE giohang (" +
++                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
++                "masp INTEGER NOT NULL, " +
++                "tensp TEXT NOT NULL, " +
++                "soluong INTEGER NOT NULL, " +
++                "gia REAL NOT NULL, " +
++                "thanhtien REAL NOT NULL, " +
++                "FOREIGN KEY(masp) REFERENCES sanpham(masp))";
++        db.execSQL(createTableGioHang);
++
++
+     }
+     @Override
+     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+Index: app/src/main/res/layout/fragment_tai_khoan.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_tai_khoan.xml b/app/src/main/res/layout/fragment_tai_khoan.xml
+new file mode 100644
+--- /dev/null	(date 1700944786000)
++++ b/app/src/main/res/layout/fragment_tai_khoan.xml	(date 1700944786000)
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="utf-8"?>
++<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".fragment.TaiKhoanFragment">
++
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        android:text="@string/hello_blank_fragment" />
++
++</FrameLayout>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_17\" default=\"true\" project-jdk-name=\"jbr-17\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision af0025709e93d4b1cfba9495c5ec5314488f6b9e)
++++ b/.idea/misc.xml	(date 1700959779331)
+@@ -1,3 +1,4 @@
++<?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ExternalStorageConfigurationManager" enabled="true" />
+   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
+Index: app/src/main/res/layout/item_donvivanchuyen_spinner.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/item_donvivanchuyen_spinner.xml b/app/src/main/res/layout/item_donvivanchuyen_spinner.xml
+new file mode 100644
+--- /dev/null	(date 1700944716000)
++++ b/app/src/main/res/layout/item_donvivanchuyen_spinner.xml	(date 1700944716000)
+@@ -0,0 +1,22 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:orientation="horizontal"
++    android:layout_height="match_parent"
++    android:padding="5dp">
++    <TextView
++        android:id="@+id/tvMaDVVC"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:text="1. "
++        android:textSize="20dp"
++        android:textColor="@color/black"/>
++    <TextView
++        android:id="@+id/tvTenDVVC"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:text="haha"
++        android:textSize="20dp"
++        android:textColor="@color/black"/>
++
++</LinearLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/myapplication/fragment/ThongTinChiTietFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication.fragment;\r\n\r\nimport static android.content.Context.MODE_PRIVATE;\r\n\r\nimport android.content.SharedPreferences;\r\nimport android.media.Image;\r\nimport android.net.Uri;\r\nimport android.os.Bundle;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.appcompat.widget.Toolbar;\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.MenuItem;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.ImageButton;\r\nimport android.widget.ImageView;\r\nimport android.widget.LinearLayout;\r\nimport android.widget.TextView;\r\n\r\nimport com.example.myapplication.DAO.HangDAO;\r\nimport com.example.myapplication.DAO.MauSacDAO;\r\nimport com.example.myapplication.DAO.TaiKhoanNDDAO;\r\nimport com.example.myapplication.R;\r\nimport com.example.myapplication.adapter.HangSpinerAdapter;\r\nimport com.example.myapplication.adapter.MauSacSpinerAdapter;\r\nimport com.example.myapplication.model.Hang;\r\nimport com.example.myapplication.model.MauSac;\r\nimport com.example.myapplication.model.SanPham;\r\nimport com.example.myapplication.model.TaiKhoanND;\r\nimport com.google.android.material.bottomnavigation.BottomNavigationView;\r\n\r\nimport java.text.NumberFormat;\r\nimport java.util.ArrayList;\r\n\r\npublic class ThongTinChiTietFragment extends Fragment {\r\n    SanPham item;\r\n    Toolbar toolbar;\r\n    ImageView imageViewSP;\r\n    TextView tenspct, giaspct, tentknd, mauspct, hangspct, motaspct;\r\n    ImageButton ibnguoidung;\r\n    MauSacDAO mauSacDAO;\r\n    HangDAO hangDAO;\r\n    ImageView imageViewSanPham;\r\n    TaiKhoanNDDAO nddao;\r\n    Uri selectedImageUri;\r\n    LinearLayout layoutduoi;\r\n    TextView baidangkhac;\r\n    RecyclerView recyclerViewSPCT;\r\n    @Override\r\n    public void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        if (getArguments() != null) {\r\n            item = (SanPham) getArguments().getSerializable(\"sanPhamChiTiet\");\r\n            Log.d(\"UpdateFragment\", \"sanphachitiet: \" + item);\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container,\r\n                             Bundle savedInstanceState) {\r\n        View view = inflater.inflate(R.layout.fragment_thong_tin_chi_tiet, container, false);\r\n\r\n        requireActivity().findViewById(R.id.navigation).setVisibility(View.GONE);\r\n\r\n        NumberFormat numberFormat = NumberFormat.getNumberInstance();\r\n\r\n        toolbar = view.findViewById(R.id.toolbarSanPham);\r\n        layoutduoi = view.findViewById(R.id.layoutduoi);\r\n        baidangkhac = view.findViewById(R.id.baidangkhac);\r\n        recyclerViewSPCT = view.findViewById(R.id.recyclerViewSPCT);\r\n\r\n        SharedPreferences pref = getActivity().getSharedPreferences(\"USER_FILE\", MODE_PRIVATE);\r\n        String user = pref.getString(\"USERNAME\", \"\");\r\n\r\n        if(user.equals(\"admin\")){\r\n            layoutduoi.setVisibility(View.GONE);\r\n            baidangkhac.setVisibility(View.GONE);\r\n            recyclerViewSPCT.setVisibility(View.GONE);\r\n        }\r\n\r\n        AppCompatActivity activity = (AppCompatActivity) getActivity();\r\n        activity.setSupportActionBar(toolbar);\r\n        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);\r\n        activity.getSupportActionBar().setTitle(\"Thông tin sản phẩm\");\r\n\r\n        imageViewSP = view.findViewById(R.id.imageViewSanPham);\r\n        tenspct = view.findViewById(R.id.tvTenSPCT);\r\n        giaspct = view.findViewById(R.id.tvGiaSPCT);\r\n        tentknd = view.findViewById(R.id.tvtentknd);\r\n        mauspct = view.findViewById(R.id.tvMauSPCT);\r\n        hangspct = view.findViewById(R.id.tvHangSPCT);\r\n        motaspct = view.findViewById(R.id.tvMotaSPCT);\r\n        imageViewSP = view.findViewById(R.id.imageViewSanPham);\r\n        ibnguoidung = view.findViewById(R.id.ibNguoiDung);\r\n\r\n        imageViewSanPham = view.findViewById(R.id.imageViewSanPham);\r\n        selectedImageUri = Uri.parse(item.getAnh());\r\n        imageViewSanPham.setImageURI(selectedImageUri);\r\n\r\n        if (item != null) {\r\n            tenspct.setText(item.getTensp());\r\n            giaspct.setText(String.valueOf(item.getGiasp()));\r\n\r\n            nddao = new TaiKhoanNDDAO(getContext());\r\n            TaiKhoanND taiKhoanND = nddao.getID(String.valueOf(item.getMatknd()));\r\n            tentknd.setText(taiKhoanND.getTaiKhoanND());\r\n\r\n            mauSacDAO = new MauSacDAO(getContext());\r\n            MauSac mauSac = mauSacDAO.getID(String.valueOf(item.getMamau()));\r\n            mauspct.setText(\"Màu: \" + mauSac.getTenMau());\r\n\r\n            hangDAO = new HangDAO(getContext());\r\n            Hang hang = hangDAO.getID(String.valueOf(item.getMahang()));\r\n            hangspct.setText(\"Hãng: \" + hang.getTenHang());\r\n\r\n            String giaviet = numberFormat.format(item.getGiasp());\r\n            giaspct.setText(\"Giá: \" + giaviet + \" đ\");\r\n            motaspct.setText(item.getMota());\r\n        }\r\n\r\n        return view;\r\n    }\r\n\r\n//    @Override\r\n//    public boolean onOptionsItemSelected(MenuItem item) {\r\n//        if (item.getItemId() == android.R.id.home) {\r\n//            // Xử lý sự kiện click vào mũi tên back ở đây\r\n//            getActivity().onBackPressed(); // Hoặc thực hiện các hành động khác\r\n//            return true;\r\n//        }\r\n//        return super.onOptionsItemSelected(item);\r\n//    }\r\n    @Override\r\n    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {\r\n        super.onViewCreated(view, savedInstanceState);\r\n        toolbar.setNavigationOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                getFragmentManager().popBackStack();\r\n            }\r\n        });\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/fragment/ThongTinChiTietFragment.java b/app/src/main/java/com/example/myapplication/fragment/ThongTinChiTietFragment.java
+--- a/app/src/main/java/com/example/myapplication/fragment/ThongTinChiTietFragment.java	(revision af0025709e93d4b1cfba9495c5ec5314488f6b9e)
++++ b/app/src/main/java/com/example/myapplication/fragment/ThongTinChiTietFragment.java	(date 1700948400000)
+@@ -2,6 +2,7 @@
+ 
+ import static android.content.Context.MODE_PRIVATE;
+ 
++import android.content.Intent;
+ import android.content.SharedPreferences;
+ import android.media.Image;
+ import android.net.Uri;
+@@ -12,6 +13,7 @@
+ import androidx.appcompat.app.AppCompatActivity;
+ import androidx.appcompat.widget.Toolbar;
+ import androidx.fragment.app.Fragment;
++import androidx.fragment.app.FragmentManager;
+ import androidx.recyclerview.widget.RecyclerView;
+ 
+ import android.util.Log;
+@@ -19,6 +21,7 @@
+ import android.view.MenuItem;
+ import android.view.View;
+ import android.view.ViewGroup;
++import android.widget.Button;
+ import android.widget.ImageButton;
+ import android.widget.ImageView;
+ import android.widget.LinearLayout;
+@@ -27,6 +30,7 @@
+ import com.example.myapplication.DAO.HangDAO;
+ import com.example.myapplication.DAO.MauSacDAO;
+ import com.example.myapplication.DAO.TaiKhoanNDDAO;
++import com.example.myapplication.ManHinhChinh;
+ import com.example.myapplication.R;
+ import com.example.myapplication.adapter.HangSpinerAdapter;
+ import com.example.myapplication.adapter.MauSacSpinerAdapter;
+@@ -53,6 +57,7 @@
+     LinearLayout layoutduoi;
+     TextView baidangkhac;
+     RecyclerView recyclerViewSPCT;
++    Button btnGioHang, btnMuaNgay;
+     @Override
+     public void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+@@ -75,6 +80,9 @@
+         layoutduoi = view.findViewById(R.id.layoutduoi);
+         baidangkhac = view.findViewById(R.id.baidangkhac);
+         recyclerViewSPCT = view.findViewById(R.id.recyclerViewSPCT);
++        btnGioHang = view.findViewById(R.id.btnGioHang);
++
++        btnMuaNgay= view.findViewById(R.id.btnMuaNgay);
+ 
+         SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
+         String user = pref.getString("USERNAME", "");
+Index: app/src/main/res/layout/fragment_person.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_person.xml b/app/src/main/res/layout/fragment_person.xml
+new file mode 100644
+--- /dev/null	(date 1700949464000)
++++ b/app/src/main/res/layout/fragment_person.xml	(date 1700949464000)
+@@ -0,0 +1,107 @@
++<?xml version="1.0" encoding="utf-8"?>
++<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".fragment.PersonFragment">
++<LinearLayout
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    android:orientation="vertical">
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="100dp"
++        android:orientation="horizontal">
++    <ImageView
++        android:layout_width="140dp"
++        android:layout_height="wrap_content"
++        android:src="@drawable/img_5"/>
++        <TextView
++            android:id="@+id/tvTenNguoiDung"
++            android:layout_width="wrap_content"
++            android:layout_marginTop="30dp"
++            android:textStyle="bold"
++            android:textSize="25dp"
++            android:layout_height="wrap_content"
++            android:text="Phạm Minh Hiếu"/>
++
++    </LinearLayout>
++
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="35dp"
++        android:text="Quản lí đơn hàng"
++        android:textSize="22dp"
++        android:paddingLeft="20dp"
++        android:textStyle="bold"
++        android:layout_marginTop="10dp"
++        android:background="#D9D9D9"/>
++
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="45dp"
++        android:text="Đơn mua"
++        android:textSize="22dp"
++        android:backgroundTint="#F0F5F8"
++        android:gravity="center"
++        android:layout_margin="5dp"
++        android:background="@drawable/khung_dangnhap"/>
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="45dp"
++        android:text="Đơn bán"
++        android:textSize="22dp"
++        android:backgroundTint="#F0F5F8"
++        android:gravity="center"
++        android:layout_margin="5dp"
++        android:background="@drawable/khung_dangnhap"/>
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="45dp"
++        android:text="Lịch sử mua"
++        android:textSize="22dp"
++        android:backgroundTint="#F0F5F8"
++        android:gravity="center"
++        android:layout_margin="5dp"
++        android:background="@drawable/khung_dangnhap"/>
++
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="35dp"
++        android:text="Khác"
++        android:textSize="22dp"
++        android:paddingLeft="20dp"
++        android:textStyle="bold"
++        android:layout_marginTop="10dp"
++        android:background="#D9D9D9"/>
++
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="45dp"
++        android:text="Cài đặt tài khoản"
++        android:textSize="22dp"
++        android:backgroundTint="#F0F5F8"
++        android:gravity="center"
++        android:layout_margin="5dp"
++        android:background="@drawable/khung_dangnhap"/>
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="45dp"
++        android:text="Trợ giúp"
++        android:textSize="22dp"
++        android:backgroundTint="#F0F5F8"
++        android:gravity="center"
++        android:layout_margin="5dp"
++        android:background="@drawable/khung_dangnhap"/>
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="45dp"
++        android:text="Đăng xuất"
++        android:textSize="22dp"
++        android:backgroundTint="#F0F5F8"
++        android:gravity="center"
++        android:layout_margin="5dp"
++        android:background="@drawable/khung_dangnhap"/>
++
++</LinearLayout>
++</FrameLayout>
+\ No newline at end of file
+Index: app/src/main/res/drawable/baseline_notifications_none_24.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><vector android:height=\"39dp\" android:tint=\"#FFFFFF\"\r\n    android:viewportHeight=\"24\" android:viewportWidth=\"24\"\r\n    android:width=\"39dp\" xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n    <path android:fillColor=\"@android:color/white\" android:pathData=\"M12,22c1.1,0 2,-0.9 2,-2h-4c0,1.1 0.9,2 2,2zM18,16v-5c0,-3.07 -1.63,-5.64 -4.5,-6.32L13.5,4c0,-0.83 -0.67,-1.5 -1.5,-1.5s-1.5,0.67 -1.5,1.5v0.68C7.64,5.36 6,7.92 6,11v5l-2,2v1h16v-1l-2,-2zM16,17L8,17v-6c0,-2.48 1.51,-4.5 4,-4.5s4,2.02 4,4.5v6z\"/>\r\n</vector>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/baseline_notifications_none_24.xml b/app/src/main/res/drawable/baseline_notifications_none_24.xml
+--- a/app/src/main/res/drawable/baseline_notifications_none_24.xml	(revision af0025709e93d4b1cfba9495c5ec5314488f6b9e)
++++ b/app/src/main/res/drawable/baseline_notifications_none_24.xml	(date 1700885398000)
+@@ -1,4 +1,4 @@
+-<vector android:height="39dp" android:tint="#FFFFFF"
++<vector android:height="39dp" android:tint="#9D9292"
+     android:viewportHeight="24" android:viewportWidth="24"
+     android:width="39dp" xmlns:android="http://schemas.android.com/apk/res/android">
+     <path android:fillColor="@android:color/white" android:pathData="M12,22c1.1,0 2,-0.9 2,-2h-4c0,1.1 0.9,2 2,2zM18,16v-5c0,-3.07 -1.63,-5.64 -4.5,-6.32L13.5,4c0,-0.83 -0.67,-1.5 -1.5,-1.5s-1.5,0.67 -1.5,1.5v0.68C7.64,5.36 6,7.92 6,11v5l-2,2v1h16v-1l-2,-2zM16,17L8,17v-6c0,-2.48 1.51,-4.5 4,-4.5s4,2.02 4,4.5v6z"/>
+Index: app/src/main/res/layout/activity_man_hinh_chinh.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.drawerlayout.widget.DrawerLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/drawerLayout\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    tools:context=\".ManHinhChinh\"\r\n    android:orientation=\"vertical\"\r\n    tools:openDrawer=\"start\">\r\n\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\"\r\n            android:orientation=\"vertical\">\r\n\r\n                <androidx.appcompat.widget.Toolbar\r\n                    android:id=\"@+id/toolbarQTV\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"?attr/actionBarSize\"\r\n                    android:fitsSystemWindows=\"true\"\r\n                    android:background=\"#1E88E5\"\r\n                    app:title=\"@null\"/>\r\n\r\n                <FrameLayout\r\n                    android:id=\"@+id/flContent\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"0dp\"\r\n                    android:layout_weight=\"1\" />\r\n\r\n                <com.google.android.material.bottomnavigation.BottomNavigationView\r\n                    android:id=\"@+id/navigation\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"60dp\"\r\n                    android:layout_alignParentBottom=\"true\"\r\n                    app:itemIconTint=\"@color/white\"\r\n                    android:background=\"#444444\"\r\n                    app:menu=\"@menu/menu_bottom_navigation\" />\r\n\r\n        </LinearLayout>\r\n\r\n        <com.google.android.material.navigation.NavigationView\r\n            android:id=\"@+id/navigationView1\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"match_parent\"\r\n            android:layout_gravity=\"start\"\r\n            app:headerLayout=\"@layout/nav_layout\"\r\n            app:menu=\"@menu/menu_quan_tri_vien\" />\r\n\r\n</androidx.drawerlayout.widget.DrawerLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_man_hinh_chinh.xml b/app/src/main/res/layout/activity_man_hinh_chinh.xml
+--- a/app/src/main/res/layout/activity_man_hinh_chinh.xml	(revision af0025709e93d4b1cfba9495c5ec5314488f6b9e)
++++ b/app/src/main/res/layout/activity_man_hinh_chinh.xml	(date 1700885398000)
+@@ -33,8 +33,9 @@
+                     android:layout_width="match_parent"
+                     android:layout_height="60dp"
+                     android:layout_alignParentBottom="true"
+-                    app:itemIconTint="@color/white"
+-                    android:background="#444444"
++                    android:background="#F9F7F7"
++                    app:itemIconSize="33dp"
++                    app:itemIconTint="#2E2D2D"
+                     app:menu="@menu/menu_bottom_navigation" />
+ 
+         </LinearLayout>
+Index: app/src/main/res/layout/fragment_thanh_toan.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_thanh_toan.xml b/app/src/main/res/layout/fragment_thanh_toan.xml
+new file mode 100644
+--- /dev/null	(date 1700947682000)
++++ b/app/src/main/res/layout/fragment_thanh_toan.xml	(date 1700947682000)
+@@ -0,0 +1,218 @@
++<?xml version="1.0" encoding="utf-8"?>
++<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".fragment.ThanhToanFragment">
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="5dp"
++        android:orientation="vertical"
++        android:padding="10dp">
++
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content">
++
++            <ImageView
++                android:id="@+id/imageSP"
++                android:layout_width="120dp"
++                android:layout_height="130dp"
++                android:layout_marginRight="5dp"
++                android:scaleType="fitCenter"
++                android:src="@drawable/redmi" />
++
++            <LinearLayout
++                android:layout_width="200dp"
++                android:layout_height="wrap_content"
++                android:layout_marginLeft="10dp"
++                android:orientation="vertical">
++
++                <TextView
++                    android:id="@+id/tvTensp"
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:layout_marginBottom="10dp"
++                    android:text="tensp"
++                    android:textColor="#444444"
++                    android:textSize="18dp"
++                    android:textStyle="bold" />
++
++                <TextView
++                    android:id="@+id/tvGia"
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:layout_marginBottom="10dp"
++                    android:text="giasp"
++                    android:textColor="#E53935"
++                    android:textSize="20dp"
++                    android:textStyle="bold" />
++
++                <TextView
++                    android:id="@+id/tvMau"
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:layout_marginBottom="10dp"
++                    android:text="mausp"
++                    android:textSize="16dp" />
++
++
++            </LinearLayout>
++
++        </LinearLayout>
++
++        <View
++            android:layout_width="match_parent"
++            android:layout_height="1dp"
++            android:background="@color/black" />
++
++        <TextView
++            android:layout_marginTop="20dp"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Địa chỉ nhận hàng:"
++            android:textSize="20dp"
++            android:drawableLeft="@drawable/baseline_location_on_24"
++            android:textStyle="bold"
++            android:textColor="@color/black"/>
++        <TextView
++            android:id="@+id/tvdiachi"
++            android:layout_marginTop="8dp"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_marginLeft="25dp"
++            android:text="Tổ dân phố Văn Trì, Minh Khai,Từ Liêm, Hanoi"
++            android:textSize="18dp"
++            android:textColor="@color/black"/>
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:orientation="horizontal">
++            <TextView
++                android:layout_marginTop="10dp"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_marginLeft="25dp"
++                android:text="Địa chỉ nhận hàng:"
++                android:textSize="20dp"
++                android:textStyle="bold"
++                android:textColor="@color/black"/>
++        <TextView
++            android:id="@+id/tvSDT"
++            android:layout_marginTop="10dp"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:layout_marginLeft="10dp"
++            android:text="0366350859"
++            android:textSize="18dp"
++            android:textColor="@color/black"/>
++        </LinearLayout>
++        <View
++            android:layout_width="match_parent"
++            android:layout_height="1dp"
++            android:layout_marginTop="10dp"
++            android:layout_marginBottom="10dp"
++            android:background="@color/black" />
++        <Spinner
++            android:id="@+id/spdvvc"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginRight="5dp"
++            android:layout_marginLeft="19dp"
++            android:layout_marginBottom="10dp" />
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:orientation="horizontal">
++            <TextView
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_marginLeft="25dp"
++                android:text="Giá vận chuyển:"
++                android:textSize="20dp"
++                android:textStyle="bold"
++                android:textColor="@color/black"/>
++            <TextView
++                android:id="@+id/tvGiaShip"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_marginLeft="10dp"
++                android:text="100000d"
++                android:textSize="20dp"
++                android:textColor="@color/black"/>
++        </LinearLayout>
++        <View
++            android:layout_width="match_parent"
++            android:layout_height="1dp"
++            android:layout_marginTop="10dp"
++            android:layout_marginBottom="10dp"
++            android:background="@color/black" />
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Chi tiết thanh toán:"
++            android:textStyle="bold"
++            android:textColor="@color/black"
++            android:textSize="25dp"/>
++
++
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="10dp"
++            android:orientation="horizontal">
++            <TextView
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_marginLeft="25dp"
++                android:text="Tổng tiền hàng:"
++                android:textSize="20dp"
++                android:textStyle="bold"
++                android:textColor="@color/black"/>
++            <TextView
++                android:id="@+id/tvTienHang"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_marginLeft="10dp"
++                android:text="100000d"
++                android:textSize="20dp"
++                android:textColor="@color/black"/>
++        </LinearLayout>
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="10dp"
++            android:orientation="horizontal">
++            <TextView
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_marginLeft="25dp"
++                android:text="Tổng thanh toán:"
++                android:textSize="24dp"
++                android:textStyle="bold"
++                android:textColor="@color/black"/>
++            <TextView
++                android:id="@+id/tv"
++                android:layout_width="wrap_content"
++                android:layout_height="wrap_content"
++                android:layout_marginLeft="10dp"
++                android:text="100000d"
++                android:textStyle="bold"
++                android:textSize="22dp"
++                android:textColor="#FA0808"/>
++        </LinearLayout>
++
++        <Button
++            android:layout_width="300dp"
++            android:layout_gravity="center"
++            android:layout_marginTop="150dp"
++            android:layout_height="wrap_content"
++            android:backgroundTint="#E44646"
++            android:background="@drawable/khung_button"
++            android:text="Đặt hàng"/>
++
++    </LinearLayout>
++
++</FrameLayout>
+\ No newline at end of file
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"testRunner\" value=\"GRADLE\" />\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"gradleJvm\" value=\"jbr-17\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+--- a/.idea/gradle.xml	(revision af0025709e93d4b1cfba9495c5ec5314488f6b9e)
++++ b/.idea/gradle.xml	(date 1700959779348)
+@@ -1,6 +1,5 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="GradleMigrationSettings" migrationVersion="1" />
+   <component name="GradleSettings">
+     <option name="linkedExternalProjectsSettings">
+       <GradleProjectSettings>
+Index: app/src/main/java/com/example/myapplication/ManHinhChinh.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.myapplication;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.ActionBarDrawerToggle;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.appcompat.widget.Toolbar;\r\nimport androidx.core.view.GravityCompat;\r\nimport androidx.drawerlayout.widget.DrawerLayout;\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.fragment.app.FragmentManager;\r\nimport androidx.fragment.app.FragmentTransaction;\r\n\r\nimport android.content.Intent;\r\nimport android.content.SharedPreferences;\r\nimport android.os.Bundle;\r\nimport android.view.MenuItem;\r\nimport android.view.View;\r\n\r\nimport com.example.myapplication.fragment.AddFragment;\r\nimport com.example.myapplication.fragment.HangFragment;\r\nimport com.example.myapplication.fragment.HomeFragment;\r\nimport com.example.myapplication.fragment.ProductFragment;\r\nimport com.example.myapplication.fragment.QuanLyMauFragment;\r\nimport com.example.myapplication.fragment.QuanLyNguoiDungFragment;\r\nimport com.example.myapplication.fragment.QuanLySPFragment;\r\nimport com.google.android.material.bottomnavigation.BottomNavigationView;\r\nimport com.google.android.material.navigation.NavigationView;\r\n\r\npublic class ManHinhChinh extends AppCompatActivity {\r\n    Fragment fragment;\r\n    BottomNavigationView bottomNavigationView;\r\n    NavigationView navigationView;\r\n    Toolbar toolbar;\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_man_hinh_chinh);\r\n\r\n        bottomNavigationView = findViewById(R.id.navigation);\r\n        navigationView = findViewById(R.id.navigationView1);\r\n        toolbar = findViewById(R.id.toolbarQTV);\r\n\r\n        SharedPreferences pref = getSharedPreferences(\"USER_FILE\", MODE_PRIVATE);\r\n        String user = pref.getString(\"USERNAME\", \"\");\r\n\r\n        if(user.equals(\"admin\")){\r\n            bottomNavigationView.setVisibility(View.GONE);\r\n            navigationView.setVisibility(View.VISIBLE);\r\n\r\n            DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);\r\n            setSupportActionBar(toolbar);\r\n            getSupportActionBar().setDisplayHomeAsUpEnabled(true);\r\n            ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(\r\n                    ManHinhChinh.this, drawerLayout, toolbar,\r\n                    R.string.open,\r\n                    R.string.close);\r\n            drawerToggle.setDrawerIndicatorEnabled(true);\r\n            drawerToggle.syncState();\r\n            drawerLayout.addDrawerListener(drawerToggle);\r\n            navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {\r\n                @Override\r\n                public boolean onNavigationItemSelected(@NonNull MenuItem item) {\r\n                    if(item.getItemId() == R.id.nav_sanpham){\r\n                        fragment = new QuanLySPFragment();\r\n                    }else if(item.getItemId() == R.id.nav_mau){\r\n                        fragment = new QuanLyMauFragment();\r\n                    }else if(item.getItemId() == R.id.nav_thanhvien){\r\n                        fragment = new QuanLyNguoiDungFragment();\r\n                    }else if(item.getItemId() == R.id.nav_hang){\r\n                        fragment = new HangFragment();\r\n                    }else{\r\n                        Intent intent = new Intent(ManHinhChinh.this, ManHinhDangNhap.class);\r\n                        startActivity(intent);\r\n                    }\r\n\r\n                    drawerLayout.closeDrawer(GravityCompat.START);\r\n\r\n                    if (fragment != null) {\r\n                        FragmentManager fragmentManager = getSupportFragmentManager();\r\n                        FragmentTransaction ft = fragmentManager.beginTransaction();\r\n                        ft.replace(R.id.flContent, fragment);\r\n                        ft.commit();\r\n                    }\r\n\r\n                    return true;\r\n                }\r\n            });\r\n\r\n            // Hiển thị màn hình Home khi vào ứng dụng\r\n            fragment = new QuanLySPFragment();\r\n            FragmentManager fragmentManager = getSupportFragmentManager();\r\n            FragmentTransaction ft = fragmentManager.beginTransaction();\r\n            ft.replace(R.id.flContent, fragment);\r\n            ft.commit();\r\n        }else{\r\n            bottomNavigationView.setVisibility(View.VISIBLE);\r\n            navigationView.setVisibility(View.GONE);\r\n\r\n            toolbar = findViewById(R.id.toolbarQTV);\r\n            toolbar.setVisibility(View.GONE);\r\n\r\n            bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {\r\n                @Override\r\n                public boolean onNavigationItemSelected(@NonNull MenuItem item) {\r\n                    if (item.getItemId() == R.id.add) {\r\n                        fragment = new AddFragment();\r\n                    } else if (item.getItemId() == R.id.product) {\r\n                        fragment = new ProductFragment();\r\n                    } else if (item.getItemId() == R.id.home) {\r\n                        fragment = new HomeFragment();\r\n                    }\r\n\r\n                    if (fragment != null) {\r\n                        FragmentManager fragmentManager = getSupportFragmentManager();\r\n                        FragmentTransaction ft = fragmentManager.beginTransaction();\r\n                        ft.replace(R.id.flContent, fragment);\r\n                        ft.commit();\r\n                    }\r\n                    return true;\r\n                }\r\n            });\r\n\r\n            // Hiển thị màn hình Home khi vào ứng dụng\r\n            fragment = new HomeFragment();\r\n            FragmentManager fragmentManager = getSupportFragmentManager();\r\n            FragmentTransaction ft = fragmentManager.beginTransaction();\r\n            ft.replace(R.id.flContent, fragment);\r\n            ft.commit();\r\n        }\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/ManHinhChinh.java b/app/src/main/java/com/example/myapplication/ManHinhChinh.java
+--- a/app/src/main/java/com/example/myapplication/ManHinhChinh.java	(revision af0025709e93d4b1cfba9495c5ec5314488f6b9e)
++++ b/app/src/main/java/com/example/myapplication/ManHinhChinh.java	(date 1700948522000)
+@@ -17,8 +17,10 @@
+ import android.view.View;
+ 
+ import com.example.myapplication.fragment.AddFragment;
++import com.example.myapplication.fragment.GioHangFragment;
+ import com.example.myapplication.fragment.HangFragment;
+ import com.example.myapplication.fragment.HomeFragment;
++import com.example.myapplication.fragment.PersonFragment;
+ import com.example.myapplication.fragment.ProductFragment;
+ import com.example.myapplication.fragment.QuanLyMauFragment;
+ import com.example.myapplication.fragment.QuanLyNguoiDungFragment;
+@@ -68,7 +70,8 @@
+                         fragment = new QuanLyNguoiDungFragment();
+                     }else if(item.getItemId() == R.id.nav_hang){
+                         fragment = new HangFragment();
+-                    }else{
++                    }
++                    else{
+                         Intent intent = new Intent(ManHinhChinh.this, ManHinhDangNhap.class);
+                         startActivity(intent);
+                     }
+@@ -109,7 +112,12 @@
+                     } else if (item.getItemId() == R.id.home) {
+                         fragment = new HomeFragment();
+                     }
+-
++                    else if (item.getItemId() == R.id.person) {
++                        fragment = new PersonFragment();
++                    }
++                    else if (item.getItemId() == R.id.cart) {
++                        fragment = new GioHangFragment();
++                    }
+                     if (fragment != null) {
+                         FragmentManager fragmentManager = getSupportFragmentManager();
+                         FragmentTransaction ft = fragmentManager.beginTransaction();
+Index: app/src/main/res/layout/fragment_don_hang.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_don_hang.xml b/app/src/main/res/layout/fragment_don_hang.xml
+new file mode 100644
+--- /dev/null	(date 1700940334000)
++++ b/app/src/main/res/layout/fragment_don_hang.xml	(date 1700940334000)
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="utf-8"?>
++<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".fragment.DonHangFragment">
++
++    <!-- TODO: Update blank fragment layout -->
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        android:text="@string/hello_blank_fragment" />
++
++</FrameLayout>
+\ No newline at end of file
+Index: gradle.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Project-wide Gradle settings.\r\n# IDE (e.g. Android Studio) users:\r\n# Gradle settings configured through the IDE *will override*\r\n# any settings specified in this file.\r\n# For more details on how to configure your build environment visit\r\n# http://www.gradle.org/docs/current/userguide/build_environment.html\r\n# Specifies the JVM arguments used for the daemon process.\r\n# The setting is particularly useful for tweaking memory settings.\r\norg.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8\r\n# When configured, Gradle will run in incubating parallel mode.\r\n# This option should only be used with decoupled projects. More details, visit\r\n# http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects\r\n# org.gradle.parallel=true\r\n# AndroidX package structure to make it clearer which packages are bundled with the\r\n# Android operating system, and which are packaged with your app's APK\r\n# https://developer.android.com/topic/libraries/support-library/androidx-rn\r\nandroid.useAndroidX=true\r\n# Enables namespacing of each library's R class so that its R class includes only the\r\n# resources declared in the library itself and none from the library's dependencies,\r\n# thereby reducing the size of the R class for that library\r\nandroid.nonTransitiveRClass=true\r\nandroid.overridePathCheck=true
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/gradle.properties b/gradle.properties
+--- a/gradle.properties	(revision af0025709e93d4b1cfba9495c5ec5314488f6b9e)
++++ b/gradle.properties	(date 1700885398000)
+@@ -19,4 +19,3 @@
+ # resources declared in the library itself and none from the library's dependencies,
+ # thereby reducing the size of the R class for that library
+ android.nonTransitiveRClass=true
+-android.overridePathCheck=true
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_gio_hang.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_gio_hang.xml b/app/src/main/res/layout/fragment_gio_hang.xml
+new file mode 100644
+--- /dev/null	(date 1700948426000)
++++ b/app/src/main/res/layout/fragment_gio_hang.xml	(date 1700948426000)
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="utf-8"?>
++<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".fragment.GioHangFragment">
++
++    <!-- TODO: Update blank fragment layout -->
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        android:text="@string/hello_blank_fragment" />
++
++</FrameLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/myapplication/DAO/DonViVanChuyenDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/DAO/DonViVanChuyenDAO.java b/app/src/main/java/com/example/myapplication/DAO/DonViVanChuyenDAO.java
+new file mode 100644
+--- /dev/null	(date 1700944716000)
++++ b/app/src/main/java/com/example/myapplication/DAO/DonViVanChuyenDAO.java	(date 1700944716000)
+@@ -0,0 +1,62 @@
++package com.example.myapplication.DAO;
++
++import android.annotation.SuppressLint;
++import android.content.ContentValues;
++import android.content.Context;
++import android.database.Cursor;
++import android.database.sqlite.SQLiteDatabase;
++
++import com.example.myapplication.database.DBHelper;
++import com.example.myapplication.model.DonViVanChuyen;
++import com.example.myapplication.model.Hang;
++
++import java.util.ArrayList;
++import java.util.List;
++
++public class DonViVanChuyenDAO {
++    private SQLiteDatabase db;
++
++    public DonViVanChuyenDAO(Context context) {
++        DBHelper dbHelper = new DBHelper(context);
++        db = dbHelper.getWritableDatabase();
++    }
++    public long insert(DonViVanChuyen obj) {
++        ContentValues values = new ContentValues();
++        values.put("tendvvc", obj.getTendvvc());
++        return db.insert("donvivanchuyen", null, values);
++    }
++    public long update(DonViVanChuyen obj) {
++        ContentValues values = new ContentValues();
++        values.put("tendvvc", obj.getTendvvc());
++        values.put("giaship", obj.getGia());
++        return db.update("donvivanchuyen", values, "madvvc = ?", new String[]{String.valueOf(obj.getMadvvc())});
++    }
++
++    public List<DonViVanChuyen> getAll() {
++        String sql = "SELECT * FROM donvivanchuyen";
++        return getData(sql);
++    }
++    public long delete(String id) {
++        return db.delete("donvivanchuyen", "madvvc = ?", new String[]{String.valueOf(id)});
++    }
++
++    public DonViVanChuyen getID(String id) {
++        String sql = "SELECT * FROM donvivanchuyen WHERE madvvc=?";
++        List<DonViVanChuyen> list = getData(sql, id);
++        return list.get(0);
++    }
++
++    @SuppressLint("Range")
++    private List<DonViVanChuyen> getData(String sql, String... selectionArgs) {
++        List<DonViVanChuyen> list = new ArrayList<>();
++        Cursor cursor = db.rawQuery(sql, selectionArgs);
++        while (cursor.moveToNext()) {
++            DonViVanChuyen obj = new DonViVanChuyen();
++            obj.setMadvvc(Integer.parseInt(cursor.getString(cursor.getColumnIndex("madvvc"))));
++            obj.setTendvvc(cursor.getString(cursor.getColumnIndex("tendvvc")));
++            obj.setGia(Double.valueOf(cursor.getString(cursor.getColumnIndex("giaship"))));
++            list.add(obj);
++        }
++        return list;
++    }
++}
+Index: app/src/main/java/com/example/myapplication/model/DonViVanChuyen.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/model/DonViVanChuyen.java b/app/src/main/java/com/example/myapplication/model/DonViVanChuyen.java
+new file mode 100644
+--- /dev/null	(date 1700941900000)
++++ b/app/src/main/java/com/example/myapplication/model/DonViVanChuyen.java	(date 1700941900000)
+@@ -0,0 +1,40 @@
++package com.example.myapplication.model;
++
++public class DonViVanChuyen {
++    private int madvvc;
++    private String tendvvc;
++    private Double gia;
++
++    public DonViVanChuyen() {
++    }
++
++    public DonViVanChuyen(int madvvc, String tendvvc, Double gia) {
++        this.madvvc = madvvc;
++        this.tendvvc = tendvvc;
++        this.gia = gia;
++    }
++
++    public int getMadvvc() {
++        return madvvc;
++    }
++
++    public void setMadvvc(int madvvc) {
++        this.madvvc = madvvc;
++    }
++
++    public String getTendvvc() {
++        return tendvvc;
++    }
++
++    public void setTendvvc(String tendvvc) {
++        this.tendvvc = tendvvc;
++    }
++
++    public Double getGia() {
++        return gia;
++    }
++
++    public void setGia(Double gia) {
++        this.gia = gia;
++    }
++}
+Index: app/src/main/res/drawable/khung_seach.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/khung_seach.xml b/app/src/main/res/drawable/khung_seach.xml
+new file mode 100644
+--- /dev/null	(date 1700885398000)
++++ b/app/src/main/res/drawable/khung_seach.xml	(date 1700885398000)
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<shape xmlns:android="http://schemas.android.com/apk/res/android">
++    <solid android:color="#FFFFFF"/>
++    <stroke android:color="#F6113A" android:width="1dp"/>
++    <size android:width="100dp" android:height="30dp"/>
++    <corners android:radius="15dp"/>
++</shape>
+\ No newline at end of file
+Index: app/src/main/res/drawable/khung_button.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<shape xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n<solid android:color=\"#FFFFFF\"/>\r\n<stroke android:color=\"#0D0D0E\" android:width=\"1dp\"/>\r\n<size android:width=\"100dp\" android:height=\"30dp\"/>\r\n<corners android:radius=\"4dp\"/>\r\n</shape>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/khung_button.xml b/app/src/main/res/drawable/khung_button.xml
+--- a/app/src/main/res/drawable/khung_button.xml	(revision af0025709e93d4b1cfba9495c5ec5314488f6b9e)
++++ b/app/src/main/res/drawable/khung_button.xml	(date 1700885398000)
+@@ -3,5 +3,5 @@
+ <solid android:color="#FFFFFF"/>
+ <stroke android:color="#0D0D0E" android:width="1dp"/>
+ <size android:width="100dp" android:height="30dp"/>
+-<corners android:radius="4dp"/>
++<corners android:radius="8dp"/>
+ </shape>
+\ No newline at end of file
+Index: app/src/main/java/com/example/myapplication/fragment/PersonFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/fragment/PersonFragment.java b/app/src/main/java/com/example/myapplication/fragment/PersonFragment.java
+new file mode 100644
+--- /dev/null	(date 1700948400000)
++++ b/app/src/main/java/com/example/myapplication/fragment/PersonFragment.java	(date 1700948400000)
+@@ -0,0 +1,66 @@
++package com.example.myapplication.fragment;
++
++import android.os.Bundle;
++
++import androidx.fragment.app.Fragment;
++
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++
++import com.example.myapplication.R;
++
++/**
++ * A simple {@link Fragment} subclass.
++ * Use the {@link PersonFragment#newInstance} factory method to
++ * create an instance of this fragment.
++ */
++public class PersonFragment extends Fragment {
++
++    // TODO: Rename parameter arguments, choose names that match
++    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
++    private static final String ARG_PARAM1 = "param1";
++    private static final String ARG_PARAM2 = "param2";
++
++    // TODO: Rename and change types of parameters
++    private String mParam1;
++    private String mParam2;
++
++    public PersonFragment() {
++        // Required empty public constructor
++    }
++
++    /**
++     * Use this factory method to create a new instance of
++     * this fragment using the provided parameters.
++     *
++     * @param param1 Parameter 1.
++     * @param param2 Parameter 2.
++     * @return A new instance of fragment PersonFragment.
++     */
++    // TODO: Rename and change types and number of parameters
++    public static PersonFragment newInstance(String param1, String param2) {
++        PersonFragment fragment = new PersonFragment();
++        Bundle args = new Bundle();
++        args.putString(ARG_PARAM1, param1);
++        args.putString(ARG_PARAM2, param2);
++        fragment.setArguments(args);
++        return fragment;
++    }
++
++    @Override
++    public void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        if (getArguments() != null) {
++            mParam1 = getArguments().getString(ARG_PARAM1);
++            mParam2 = getArguments().getString(ARG_PARAM2);
++        }
++    }
++
++    @Override
++    public View onCreateView(LayoutInflater inflater, ViewGroup container,
++                             Bundle savedInstanceState) {
++        // Inflate the layout for this fragment
++        return inflater.inflate(R.layout.fragment_person, container, false);
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/drawable/baseline_location_on_24.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/baseline_location_on_24.xml b/app/src/main/res/drawable/baseline_location_on_24.xml
+new file mode 100644
+--- /dev/null	(date 1700946218000)
++++ b/app/src/main/res/drawable/baseline_location_on_24.xml	(date 1700946218000)
+@@ -0,0 +1,5 @@
++<vector android:height="24dp" android:tint="#000000"
++    android:viewportHeight="24" android:viewportWidth="24"
++    android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
++    <path android:fillColor="@android:color/white" android:pathData="M12,2C8.13,2 5,5.13 5,9c0,5.25 7,13 7,13s7,-7.75 7,-13c0,-3.87 -3.13,-7 -7,-7zM12,11.5c-1.38,0 -2.5,-1.12 -2.5,-2.5s1.12,-2.5 2.5,-2.5 2.5,1.12 2.5,2.5 -1.12,2.5 -2.5,2.5z"/>
++</vector>
+Index: app/src/main/res/drawable/person.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><vector android:height=\"38dp\" android:tint=\"#FFFFFF\"\r\n    android:viewportHeight=\"24\" android:viewportWidth=\"24\"\r\n    android:width=\"35dp\" xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n    <path android:fillColor=\"@android:color/white\" android:pathData=\"M12,12c2.21,0 4,-1.79 4,-4s-1.79,-4 -4,-4 -4,1.79 -4,4 1.79,4 4,4zM12,14c-2.67,0 -8,1.34 -8,4v2h16v-2c0,-2.66 -5.33,-4 -8,-4z\"/>\r\n</vector>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/person.xml b/app/src/main/res/drawable/person.xml
+--- a/app/src/main/res/drawable/person.xml	(revision af0025709e93d4b1cfba9495c5ec5314488f6b9e)
++++ b/app/src/main/res/drawable/person.xml	(date 1700885398000)
+@@ -1,4 +1,4 @@
+-<vector android:height="38dp" android:tint="#FFFFFF"
++<vector android:height="38dp" android:tint="#9D9292"
+     android:viewportHeight="24" android:viewportWidth="24"
+     android:width="35dp" xmlns:android="http://schemas.android.com/apk/res/android">
+     <path android:fillColor="@android:color/white" android:pathData="M12,12c2.21,0 4,-1.79 4,-4s-1.79,-4 -4,-4 -4,1.79 -4,4 1.79,4 4,4zM12,14c-2.67,0 -8,1.34 -8,4v2h16v-2c0,-2.66 -5.33,-4 -8,-4z"/>
+Index: app/src/main/java/com/example/myapplication/fragment/TaiKhoanFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/fragment/TaiKhoanFragment.java b/app/src/main/java/com/example/myapplication/fragment/TaiKhoanFragment.java
+new file mode 100644
+--- /dev/null	(date 1700944786000)
++++ b/app/src/main/java/com/example/myapplication/fragment/TaiKhoanFragment.java	(date 1700944786000)
+@@ -0,0 +1,22 @@
++package com.example.myapplication.fragment;
++
++import android.os.Bundle;
++
++import androidx.fragment.app.Fragment;
++
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++
++import com.example.myapplication.R;
++
++
++public class TaiKhoanFragment extends Fragment {
++
++    @Override
++    public View onCreateView(LayoutInflater inflater, ViewGroup container,
++                             Bundle savedInstanceState) {
++        // Inflate the layout for this fragment
++        return inflater.inflate(R.layout.fragment_tai_khoan, container, false);
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/menu/menu_bottom_navigation.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<menu xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n    <item android:id=\"@+id/home\"\r\n        android:title=\"Home\"\r\n        android:icon=\"@drawable/home\"/>\r\n    <item android:id=\"@+id/cart\"\r\n        android:title=\"Cart\"\r\n        android:icon=\"@drawable/baseline_shopping_cart_24\"/>\r\n    <item android:id=\"@+id/add\"\r\n        android:title=\"Add\"\r\n        android:icon=\"@drawable/add\"/>\r\n    <item android:id=\"@+id/product\"\r\n        android:title=\"Product\"\r\n        android:icon=\"@drawable/list\"/>\r\n    <item android:id=\"@+id/person\"\r\n        android:title=\"Person\"\r\n        android:icon=\"@drawable/person\"/>\r\n</menu>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/menu/menu_bottom_navigation.xml b/app/src/main/res/menu/menu_bottom_navigation.xml
+--- a/app/src/main/res/menu/menu_bottom_navigation.xml	(revision af0025709e93d4b1cfba9495c5ec5314488f6b9e)
++++ b/app/src/main/res/menu/menu_bottom_navigation.xml	(date 1700885398000)
+@@ -8,7 +8,7 @@
+         android:icon="@drawable/baseline_shopping_cart_24"/>
+     <item android:id="@+id/add"
+         android:title="Add"
+-        android:icon="@drawable/add"/>
++        android:icon="@drawable/baseline_add_circle_24"/>
+     <item android:id="@+id/product"
+         android:title="Product"
+         android:icon="@drawable/list"/>
+Index: app/src/main/java/com/example/myapplication/fragment/ThanhToanFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/fragment/ThanhToanFragment.java b/app/src/main/java/com/example/myapplication/fragment/ThanhToanFragment.java
+new file mode 100644
+--- /dev/null	(date 1700945584000)
++++ b/app/src/main/java/com/example/myapplication/fragment/ThanhToanFragment.java	(date 1700945584000)
+@@ -0,0 +1,66 @@
++package com.example.myapplication.fragment;
++
++import android.os.Bundle;
++
++import androidx.fragment.app.Fragment;
++
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++
++import com.example.myapplication.R;
++
++/**
++ * A simple {@link Fragment} subclass.
++ * Use the {@link ThanhToanFragment#newInstance} factory method to
++ * create an instance of this fragment.
++ */
++public class ThanhToanFragment extends Fragment {
++
++    // TODO: Rename parameter arguments, choose names that match
++    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
++    private static final String ARG_PARAM1 = "param1";
++    private static final String ARG_PARAM2 = "param2";
++
++    // TODO: Rename and change types of parameters
++    private String mParam1;
++    private String mParam2;
++
++    public ThanhToanFragment() {
++        // Required empty public constructor
++    }
++
++    /**
++     * Use this factory method to create a new instance of
++     * this fragment using the provided parameters.
++     *
++     * @param param1 Parameter 1.
++     * @param param2 Parameter 2.
++     * @return A new instance of fragment ThanhToanFragment.
++     */
++    // TODO: Rename and change types and number of parameters
++    public static ThanhToanFragment newInstance(String param1, String param2) {
++        ThanhToanFragment fragment = new ThanhToanFragment();
++        Bundle args = new Bundle();
++        args.putString(ARG_PARAM1, param1);
++        args.putString(ARG_PARAM2, param2);
++        fragment.setArguments(args);
++        return fragment;
++    }
++
++    @Override
++    public void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        if (getArguments() != null) {
++            mParam1 = getArguments().getString(ARG_PARAM1);
++            mParam2 = getArguments().getString(ARG_PARAM2);
++        }
++    }
++
++    @Override
++    public View onCreateView(LayoutInflater inflater, ViewGroup container,
++                             Bundle savedInstanceState) {
++        // Inflate the layout for this fragment
++        return inflater.inflate(R.layout.fragment_thanh_toan, container, false);
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/drawable/baseline_add_circle_24.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/baseline_add_circle_24.xml b/app/src/main/res/drawable/baseline_add_circle_24.xml
+new file mode 100644
+--- /dev/null	(date 1700885398000)
++++ b/app/src/main/res/drawable/baseline_add_circle_24.xml	(date 1700885398000)
+@@ -0,0 +1,5 @@
++<vector android:height="40dp" android:tint="#000000"
++    android:viewportHeight="24" android:viewportWidth="24"
++    android:width="40dp" xmlns:android="http://schemas.android.com/apk/res/android">
++    <path android:fillColor="@android:color/white" android:pathData="M12,2C6.48,2 2,6.48 2,12s4.48,10 10,10 10,-4.48 10,-10S17.52,2 12,2zM17,13h-4v4h-2v-4L7,13v-2h4L11,7h2v4h4v2z"/>
++</vector>
+Index: app/src/main/java/com/example/myapplication/fragment/DonHangFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/fragment/DonHangFragment.java b/app/src/main/java/com/example/myapplication/fragment/DonHangFragment.java
+new file mode 100644
+--- /dev/null	(date 1700940772000)
++++ b/app/src/main/java/com/example/myapplication/fragment/DonHangFragment.java	(date 1700940772000)
+@@ -0,0 +1,26 @@
++package com.example.myapplication.fragment;
++
++import android.os.Bundle;
++
++import androidx.fragment.app.Fragment;
++
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++
++import com.example.myapplication.R;
++
++public class DonHangFragment extends Fragment {
++
++
++
++
++    @Override
++    public View onCreateView(LayoutInflater inflater, ViewGroup container,
++                             Bundle savedInstanceState) {
++        View view = inflater.inflate(R.layout.fragment_don_hang, container, false);
++
++        return view;
++    }
++
++}
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_home.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\">\r\n\r\n    <!-- Toolbar -->\r\n\r\n    <!-- ViewPager để hiển thị slide show -->\r\n    <androidx.appcompat.widget.Toolbar\r\n        android:id=\"@+id/toolbar\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"50dp\"\r\n        android:background=\"#444444\"\r\n        android:elevation=\"4dp\"\r\n        android:layout_marginBottom=\"2dp\"\r\n        android:theme=\"@style/ThemeOverlay.AppCompat.ActionBar\">\r\n\r\n        <!-- Thanh tìm kiếm -->\r\n        <EditText\r\n            android:id=\"@+id/searchEditText\"\r\n            android:layout_width=\"320dp\"\r\n            android:layout_height=\"40dp\"\r\n            android:background=\"@drawable/khung_button\"\r\n            android:paddingLeft=\"15dp\"\r\n            android:drawablePadding=\"15dp\"\r\n            android:drawableLeft=\"@drawable/baseline_search_24\"\r\n            android:hint=\"Tìm kiếm\" />\r\n\r\n        <!-- Nút thông báo -->\r\n        <ImageButton\r\n            android:id=\"@+id/notificationButton\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"match_parent\"\r\n            android:background=\"?attr/selectableItemBackgroundBorderless\"\r\n            android:padding=\"15dp\"\r\n            android:src=\"@drawable/baseline_notifications_none_24\"/>\r\n    </androidx.appcompat.widget.Toolbar>\r\n\r\n    <androidx.recyclerview.widget.RecyclerView\r\n        android:id=\"@+id/recyclerViewHang\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"60dp\"\r\n        android:layout_marginBottom=\"5dp\"/>\r\n\r\n    <androidx.viewpager.widget.ViewPager\r\n        android:id=\"@+id/viewPager\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"170dp\"/>\r\n\r\n    <!-- TabLayout để hiển thị đánh dấu vị trí hiện tại -->\r\n    <com.google.android.material.tabs.TabLayout\r\n        android:id=\"@+id/tabLayout\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"2dp\"\r\n        android:background=\"?attr/colorPrimary\"\r\n        android:minHeight=\"?attr/actionBarSize\"\r\n        android:theme=\"@style/ThemeOverlay.AppCompat.Dark.ActionBar\"\r\n        android:layout_marginBottom=\"10dp\"/>\r\n\r\n    <androidx.recyclerview.widget.RecyclerView\r\n        android:layout_marginLeft=\"5dp\"\r\n        android:layout_marginRight=\"15dp\"\r\n        android:id=\"@+id/recyclerView\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"/>\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_home.xml b/app/src/main/res/layout/fragment_home.xml
+--- a/app/src/main/res/layout/fragment_home.xml	(revision af0025709e93d4b1cfba9495c5ec5314488f6b9e)
++++ b/app/src/main/res/layout/fragment_home.xml	(date 1700885398000)
+@@ -10,7 +10,6 @@
+         android:id="@+id/toolbar"
+         android:layout_width="match_parent"
+         android:layout_height="50dp"
+-        android:background="#444444"
+         android:elevation="4dp"
+         android:layout_marginBottom="2dp"
+         android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+@@ -20,7 +19,7 @@
+             android:id="@+id/searchEditText"
+             android:layout_width="320dp"
+             android:layout_height="40dp"
+-            android:background="@drawable/khung_button"
++            android:background="@drawable/khung_seach"
+             android:paddingLeft="15dp"
+             android:drawablePadding="15dp"
+             android:drawableLeft="@drawable/baseline_search_24"
+Index: app/src/main/java/com/example/myapplication/fragment/GioHangFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/myapplication/fragment/GioHangFragment.java b/app/src/main/java/com/example/myapplication/fragment/GioHangFragment.java
+new file mode 100644
+--- /dev/null	(date 1700948426000)
++++ b/app/src/main/java/com/example/myapplication/fragment/GioHangFragment.java	(date 1700948426000)
+@@ -0,0 +1,66 @@
++package com.example.myapplication.fragment;
++
++import android.os.Bundle;
++
++import androidx.fragment.app.Fragment;
++
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++
++import com.example.myapplication.R;
++
++/**
++ * A simple {@link Fragment} subclass.
++ * Use the {@link GioHangFragment#newInstance} factory method to
++ * create an instance of this fragment.
++ */
++public class GioHangFragment extends Fragment {
++
++    // TODO: Rename parameter arguments, choose names that match
++    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
++    private static final String ARG_PARAM1 = "param1";
++    private static final String ARG_PARAM2 = "param2";
++
++    // TODO: Rename and change types of parameters
++    private String mParam1;
++    private String mParam2;
++
++    public GioHangFragment() {
++        // Required empty public constructor
++    }
++
++    /**
++     * Use this factory method to create a new instance of
++     * this fragment using the provided parameters.
++     *
++     * @param param1 Parameter 1.
++     * @param param2 Parameter 2.
++     * @return A new instance of fragment GioHangFragment.
++     */
++    // TODO: Rename and change types and number of parameters
++    public static GioHangFragment newInstance(String param1, String param2) {
++        GioHangFragment fragment = new GioHangFragment();
++        Bundle args = new Bundle();
++        args.putString(ARG_PARAM1, param1);
++        args.putString(ARG_PARAM2, param2);
++        fragment.setArguments(args);
++        return fragment;
++    }
++
++    @Override
++    public void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        if (getArguments() != null) {
++            mParam1 = getArguments().getString(ARG_PARAM1);
++            mParam2 = getArguments().getString(ARG_PARAM2);
++        }
++    }
++
++    @Override
++    public View onCreateView(LayoutInflater inflater, ViewGroup container,
++                             Bundle savedInstanceState) {
++        // Inflate the layout for this fragment
++        return inflater.inflate(R.layout.fragment_gio_hang, container, false);
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/drawable/home.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><vector android:height=\"38dp\" android:tint=\"#FFFFFF\"\r\n    android:viewportHeight=\"24\" android:viewportWidth=\"24\"\r\n    android:width=\"35dp\" xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n    <path android:fillColor=\"@android:color/white\" android:pathData=\"M10,20v-6h4v6h5v-8h3L12,3 2,12h3v8z\"/>\r\n</vector>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/home.xml b/app/src/main/res/drawable/home.xml
+--- a/app/src/main/res/drawable/home.xml	(revision af0025709e93d4b1cfba9495c5ec5314488f6b9e)
++++ b/app/src/main/res/drawable/home.xml	(date 1700885398000)
+@@ -1,4 +1,4 @@
+-<vector android:height="38dp" android:tint="#FFFFFF"
++<vector android:height="38dp" android:tint="#9D9292"
+     android:viewportHeight="24" android:viewportWidth="24"
+     android:width="35dp" xmlns:android="http://schemas.android.com/apk/res/android">
+     <path android:fillColor="@android:color/white" android:pathData="M10,20v-6h4v6h5v-8h3L12,3 2,12h3v8z"/>
+Index: app/src/main/res/drawable/baseline_shopping_cart_24.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><vector android:height=\"38dp\" android:tint=\"#FFFFFF\"\r\n    android:viewportHeight=\"24\" android:viewportWidth=\"24\"\r\n    android:width=\"35dp\" xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n    <path android:fillColor=\"@android:color/white\" android:pathData=\"M7,18c-1.1,0 -1.99,0.9 -1.99,2S5.9,22 7,22s2,-0.9 2,-2 -0.9,-2 -2,-2zM1,2v2h2l3.6,7.59 -1.35,2.45c-0.16,0.28 -0.25,0.61 -0.25,0.96 0,1.1 0.9,2 2,2h12v-2L7.42,15c-0.14,0 -0.25,-0.11 -0.25,-0.25l0.03,-0.12 0.9,-1.63h7.45c0.75,0 1.41,-0.41 1.75,-1.03l3.58,-6.49c0.08,-0.14 0.12,-0.31 0.12,-0.48 0,-0.55 -0.45,-1 -1,-1L5.21,4l-0.94,-2L1,2zM17,18c-1.1,0 -1.99,0.9 -1.99,2s0.89,2 1.99,2 2,-0.9 2,-2 -0.9,-2 -2,-2z\"/>\r\n</vector>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/baseline_shopping_cart_24.xml b/app/src/main/res/drawable/baseline_shopping_cart_24.xml
+--- a/app/src/main/res/drawable/baseline_shopping_cart_24.xml	(revision af0025709e93d4b1cfba9495c5ec5314488f6b9e)
++++ b/app/src/main/res/drawable/baseline_shopping_cart_24.xml	(date 1700885398000)
+@@ -1,4 +1,4 @@
+-<vector android:height="38dp" android:tint="#FFFFFF"
++<vector android:height="38dp" android:tint="#9D9292"
+     android:viewportHeight="24" android:viewportWidth="24"
+     android:width="35dp" xmlns:android="http://schemas.android.com/apk/res/android">
+     <path android:fillColor="@android:color/white" android:pathData="M7,18c-1.1,0 -1.99,0.9 -1.99,2S5.9,22 7,22s2,-0.9 2,-2 -0.9,-2 -2,-2zM1,2v2h2l3.6,7.59 -1.35,2.45c-0.16,0.28 -0.25,0.61 -0.25,0.96 0,1.1 0.9,2 2,2h12v-2L7.42,15c-0.14,0 -0.25,-0.11 -0.25,-0.25l0.03,-0.12 0.9,-1.63h7.45c0.75,0 1.41,-0.41 1.75,-1.03l3.58,-6.49c0.08,-0.14 0.12,-0.31 0.12,-0.48 0,-0.55 -0.45,-1 -1,-1L5.21,4l-0.94,-2L1,2zM17,18c-1.1,0 -1.99,0.9 -1.99,2s0.89,2 1.99,2 2,-0.9 2,-2 -0.9,-2 -2,-2z"/>

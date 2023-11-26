@@ -30,17 +30,14 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(createTableNguoiDung);
         db.execSQL("insert into nguoidung (mand,ten, gioitinh, namsinh, diachi, sdt, email, matknd) values (1,'Người dùng 1', 'Nam', 1990, 'Địa chỉ 1', '0123456789', 'nguoidung1@example.com', 1)");
         db.execSQL("insert into nguoidung (mand, ten, gioitinh, namsinh, diachi, sdt, email, matknd) values (2,'Người dùng 2', 'Nữ', 1995, 'Địa chỉ 2', '0987654321', 'nguoidung2@example.com', 2)");
+
         String createTableTaiKhoanNguoiDung = "create table taikhoanND (" +
                 "matknd integer primary key autoincrement, " +
                 "taikhoannd text not null, " +
                 "matkhaund text not null)";
         db.execSQL(createTableTaiKhoanNguoiDung);
-
         db.execSQL("insert into taikhoanND values (1, 'admin', 'admin')");
         db.execSQL("insert into taikhoanND values (2, 'linh', '123')");
-
-        String createTableQuanTriVien = "create table taikhoanQTV(taikhoanadmin text primary key, tenadmin text not null, matkhauadmin text not null)";
-        db.execSQL(createTableQuanTriVien);
 
         String createTableMau = "create table mausac(mamau bigint primary key, tenmau text not null)";
         db.execSQL(createTableMau);
@@ -49,6 +46,10 @@ public class DBHelper extends SQLiteOpenHelper {
         String createTableHang = "create table hang(mahang integer primary key autoincrement, tenhang text not null)";
         db.execSQL(createTableHang);
         db.execSQL("insert into hang values (1, 'SamSung'), (2, 'iphone'),(3, 'Xiaomi'),(4, 'Realme'), (5, 'Nokia')");
+
+        String createTableDonViVanChuyen = "create table donvivanchuyen (madvvc integer primary key autoincrement, tendvvc text not null, giaship real not null)";
+        db.execSQL(createTableDonViVanChuyen);
+        db.execSQL("insert into donvivanchuyen values (1, 'Vnexpress', 30000), (2, 'Giao hang tiet kiem', 10000)");
 
         String createTableSanPham = "create table sanpham (" +
                 "masp integer primary key autoincrement, " +
@@ -61,6 +62,18 @@ public class DBHelper extends SQLiteOpenHelper {
                 "mota text not null," +
                 "anh text not null)";
         db.execSQL(createTableSanPham);
+
+        String createTableGioHang = "CREATE TABLE giohang (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "masp INTEGER NOT NULL, " +
+                "tensp TEXT NOT NULL, " +
+                "soluong INTEGER NOT NULL, " +
+                "gia REAL NOT NULL, " +
+                "thanhtien REAL NOT NULL, " +
+                "FOREIGN KEY(masp) REFERENCES sanpham(masp))";
+        db.execSQL(createTableGioHang);
+
+
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

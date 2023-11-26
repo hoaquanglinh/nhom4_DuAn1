@@ -18,8 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.myapplication.fragment.AddFragment;
+import com.example.myapplication.fragment.GioHangFragment;
 import com.example.myapplication.fragment.HangFragment;
 import com.example.myapplication.fragment.HomeFragment;
+import com.example.myapplication.fragment.PersonFragment;
 import com.example.myapplication.fragment.ProductFragment;
 import com.example.myapplication.fragment.QuanLyMauFragment;
 import com.example.myapplication.fragment.QuanLyNguoiDungFragment;
@@ -71,7 +73,8 @@ public class ManHinhChinh extends AppCompatActivity {
                         fragment = new QuanLyNguoiDungFragment();
                     }else if(item.getItemId() == R.id.nav_hang){
                         fragment = new HangFragment();
-                    }else{
+                    }
+                    else{
                         Intent intent = new Intent(ManHinhChinh.this, ManHinhDangNhap.class);
                         startActivity(intent);
                     }
@@ -112,7 +115,12 @@ public class ManHinhChinh extends AppCompatActivity {
                     } else if (item.getItemId() == R.id.home) {
                         fragment = new HomeFragment();
                     }
-
+                    else if (item.getItemId() == R.id.person) {
+                        fragment = new PersonFragment();
+                    }
+                    else if (item.getItemId() == R.id.cart) {
+                        fragment = new GioHangFragment();
+                    }
                     if (fragment != null) {
                         FragmentManager fragmentManager = getSupportFragmentManager();
                         FragmentTransaction ft = fragmentManager.beginTransaction();

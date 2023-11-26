@@ -27,7 +27,6 @@ import android.widget.TextView;
 import com.example.myapplication.DAO.HangDAO;
 import com.example.myapplication.DAO.MauSacDAO;
 import com.example.myapplication.DAO.TaiKhoanNDDAO;
-import com.example.myapplication.ManHinhChinh;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.HangSpinerAdapter;
 import com.example.myapplication.adapter.MauSacSpinerAdapter;
@@ -51,11 +50,15 @@ public class ThongTinChiTietFragment extends Fragment {
     ImageView imageViewSanPham;
     TaiKhoanNDDAO nddao;
     Uri selectedImageUri;
+    LinearLayout layoutduoi;
+    TextView baidangkhac;
+    RecyclerView recyclerViewSPCT;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             item = (SanPham) getArguments().getSerializable("sanPhamChiTiet");
+            Log.d("UpdateFragment", "sanphachitiet: " + item);
         }
     }
 
@@ -69,6 +72,18 @@ public class ThongTinChiTietFragment extends Fragment {
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
 
         toolbar = view.findViewById(R.id.toolbarSanPham);
+        layoutduoi = view.findViewById(R.id.layoutduoi);
+        baidangkhac = view.findViewById(R.id.baidangkhac);
+        recyclerViewSPCT = view.findViewById(R.id.recyclerViewSPCT);
+
+        SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
+        String user = pref.getString("USERNAME", "");
+
+        if(user.equals("admin")){
+            layoutduoi.setVisibility(View.GONE);
+            baidangkhac.setVisibility(View.GONE);
+            recyclerViewSPCT.setVisibility(View.GONE);
+        }
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
@@ -113,6 +128,15 @@ public class ThongTinChiTietFragment extends Fragment {
         return view;
     }
 
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if (item.getItemId() == android.R.id.home) {
+//            // Xử lý sự kiện click vào mũi tên back ở đây
+//            getActivity().onBackPressed(); // Hoặc thực hiện các hành động khác
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
