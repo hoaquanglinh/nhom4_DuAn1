@@ -111,36 +111,31 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
             checkBoxSP.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    SanPham sanPham = list.get(position);
+                    double giaSanPham = sanPham.getGiasp();
+                    double soluong = sanPham.getSoluong();
                     if (isChecked) {
-                        selectedItems.add(position);
-                        SanPham sanPham = list.get(position);
-                        double giaSanPham = sanPham.getGiasp();
-                        double soluong = sanPham.getSoluong();
                         tong += giaSanPham*soluong;
                     } else {
-                        selectedItems.remove(Integer.valueOf(position));
-                        SanPham sanPham = list.get(position);
-                        double giaSanPham = sanPham.getGiasp();
-                        double soluong = sanPham.getSoluong();
                         tong -= giaSanPham*soluong;
                     }
-
                     if (onItemSelectedListener != null) {
                         onItemSelectedListener.onItemSelected(tong);
                     }
                 }
             });
 
-            tvsoluong = v.findViewById(R.id.tvsoluong);
             v.findViewById(R.id.btntang1).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     item.setSoluong(item.getSoluong() + 1);
                     dao.updateSL(item.getMasp(), item.getSoluong());
                     notifyDataSetChanged();
-                    tong += item.getGiasp(); // Cập nhật giá trị tong
-                    if (onItemSelectedListener != null) {
-                        onItemSelectedListener.onItemSelected(tong);
+                    if (checkBoxSP.isChecked()){
+                        tong += item.getGiasp();
+                        if (onItemSelectedListener != null) {
+                            onItemSelectedListener.onItemSelected(tong);
+                        }
                     }
                 }
             });
@@ -155,12 +150,16 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
                         xoa(id);
                     }
                     notifyDataSetChanged();
-                    tong -= item.getGiasp();
-                    if (onItemSelectedListener != null) {
-                        onItemSelectedListener.onItemSelected(tong);
+                    if (checkBoxSP.isChecked()){
+                        tong -= item.getGiasp();
+                        if (onItemSelectedListener != null) {
+                            onItemSelectedListener.onItemSelected(tong);
+                        }
                     }
                 }
             });
+
+            tvsoluong = v.findViewById(R.id.tvsoluong);
             tvsoluong.setText(String.valueOf(item.getSoluong()));
             v.setOnClickListener(new View.OnClickListener() {
                 @Override

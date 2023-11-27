@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -35,11 +36,10 @@ public class GioHangFragment extends Fragment{
     TaiKhoanNDDAO nddao;
     private int matknd;
     TextView tvGia;
-
+    CheckBox checkBoxAll;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_gio_hang, container, false);
         requireActivity().findViewById(R.id.navigation).setVisibility(View.VISIBLE);
 
@@ -47,6 +47,7 @@ public class GioHangFragment extends Fragment{
         dao = new SanPhamDAO(getActivity());
         gioHangDao = new GioHangDao(getActivity());
         tvGia = view.findViewById(R.id.tvTongTien);
+        checkBoxAll = view.findViewById(R.id.checkBoxAll);
 
         nddao = new TaiKhoanNDDAO(getActivity());
 
@@ -60,7 +61,7 @@ public class GioHangFragment extends Fragment{
         adapter = new SanPhamGioHangAdapter(getContext(), list, getActivity(), dao);
 
         adapter.setOnItemSelectedListener(new SanPhamGioHangAdapter.OnItemSelectedListener() {
-            @Override            public void onItemSelected(double gia) {
+            @Override public void onItemSelected(double gia) {
                 tvGia.setText(String.valueOf(gia));
             }
         });
