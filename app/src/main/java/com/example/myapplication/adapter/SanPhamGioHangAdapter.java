@@ -55,6 +55,8 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
     GioHangDao gioHangDao;
     double tong = 0;
     int matknd;
+    int maChk;
+    private ArrayList<Integer> selectedItems = new ArrayList<>();
 
     public SanPhamGioHangAdapter(@NonNull Context context, ArrayList<SanPham> list, Activity activity, SanPhamDAO dao) {
         super(context, 0, list);
@@ -107,36 +109,37 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
             imageView.setImageURI(imageUri);
 
             checkBoxSP = v.findViewById(R.id.checkBoxSP);
-            ArrayList<Integer> selectedItems = new ArrayList<>();
+
             checkBoxSP.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    SanPham sanPham = list.get(position);
-                    double giaSanPham = sanPham.getGiasp();
-                    double soluong = sanPham.getSoluong();
+                    double giaSanPham = item.getGiasp();
+                    double soluong = item.getSoluong();
                     if (isChecked) {
-                        tong += giaSanPham*soluong;
+
+                        tong += giaSanPham * soluong;
                     } else {
-                        tong -= giaSanPham*soluong;
+
+                        tong -= giaSanPham * soluong;
                     }
+
                     if (onItemSelectedListener != null) {
                         onItemSelectedListener.onItemSelected(tong);
                     }
                 }
             });
-
             v.findViewById(R.id.btntang1).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     item.setSoluong(item.getSoluong() + 1);
                     dao.updateSL(item.getMasp(), item.getSoluong());
-                    notifyDataSetChanged();
-                    if (checkBoxSP.isChecked()){
+                    if (checkBoxSP.isChecked()) {
                         tong += item.getGiasp();
                         if (onItemSelectedListener != null) {
                             onItemSelectedListener.onItemSelected(tong);
                         }
                     }
+                    notifyDataSetChanged();
                 }
             });
 
@@ -145,17 +148,17 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
                 public void onClick(View view) {
                     item.setSoluong(item.getSoluong() - 1);
                     dao.updateSL(item.getMasp(), item.getSoluong());
-                    if (item.getSoluong() == 0){
+                    if (item.getSoluong() == 0) {
                         int id = list.get(position).getMasp();
                         xoa(id);
                     }
-                    notifyDataSetChanged();
-                    if (checkBoxSP.isChecked()){
+                    if (checkBoxSP.isChecked()) {
                         tong -= item.getGiasp();
                         if (onItemSelectedListener != null) {
                             onItemSelectedListener.onItemSelected(tong);
                         }
                     }
+                    notifyDataSetChanged();
                 }
             });
 
@@ -172,6 +175,7 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
             String pass = pref.getString("PASSWORD", "");
             nddao = new TaiKhoanNDDAO(context);
             matknd = nddao.getMatkndFromTaikhoannd(user, pass);
+
             v.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
@@ -204,7 +208,7 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
         }
     }
 
-    public void xoa(int id){
+    public void xoa(int id) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Delete");
         builder.setMessage("Bạn có muốn xóa không?");
@@ -213,7 +217,6 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 gioHangDao.delete(String.valueOf(id));
                 list.clear();
                 list.addAll(gioHangDao.getSanPhamInGioHangByMatkd(matknd));
@@ -230,5 +233,8 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
         });
         AlertDialog alert = builder.create();
         builder.show();
+    }
+    public boolean isCheckBoxSelected(int position) {
+        return checkBoxSP.isChecked();
     }
 }
