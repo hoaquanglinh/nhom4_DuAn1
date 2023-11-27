@@ -29,7 +29,7 @@ public class GioHangDao {
     }
 
     public long delete(String id) {
-        return db.delete("giohang", "magh = ?", new String[]{String.valueOf(id)});
+        return db.delete("giohang", "masp = ?", new String[]{String.valueOf(id)});
     }
 
     @SuppressLint("Range")
@@ -47,7 +47,7 @@ public class GioHangDao {
     }
 
     @SuppressLint("Range")
-    public List<SanPham> getSanPhamInGioHangByMatkd(int matkd) {
+    public List<SanPham> getSanPhamInGioHangByMatkd(int matknd) {
         List<SanPham> listSanPham = new ArrayList<>();
 
         String query = "SELECT sanpham.* " +
@@ -55,7 +55,7 @@ public class GioHangDao {
                 "INNER JOIN giohang ON sanpham.masp = giohang.masp " +
                 "WHERE giohang.matknd = ?";
 
-        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(matkd)});
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(matknd)});
         while (cursor.moveToNext()) {
             SanPham sanPham = new SanPham();
             sanPham.setMasp(Integer.parseInt(cursor.getString(cursor.getColumnIndex("masp"))));

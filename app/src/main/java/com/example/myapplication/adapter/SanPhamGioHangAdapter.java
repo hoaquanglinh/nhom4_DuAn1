@@ -45,7 +45,7 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
     MauSacDAO mauSacDAO;
     SanPhamDAO dao;
     private ArrayList<SanPham> list;
-    TextView tvtensp, tvgiasp, tvmau, tvkhohang, tvsoluong;
+    TextView tvtensp, tvgiasp, tvmau, tvsoluong;
     ImageView imageView;
     private Activity activity;
     TaiKhoanNDDAO nddao;
@@ -134,7 +134,7 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             int id = list.get(position).getMasp();
-                            dao.delete(String.valueOf(id));
+                            gioHangDao.delete(String.valueOf(id));
                             list.clear();
                             list.addAll(gioHangDao.getSanPhamInGioHangByMatkd(matknd));
                             notifyDataSetChanged();
