@@ -2,103 +2,106 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:id="@+id/lineargiohang"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/llBottom">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp"
-            android:layout_marginTop="5dp">
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/checkBoxSP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp" />
+
+            <ImageView
+                android:id="@+id/imageSP1"
+                android:layout_width="120dp"
+                android:layout_height="130dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/redmi" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <CheckBox
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="5dp"/>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/imageSP1"
-                    android:layout_width="120dp"
-                    android:layout_height="130dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginLeft="3dp"
-                    android:src="@drawable/redmi"
-                    android:scaleType="fitCenter"/>
+                <TextView
+                    android:id="@+id/tvTensp1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="tensp"
+                    android:textColor="#444444"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvGia1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="giasp"
+                    android:textColor="#E53935"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvMau1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="80dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="mausp"
+                        android:textSize="16dp" />
+
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginLeft="10dp">
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/btngiam1"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/tru" />
+
                     <TextView
-                        android:id="@+id/tvTensp1"
+                        android:id="@+id/tvsoluong"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="tensp"
-                        android:textStyle="bold"
-                        android:textSize="18dp"
-                        android:textColor="#444444"
-                        android:layout_marginBottom="10dp"/>
-                    <TextView
-                        android:id="@+id/tvGia1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="giasp"
-                        android:textColor="#E53935"
-                        android:textStyle="bold"
-                        android:textSize="18dp"
-                        android:layout_marginBottom="10dp"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:id="@+id/tvMau1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="mausp"
-                            android:textSize="16dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginRight="80dp"/>
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="soluong"
+                        android:textSize="16dp" />
 
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center">
-                        <Button
-                            android:layout_gravity="center"
-                            android:id="@+id/btngiam1"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/tru"/>
-
-                        <TextView
-                            android:id="@+id/tvsoluong"
-                            android:layout_marginTop="8dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="soluong"
-                            android:textSize="16dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_marginBottom="10dp"/>
-
-                        <Button
-                            android:layout_gravity="center"
-                            android:id="@+id/btntang1"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/cong"
-                            android:layout_marginRight="50dp"/>
-                    </LinearLayout>
+                    <Button
+                        android:id="@+id/btntang1"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="50dp"
+                        android:background="@drawable/cong" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

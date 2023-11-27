@@ -15,19 +15,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.myapplication.DAO.GioHangDao;
 import com.example.myapplication.DAO.SanPhamDAO;
 import com.example.myapplication.DAO.TaiKhoanNDDAO;
 import com.example.myapplication.R;
-import com.example.myapplication.adapter.SanPhamAdapter;
 import com.example.myapplication.adapter.SanPhamGioHangAdapter;
 import com.example.myapplication.model.SanPham;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class GioHangFragment extends Fragment {
+public class GioHangFragment extends Fragment{
     ListView listView;
     SanPhamDAO dao;
     GioHangDao gioHangDao;
@@ -35,6 +34,7 @@ public class GioHangFragment extends Fragment {
     ArrayList<SanPham> list;
     TaiKhoanNDDAO nddao;
     private int matknd;
+    TextView tvGia;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,6 +46,7 @@ public class GioHangFragment extends Fragment {
         listView = view.findViewById(R.id.listViewGioHang);
         dao = new SanPhamDAO(getActivity());
         gioHangDao = new GioHangDao(getActivity());
+        tvGia = view.findViewById(R.id.tvTongTien);
 
         nddao = new TaiKhoanNDDAO(getActivity());
 
@@ -57,6 +58,13 @@ public class GioHangFragment extends Fragment {
 
         list = (ArrayList<SanPham>) gioHangDao.getSanPhamInGioHangByMatkd(matknd);
         adapter = new SanPhamGioHangAdapter(getContext(), list, getActivity(), dao);
+
+        adapter.setOnItemSelectedListener(new SanPhamGioHangAdapter.OnItemSelectedListener() {
+            @Override            public void onItemSelected(double gia) {
+                tvGia.setText(String.valueOf(gia));
+            }
+        });
+
         adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);
 
