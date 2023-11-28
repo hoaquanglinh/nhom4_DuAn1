@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,9 +23,10 @@ import com.example.myapplication.R;
 import com.example.myapplication.adapter.SanPhamGioHangAdapter;
 import com.example.myapplication.model.SanPham;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
-public class GioHangFragment extends Fragment{
+public class GioHangFragment extends Fragment implements SanPhamGioHangAdapter.OnItemSelectedListener{
     ListView listView;
     SanPhamDAO dao;
     GioHangDao gioHangDao;
@@ -33,7 +35,6 @@ public class GioHangFragment extends Fragment{
     TaiKhoanNDDAO nddao;
     private int matknd;
     TextView tvGia;
-    CheckBox checkBoxAll;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,7 +45,6 @@ public class GioHangFragment extends Fragment{
         dao = new SanPhamDAO(getActivity());
         gioHangDao = new GioHangDao(getActivity());
         tvGia = view.findViewById(R.id.tvTongTien);
-        checkBoxAll = view.findViewById(R.id.checkBoxAll);
 
         nddao = new TaiKhoanNDDAO(getActivity());
 
@@ -57,23 +57,16 @@ public class GioHangFragment extends Fragment{
         list = (ArrayList<SanPham>) gioHangDao.getSanPhamInGioHangByMatkd(matknd);
         adapter = new SanPhamGioHangAdapter(getContext(), list, getActivity(), dao);
 
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            int ma = bundle.getInt("adapter", 0);
-            adapter.setMa(ma);
-        }
-
-        Log.d("vanh", "gia: " + tvGia.getText().toString());
-
         adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);
 
-        adapter.setOnItemSelectedListener(new SanPhamGioHangAdapter.OnItemSelectedListener() {
-            @Override public void onItemSelected(double gia) {
-                tvGia.setText(String.valueOf(gia));
-            }
-        });
+        adapter.setOnItemSelectedListener(this);
 
         return view;
+    }
+    NumberFormat numberFormat = NumberFormat.getNumberInstance();
+    @Override
+    public void onItemSelected(double gia) {
+        tvGia.setText(numberFormat.format(gia)+ " đ");
     }
 }

@@ -47,9 +47,8 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
     ImageView imageView;
     private Activity activity;
     TaiKhoanNDDAO nddao;
-    CheckBox checkBoxSP;
     GioHangDao gioHangDao;
-    double tong = 0;
+    double tong;
     int matknd;
     int ma;
     private ArrayList<Integer> selectedItems = new ArrayList<>();
@@ -104,46 +103,23 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
             imageView = v.findViewById(R.id.imageSP1);
             imageView.setImageURI(imageUri);
 
-            checkBoxSP = v.findViewById(R.id.checkBoxSP);
+            tong = 0;
+            for (SanPham sp : list) {
+                tong += sp.getGiasp() * sp.getSoluong();
+            }
 
-            double giaSanPham = item.getGiasp();
-            double soluong = item.getSoluong();
+            if (onItemSelectedListener != null) {
+                onItemSelectedListener.onItemSelected(tong);
+            }
 
-//            if(item.getMasp() == ma){
-//                checkBoxSP.setChecked(true);
-//                tong = giaSanPham * soluong;
-//            }else{
-//                checkBoxSP.setChecked(false);
-//            }
-//
-//            if (onItemSelectedListener != null) {
-//                onItemSelectedListener.onItemSelected(tong);
-//            }
-
-            checkBoxSP.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        tong += giaSanPham * soluong;
-                    } else {
-
-                        tong -= giaSanPham * soluong;
-                    }
-                    if (onItemSelectedListener != null) {
-                        onItemSelectedListener.onItemSelected(tong);
-                    }
-                }
-            });
             v.findViewById(R.id.btntang1).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     item.setSoluong(item.getSoluong() + 1);
                     dao.updateSL(item.getMasp(), item.getSoluong());
-                    if (checkBoxSP.isChecked()) {
-                        tong += item.getGiasp();
-                        if (onItemSelectedListener != null) {
-                            onItemSelectedListener.onItemSelected(tong);
-                        }
+                    tong += item.getGiasp();
+                    if (onItemSelectedListener != null) {
+                        onItemSelectedListener.onItemSelected(tong);
                     }
                     notifyDataSetChanged();
                 }
@@ -158,11 +134,12 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
                         int id = list.get(position).getMasp();
                         xoa(id);
                     }
-                    if (checkBoxSP.isChecked()) {
-                        tong -= item.getGiasp();
-                        if (onItemSelectedListener != null) {
-                            onItemSelectedListener.onItemSelected(tong);
-                        }
+
+                    tong -= item.getGiasp();
+
+                    if (onItemSelectedListener != null) {
+                        onItemSelectedListener.onItemSelected(tong);
+
                     }
                     notifyDataSetChanged();
                 }
