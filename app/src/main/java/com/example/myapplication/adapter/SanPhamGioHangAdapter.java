@@ -109,16 +109,16 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
             double giaSanPham = item.getGiasp();
             double soluong = item.getSoluong();
 
-            if(item.getMasp() == ma){
-                checkBoxSP.setChecked(true);
-                tong = giaSanPham * soluong;
-            }else{
-                checkBoxSP.setChecked(false);
-            }
-
-            if (onItemSelectedListener != null) {
-                onItemSelectedListener.onItemSelected(tong);
-            }
+//            if(item.getMasp() == ma){
+//                checkBoxSP.setChecked(true);
+//                tong = giaSanPham * soluong;
+//            }else{
+//                checkBoxSP.setChecked(false);
+//            }
+//
+//            if (onItemSelectedListener != null) {
+//                onItemSelectedListener.onItemSelected(tong);
+//            }
 
             checkBoxSP.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
