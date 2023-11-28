@@ -132,9 +132,36 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
                     dao.updateSL(item.getMasp(), item.getSoluong());
                     if (item.getSoluong() == 0) {
                         int id = list.get(position).getMasp();
-                        xoa(id);
-                    }
 
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setTitle("Delete");
+                        builder.setMessage("Bạn có muốn xóa không?");
+                        builder.setCancelable(true);
+                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                gioHangDao.delete(String.valueOf(id));
+                                list.clear();
+                                list.addAll(gioHangDao.getSanPhamInGioHangByMatkd(matknd));
+                                notifyDataSetChanged();
+                                dialog.cancel();
+                                Toast.makeText(getContext(), "Đã xóa", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                item.setSoluong(1);
+                                dao.updateSL(id, item.getSoluong());
+                                notifyDataSetChanged();
+                                dialog.cancel();
+                            }
+                        });
+                        AlertDialog alert = builder.create();
+                        builder.show();
+
+                        notifyDataSetChanged();
+                    }
                     tong -= item.getGiasp();
 
                     if (onItemSelectedListener != null) {
