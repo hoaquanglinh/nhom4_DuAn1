@@ -30,6 +30,7 @@ import com.example.myapplication.DAO.MauSacDAO;
 import com.example.myapplication.DAO.SanPhamDAO;
 import com.example.myapplication.DAO.TaiKhoanNDDAO;
 import com.example.myapplication.R;
+import com.example.myapplication.adapter.SanPhamGioHangAdapter;
 import com.example.myapplication.model.GioHang;
 import com.example.myapplication.model.Hang;
 import com.example.myapplication.model.MauSac;
@@ -55,6 +56,8 @@ public class ThongTinChiTiet1Fragment extends Fragment {
     private int matknd;
     GioHang gioHang;
     SanPhamDAO dao;
+    SanPhamGioHangAdapter adapter;
+    GioHangFragment gioHangFragment;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +73,7 @@ public class ThongTinChiTiet1Fragment extends Fragment {
         requireActivity().findViewById(R.id.navigation).setVisibility(View.GONE);
 
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
-
+        gioHangFragment = new GioHangFragment();
         toolbar = view.findViewById(R.id.toolbarSanPham1);
         gioHangDao = new GioHangDao(getContext());
         gioHang = new GioHang();
@@ -161,6 +164,48 @@ public class ThongTinChiTiet1Fragment extends Fragment {
             }
         });
 
+        adapter = new SanPhamGioHangAdapter(getContext(), listSPGH, getActivity(), dao);
+        GioHangFragment gioHangFragment = new GioHangFragment();
+        view.findViewById(R.id.btnMuaNgay).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("adapter", item.getMasp());
+                gioHangFragment.setArguments(bundle);
+
+                gioHang.setMasp(item.getMasp());
+                gioHang.setMatknd(matknd);
+                boolean cos = false;
+
+                for (SanPham product : listSPGH) {
+                    if (product.getMasp() == item.getMasp()) {
+                        cos = true;
+                        break;
+                    }
+                }
+
+                if (cos) {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.flContent, gioHangFragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                } else {
+                    listSPGH.add(item);
+                    long insert = gioHangDao.insert(gioHang);
+                    if (insert > 0) {
+                        Toast.makeText(getContext(), "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.flContent, gioHangFragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            }
+        });
         return view;
     }
     @Override
@@ -174,20 +219,4 @@ public class ThongTinChiTiet1Fragment extends Fragment {
         });
     }
 
-    private void openChiTietGioHang(final SanPham sanPham) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("sanPhamChiTiet", sanPham);
-
-        GioHangFragment gioHangFragment = new GioHangFragment();
-        gioHangFragment.setArguments(bundle);
-
-        if (getActivity() instanceof FragmentActivity) {
-            FragmentActivity fragmentActivity = (FragmentActivity) getActivity();
-            FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.flContent, gioHangFragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-        }
-    }
 }

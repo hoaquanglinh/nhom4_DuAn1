@@ -2,8 +2,6 @@ package com.example.myapplication.adapter;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -16,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -35,7 +32,6 @@ import com.example.myapplication.DAO.SanPhamDAO;
 import com.example.myapplication.DAO.TaiKhoanNDDAO;
 import com.example.myapplication.R;
 import com.example.myapplication.fragment.ThongTinChiTietFragment;
-import com.example.myapplication.fragment.UpdateFragment;
 import com.example.myapplication.model.MauSac;
 import com.example.myapplication.model.SanPham;
 
@@ -55,7 +51,7 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
     GioHangDao gioHangDao;
     double tong = 0;
     int matknd;
-    int maChk;
+    int ma;
     private ArrayList<Integer> selectedItems = new ArrayList<>();
 
     public SanPhamGioHangAdapter(@NonNull Context context, ArrayList<SanPham> list, Activity activity, SanPhamDAO dao) {
@@ -110,19 +106,29 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
 
             checkBoxSP = v.findViewById(R.id.checkBoxSP);
 
+            double giaSanPham = item.getGiasp();
+            double soluong = item.getSoluong();
+
+            if(item.getMasp() == ma){
+                checkBoxSP.setChecked(true);
+                tong = giaSanPham * soluong;
+            }else{
+                checkBoxSP.setChecked(false);
+            }
+
+            if (onItemSelectedListener != null) {
+                onItemSelectedListener.onItemSelected(tong);
+            }
+
             checkBoxSP.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    double giaSanPham = item.getGiasp();
-                    double soluong = item.getSoluong();
                     if (isChecked) {
-
                         tong += giaSanPham * soluong;
                     } else {
 
                         tong -= giaSanPham * soluong;
                     }
-
                     if (onItemSelectedListener != null) {
                         onItemSelectedListener.onItemSelected(tong);
                     }
@@ -234,7 +240,9 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
         AlertDialog alert = builder.create();
         builder.show();
     }
-    public boolean isCheckBoxSelected(int position) {
-        return checkBoxSP.isChecked();
+
+    public void setMa(int ma) {
+        this.ma = ma;
+        notifyDataSetChanged();
     }
 }

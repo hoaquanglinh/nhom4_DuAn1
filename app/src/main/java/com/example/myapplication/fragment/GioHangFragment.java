@@ -5,12 +5,9 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,14 +57,22 @@ public class GioHangFragment extends Fragment{
         list = (ArrayList<SanPham>) gioHangDao.getSanPhamInGioHangByMatkd(matknd);
         adapter = new SanPhamGioHangAdapter(getContext(), list, getActivity(), dao);
 
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            int ma = bundle.getInt("adapter", 0);
+            adapter.setMa(ma);
+        }
+
+        Log.d("vanh", "gia: " + tvGia.getText().toString());
+
+        adapter.notifyDataSetChanged();
+        listView.setAdapter(adapter);
+
         adapter.setOnItemSelectedListener(new SanPhamGioHangAdapter.OnItemSelectedListener() {
             @Override public void onItemSelected(double gia) {
                 tvGia.setText(String.valueOf(gia));
             }
         });
-
-        adapter.notifyDataSetChanged();
-        listView.setAdapter(adapter);
 
         return view;
     }

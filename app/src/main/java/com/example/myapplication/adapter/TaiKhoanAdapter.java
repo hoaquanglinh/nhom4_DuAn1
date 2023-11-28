@@ -49,7 +49,6 @@ public class TaiKhoanAdapter extends ArrayAdapter<TaiKhoanND> {
             tvMatKhau = v.findViewById(R.id.txt_MatKhau);
             tvMatKhau.setText(""+item.getMatKhauND());
 
-
             btnDelete_tk = v.findViewById(R.id.btnDelete_tk);
         }
         v.setOnClickListener(new View.OnClickListener() {
