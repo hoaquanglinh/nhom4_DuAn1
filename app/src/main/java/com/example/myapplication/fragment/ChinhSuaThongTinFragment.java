@@ -72,8 +72,6 @@ public class ChinhSuaThongTinFragment extends Fragment {
             edDiaChi.setText(item.getDiaChi());
             edSDT.setText(item.getSdt());
             edEmail.setText(item.getEmail());
-        }else{
-
         }
 
         view.findViewById(R.id.btnLuu).setOnClickListener(new View.OnClickListener() {

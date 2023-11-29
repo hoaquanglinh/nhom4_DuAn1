@@ -33,6 +33,7 @@ public class PersonFragment extends Fragment {
             }
         });
         fragment = new ChinhSuaThongTinFragment();
+
         view.findViewById(R.id.cardView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,6 +44,19 @@ public class PersonFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
+
+        DonMuaFragment donMuaFragment = new DonMuaFragment();
+        view.findViewById(R.id.tvDonMua).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.flContent, donMuaFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+
         return view;
     }
 }
