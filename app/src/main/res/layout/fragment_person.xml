@@ -8,24 +8,29 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal">
-    <ImageView
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/img_5"/>
-        <TextView
-            android:id="@+id/tvTenNguoiDung"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="30dp"
-            android:textStyle="bold"
-            android:textSize="25dp"
-            android:layout_height="wrap_content"
-            android:text="Phạm Minh Hiếu"/>
 
-    </LinearLayout>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_5"/>
+            <TextView
+                android:id="@+id/tvTenNguoiDung"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="30dp"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:layout_height="wrap_content"
+                android:text="Phạm Minh Hiếu"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:layout_width="match_parent"

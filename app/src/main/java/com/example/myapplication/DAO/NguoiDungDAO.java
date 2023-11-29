@@ -53,9 +53,9 @@ public class NguoiDungDAO {
     }
     @SuppressLint("Range")
 
-    public List<NguoiDung> getAllByMAtknd(int matk) {
+    public List<NguoiDung> getAllByMAtknd(int matknd) {
         String sql = "SELECT * FROM nguoidung WHERE matknd = ?";
-        String[] selectionArgs = {String.valueOf(matk)};
+        String[] selectionArgs = {String.valueOf(matknd)};
         return getData(sql, selectionArgs);
     }
 
@@ -83,4 +83,5 @@ public class NguoiDungDAO {
         cursor.close();
         return list;
     }
+
 }

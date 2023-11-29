@@ -6,16 +6,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.myapplication.DAO.GioHangDao;
@@ -25,10 +21,9 @@ import com.example.myapplication.R;
 import com.example.myapplication.adapter.SanPhamGioHangAdapter;
 import com.example.myapplication.model.SanPham;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
-public class GioHangFragment extends Fragment implements SanPhamGioHangAdapter.OnItemSelectedListener{
+public class XacNhanDonHangFragment extends Fragment {
     ListView listView;
     SanPhamDAO dao;
     GioHangDao gioHangDao;
@@ -37,16 +32,16 @@ public class GioHangFragment extends Fragment implements SanPhamGioHangAdapter.O
     TaiKhoanNDDAO nddao;
     private int matknd;
     TextView tvGia;
+    Spinner spptttt;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_gio_hang, container, false);
-        requireActivity().findViewById(R.id.navigation).setVisibility(View.VISIBLE);
+        View view = inflater.inflate(R.layout.fragment_xac_nhan_don_hang, container, false);
 
-        listView = view.findViewById(R.id.listViewGioHang);
+        listView = view.findViewById(R.id.lvXacNhan);
         dao = new SanPhamDAO(getActivity());
         gioHangDao = new GioHangDao(getActivity());
-        tvGia = view.findViewById(R.id.tvTongTien);
+        tvGia = view.findViewById(R.id.tvtongtientt);
 
         nddao = new TaiKhoanNDDAO(getActivity());
 
@@ -62,25 +57,6 @@ public class GioHangFragment extends Fragment implements SanPhamGioHangAdapter.O
         adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);
 
-        adapter.setOnItemSelectedListener(this);
-
-        XacNhanDonHangFragment fragment = new XacNhanDonHangFragment();
-        view.findViewById(R.id.btnDatHang).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.flContent, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });
-
         return view;
-    }
-    NumberFormat numberFormat = NumberFormat.getNumberInstance();
-    @Override
-    public void onItemSelected(double gia) {
-        tvGia.setText(numberFormat.format(gia)+ " đ");
     }
 }

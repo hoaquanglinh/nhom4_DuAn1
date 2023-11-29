@@ -160,7 +160,6 @@ public class ThongTinChiTiet1Fragment extends Fragment {
                         Toast.makeText(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
                     }
                 }
-
             }
         });
 

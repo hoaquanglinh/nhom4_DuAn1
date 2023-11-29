@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.ChinhSuaThongTinFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarThongTin"
+        android:layout_width="match_parent"
+        android:layout_height="45dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thông tin cá nhân"
+            android:textColor="#444444"
+            android:textSize="23dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Họ và tên"
+            android:textColor="#444444"
+            android:textSize="19dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edTenNguoiDung"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/khung_button"
+            android:padding="10dp"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="15dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Giới tính"
+            android:textColor="#444444"
+            android:textSize="19dp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="15dp">
+            <RadioButton
+                android:id="@+id/gtNam"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Nam"
+                android:textSize="18dp" />
+
+            <RadioButton
+                android:id="@+id/gtNu"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Nữ"
+                android:textSize="18dp" />
+
+            <RadioButton
+                android:id="@+id/gtKhac"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Khác"
+                android:textSize="18dp" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Năm sinh"
+            android:textColor="#444444"
+            android:textSize="19dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edNamSinh"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/khung_button"
+            android:padding="10dp"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="15dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Địa chỉ"
+            android:textColor="#444444"
+            android:textSize="19dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edDiaChi"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/khung_button"
+            android:padding="10dp"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="15dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Số điện thoại"
+            android:textColor="#444444"
+            android:textSize="19dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edSDT"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/khung_button"
+            android:padding="10dp"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="15dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textColor="#444444"
+            android:textSize="19dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edEmail"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/khung_button"
+            android:padding="10dp"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="40dp"/>
+
+        <Button
+            android:id="@+id/btnLuu"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Lưu"
+            android:background="@drawable/khung_button"
+            android:backgroundTint="#E53935"/>
+
+    </LinearLayout>
+
+</LinearLayout>

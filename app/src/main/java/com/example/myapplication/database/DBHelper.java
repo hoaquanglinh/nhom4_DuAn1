@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import com.example.myapplication.R;
 
 public class DBHelper extends SQLiteOpenHelper {
-    public static final String DB_NAME = "FastPhone9";
+    public static final String DB_NAME = "FastPhone10";
     public static final int DB_VERSION = 1;
 
     public DBHelper(@Nullable Context context) {
@@ -28,8 +28,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 "email text not null," +
                 "matknd integer REFERENCES taikhoanND(matknd))";
         db.execSQL(createTableNguoiDung);
-        db.execSQL("insert into nguoidung (mand,ten, gioitinh, namsinh, diachi, sdt, email, matknd) values (1,'Người dùng 1', 'Nam', 1990, 'Địa chỉ 1', '0123456789', 'nguoidung1@example.com', 1)");
-        db.execSQL("insert into nguoidung (mand, ten, gioitinh, namsinh, diachi, sdt, email, matknd) values (2,'Người dùng 2', 'Nữ', 1995, 'Địa chỉ 2', '0987654321', 'nguoidung2@example.com', 2)");
 
         String createTableTaiKhoanNguoiDung = "create table taikhoanND (" +
                 "matknd integer primary key autoincrement, " +
