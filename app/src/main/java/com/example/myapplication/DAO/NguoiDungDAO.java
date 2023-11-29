@@ -52,7 +52,6 @@ public class NguoiDungDAO {
         return db.delete("nguoidung", "mand=?", new String[]{String.valueOf(maND)});
     }
     @SuppressLint("Range")
-
     public List<NguoiDung> getAllByMAtknd(int matknd) {
         String sql = "SELECT * FROM nguoidung WHERE matknd = ?";
         String[] selectionArgs = {String.valueOf(matknd)};
@@ -82,6 +81,19 @@ public class NguoiDungDAO {
         }
         cursor.close();
         return list;
+    }
+
+    @SuppressLint("Range")
+    public int getMandByMatknd(int matknd) {
+        String sql = "SELECT mand FROM nguoidung WHERE matknd = ?";
+        String[] selectionArgs = {String.valueOf(matknd)};
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        int mand = 0;
+        if (cursor.moveToFirst()) {
+            mand = cursor.getInt(cursor.getColumnIndex("mand"));
+        }
+        cursor.close();
+        return mand;
     }
 
 }

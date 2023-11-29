@@ -12,9 +12,6 @@ import com.example.myapplication.R;
 
 public class DonHangFragment extends Fragment {
 
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

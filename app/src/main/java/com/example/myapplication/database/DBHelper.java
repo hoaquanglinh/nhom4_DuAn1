@@ -9,8 +9,8 @@ import androidx.annotation.Nullable;
 import com.example.myapplication.R;
 
 public class DBHelper extends SQLiteOpenHelper {
-    public static final String DB_NAME = "FastPhone10";
-    public static final int DB_VERSION = 1;
+    public static final String DB_NAME = "FastPhone12";
+    public static final int DB_VERSION = 2;
 
     public DBHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -45,10 +45,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(createTableHang);
         db.execSQL("insert into hang values (1, 'SamSung'), (2, 'iphone'),(3, 'Xiaomi'),(4, 'Realme'), (5, 'Nokia')");
 
-        String createTableDonViVanChuyen = "create table donvivanchuyen (madvvc integer primary key autoincrement, tendvvc text not null, giaship real not null)";
-        db.execSQL(createTableDonViVanChuyen);
-        db.execSQL("insert into donvivanchuyen values (1, 'Vnexpress', 30000), (2, 'Giao hang tiet kiem', 10000)");
-
         String createTableSanPham = "create table sanpham (" +
                 "masp integer primary key autoincrement, " +
                 "mamau bigint REFERENCES mausac(mamau)," +
@@ -68,6 +64,15 @@ public class DBHelper extends SQLiteOpenHelper {
                 "matknd integer REFERENCES taikhoanND(matknd))";
         db.execSQL(createTableGioHang);
 
+        String createTableDonHang = "create table donhang (" +
+                "madh integer primary key autoincrement," +
+                "mand integer references nguoidung(mand)," +
+                "trangthai integer not null," +
+                "tongtien doubler not null," +
+                "thoigiandathang date not null," +
+                "thoigianhoanthanh date not null," +
+                "ptttt integer not null) ";
+        db.execSQL(createTableDonHang);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

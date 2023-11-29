@@ -64,12 +64,6 @@ public class SanPhamDAO {
         return getData(sql, selectionArgs);
     }
 
-    public SanPham getID(String id) {
-        String sql = "SELECT * FROM sanpham WHERE masp=?";
-        List<SanPham> list = getData(sql, id);
-        return list.get(0);
-    }
-
     public List<SanPham> getAllByMaHang(int maHang) {
         String sql = "SELECT * FROM sanpham WHERE mahang = ?";
         String[] selectionArgs = {String.valueOf(maHang)};
@@ -96,15 +90,6 @@ public class SanPhamDAO {
         }
         return list;
     }
-
-//    public void updateSoLuongSanPham(int sanPhamId, int soLuongMoi) {
-//        ContentValues values = new ContentValues();
-//        values.put("soluong", soLuongMoi);
-//        String whereClause = "masp = ?";
-//        String[] whereArgs = {String.valueOf(sanPhamId)};
-//        db.update("sanpham", values, whereClause, whereArgs);
-//        db.close();
-//    }
 
     public long updateSL(int ma, int soLuongMoi) {
         ContentValues values = new ContentValues();

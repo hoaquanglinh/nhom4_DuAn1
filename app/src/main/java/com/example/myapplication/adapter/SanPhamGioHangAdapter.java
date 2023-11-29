@@ -85,7 +85,6 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
         final SanPham item = list.get(position);
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
 
-
         if (item != null) {
             tvtensp = v.findViewById(R.id.tvTensp1);
             tvtensp.setText(item.getTensp());

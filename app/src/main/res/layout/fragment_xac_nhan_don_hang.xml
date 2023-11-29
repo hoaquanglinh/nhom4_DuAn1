@@ -10,13 +10,14 @@
         android:layout_height="45dp" />
 
     <ScrollView
+        android:id="@+id/scr"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
         android:layout_below="@id/toolbarXacNhan"
-        android:fillViewport="true"
-        >
+        android:layout_above="@+id/l11"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -117,12 +118,31 @@
 
     </ScrollView>
 
-    <Button
-        android:id="@+id/btnDatHang"
+    <LinearLayout
+        android:id="@+id/l11"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
-        android:text="Đặt hàng" />
+        android:layout_alignParentBottom="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Thành tiền: "
+            android:gravity="center"
+            android:textSize="18dp"/>
+        <TextView
+            android:id="@+id/tv_TongTienXN"
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:textSize="20dp"
+            android:textColor="#E53935"
+            android:gravity="center"
+            android:layout_marginRight="15dp"/>
+
+        <Button
+            android:id="@+id/btnDatHang"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="Đặt hàng" />
+    </LinearLayout>
 
 </RelativeLayout>
-

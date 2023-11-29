@@ -37,6 +37,7 @@ public class GioHangFragment extends Fragment implements SanPhamGioHangAdapter.O
     TaiKhoanNDDAO nddao;
     private int matknd;
     TextView tvGia;
+    XacNhanDonHangFragment fragment;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,7 +65,7 @@ public class GioHangFragment extends Fragment implements SanPhamGioHangAdapter.O
 
         adapter.setOnItemSelectedListener(this);
 
-        XacNhanDonHangFragment fragment = new XacNhanDonHangFragment();
+        fragment = new XacNhanDonHangFragment();
         view.findViewById(R.id.btnDatHang).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,5 +83,9 @@ public class GioHangFragment extends Fragment implements SanPhamGioHangAdapter.O
     @Override
     public void onItemSelected(double gia) {
         tvGia.setText(numberFormat.format(gia)+ " đ");
+
+        Bundle bundle = new Bundle();
+        bundle.putDouble("tongtien", gia);
+        fragment.setArguments(bundle);
     }
 }
