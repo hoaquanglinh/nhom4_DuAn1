@@ -14,6 +14,7 @@ import com.example.myapplication.model.SanPham;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DonHangDAO {
@@ -46,6 +47,50 @@ public class DonHangDAO {
     public List<DonHang> getAll() {
         String sql = "SELECT * FROM donhang";
         return getData(sql);
+    }
+
+    @SuppressLint("Range")
+    public String getDiaChiByMand(int mand) {
+        String diaChi = "";
+        String query = "SELECT nguoidung.diachi " +
+                "FROM donhang " +
+                "INNER JOIN nguoidung ON donhang.mand = nguoidung.mand " +
+                "WHERE donhang.mand = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(mand)});
+
+        if (cursor.moveToFirst()) {
+            diaChi = cursor.getString(cursor.getColumnIndex("diachi"));
+        }
+        cursor.close();
+        return diaChi;
+    }
+    @SuppressLint("Range")
+    public int getPtttByMadh(int madh) {
+        int pttt = 0;
+        String query = "SELECT ptttt " +
+                "FROM donhang " +
+                "WHERE madh = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(madh)});
+
+        if (cursor.moveToFirst()) {
+            pttt = Integer.parseInt(cursor.getString(cursor.getColumnIndex("ptttt")));
+        }
+        cursor.close();
+        return pttt;
+    }
+    @SuppressLint("Range")
+    public Date getThoiGianDatHangByMadh(int madh) {
+        Date thoigiandathang = null;
+        String query = "SELECT thoigiandathang " +
+                "FROM donhang " +
+                "WHERE madh = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(madh)});
+        if (cursor.moveToFirst()) {
+            long timestamp = cursor.getLong(cursor.getColumnIndex("thoigiandathang"));
+            thoigiandathang = new Date(timestamp);
+        }
+        cursor.close();
+        return thoigiandathang;
     }
 
     @SuppressLint("Range")

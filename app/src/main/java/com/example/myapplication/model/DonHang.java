@@ -1,8 +1,9 @@
 package com.example.myapplication.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class DonHang {
+public class DonHang implements Serializable {
     private int madh;
     private int mand;
     private int masp;

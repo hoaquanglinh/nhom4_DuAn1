@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.myapplication.DAO.DonHangDAO;
 import com.example.myapplication.DAO.MauSacDAO;
@@ -26,6 +30,8 @@ import com.example.myapplication.DAO.NguoiDungDAO;
 import com.example.myapplication.DAO.SanPhamDAO;
 import com.example.myapplication.DAO.TaiKhoanNDDAO;
 import com.example.myapplication.R;
+import com.example.myapplication.fragment.DonHangFragment;
+import com.example.myapplication.fragment.ThongTinChiTietFragment;
 import com.example.myapplication.model.DonHang;
 import com.example.myapplication.model.MauSac;
 import com.example.myapplication.model.SanPham;
@@ -44,7 +50,6 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
     int matknd, mand;
     TaiKhoanNDDAO nddao;
     NguoiDungDAO nguoiDungDAO;
-    DonHang donHang;
     ArrayList<DonHang> listDH;
     public DonHangAdapter(@NonNull Context context, ArrayList<SanPham> list, ArrayList<DonHang> listDH, SanPhamDAO dao) {
         super(context, 0, list);
@@ -65,7 +70,7 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
         }
 
         final SanPham item = list.get(position);
-        donHang = listDH.get(position);
+        final DonHang donHang = listDH.get(position);
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
 
         mauSacDAO = new MauSacDAO(context);
@@ -110,7 +115,6 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             int id = donHang.getMadh();
-                            Log.d("linhh", "onClick: " + listDH.get(position));
                             donHangDAO.delete(String.valueOf(id));
                             list.clear();
                             list.addAll(donHangDAO.getListSanPhamTrongDonHang(mand));
@@ -129,9 +133,32 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
                 }
             });
 
-
         }
 
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                open(item, donHang);
+            }
+        });
+
         return v;
+    }
+
+    private void open(final SanPham sanPham, final DonHang donHang) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("chitietspdonhang", sanPham);
+        bundle.putSerializable("donhang", donHang);
+        DonHangFragment donHangFragment = new DonHangFragment();
+        donHangFragment.setArguments(bundle);
+
+        if (context instanceof FragmentActivity) {
+            FragmentActivity fragmentActivity = (FragmentActivity) context;
+            FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.flContent, donHangFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
     }
 }
