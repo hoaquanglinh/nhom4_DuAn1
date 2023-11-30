@@ -75,6 +75,7 @@ public class AddFragment extends Fragment {
     int REQUEST_CODE = 2;
     int initialColor= Color.RED;
     TaiKhoanNDDAO nddao;
+    private boolean isImageSelected = false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -124,6 +125,13 @@ public class AddFragment extends Fragment {
             }
         });
 
+        SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
+        String user = pref.getString("USERNAME", "");
+        String pass = pref.getString("PASSWORD", "");
+
+        nddao = new TaiKhoanNDDAO(getActivity());
+        int matknd = nddao.getMatkndFromTaikhoannd(user, pass);
+
         view.findViewById(R.id.btnSaveSP).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,34 +142,37 @@ public class AddFragment extends Fragment {
 
                 if (tensp.isEmpty() || giaStr.isEmpty() || khohangStr.isEmpty()) {
                     Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                }else{
+                    if (!isImageSelected) {
+                        Toast.makeText(getContext(), "Vui lòng chọn ảnh trước khi lưu sản phẩm", Toast.LENGTH_SHORT).show();
+                    }else{
+                        try {
+                            Double giasp = Double.parseDouble(giaStr);
+                            Integer khohang = Integer.parseInt(khohangStr);
+                            if (khohang <= 0){
+                                Toast.makeText(getContext(), "kho hàng phải lớn hơn 0", Toast.LENGTH_SHORT).show();
+                            }else{
+                                item = new SanPham();
+                                item.setMamau(maMauSac);
+                                item.setMahang(maHang);
+                                item.setTensp(tensp);
+                                item.setGiasp(giasp);
+                                item.setKhoHang(khohang);
+                                item.setMota(motasp);
+                                String imagePath = getPathFromUri(selectedImageUri);
+                                item.setAnh(imagePath);
 
-                Double giasp = Double.parseDouble(giaStr);
-                Integer khohang = Integer.parseInt(khohangStr);
-
-                item = new SanPham();
-                item.setMamau(maMauSac);
-                item.setMahang(maHang);
-                item.setTensp(tensp);
-                item.setGiasp(giasp);
-                item.setKhoHang(khohang);
-                item.setMota(motasp);
-                String imagePath = getPathFromUri(selectedImageUri);
-                item.setAnh(imagePath);
-
-                SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
-                String user = pref.getString("USERNAME", "");
-                String pass = pref.getString("PASSWORD", "");
-
-                nddao = new TaiKhoanNDDAO(getActivity());
-                int matknd = nddao.getMatkndFromTaikhoannd(user, pass);
-
-                long insert = dao.insert(item, matknd);
-                if (insert > 0) {
-                    Toast.makeText(getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                                long insert = dao.insert(item, matknd);
+                                if (insert > 0) {
+                                    Toast.makeText(getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }catch (NumberFormatException e){
+                            Toast.makeText(getContext(), "Giá và kho hàng phải là số", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
             }
         });
@@ -236,6 +247,7 @@ public class AddFragment extends Fragment {
             selectedImageUri = data.getData();
             Log.d("Image", "Image URI: " + selectedImageUri.toString());
             // Tiến hành xử lý ảnh, ví dụ: hiển thị ảnh lên ImageView
+            isImageSelected = true;
             try {
                 InputStream inputStream = getContext().getContentResolver().openInputStream(selectedImageUri);
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);

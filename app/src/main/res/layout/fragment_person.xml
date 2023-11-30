@@ -27,8 +27,7 @@
                 android:layout_marginTop="30dp"
                 android:textStyle="bold"
                 android:textSize="25dp"
-                android:layout_height="wrap_content"
-                android:text="Phạm Minh Hiếu"/>
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -99,7 +98,7 @@
         android:gravity="center"
         android:layout_margin="5dp"
         android:background="@drawable/khung_dangnhap"/>
-    <Button
+    <TextView
         android:id="@+id/btnDangXuat"
         android:layout_width="match_parent"
         android:layout_height="45dp"

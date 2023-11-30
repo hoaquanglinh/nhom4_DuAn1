@@ -33,6 +33,7 @@ import com.example.myapplication.DAO.TaiKhoanNDDAO;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.SanPhamGioHangAdapter;
 import com.example.myapplication.model.DonHang;
+import com.example.myapplication.model.GioHang;
 import com.example.myapplication.model.NguoiDung;
 import com.example.myapplication.model.SanPham;
 
@@ -63,49 +64,47 @@ public class XacNhanDonHangFragment extends Fragment {
     TextView tv_tongtien;
     double tongtien;
     RadioButton rdo1, rdo2, rdo3;
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_xac_nhan_don_hang, container, false);
-
         Bundle bundle = getArguments();
         if (bundle != null) {
             tongtien = bundle.getDouble("tongtien");
-            Log.d("tongtien", "onCreateView: " + tongtien);
         }
 
         donHangDAO = new DonHangDAO(getActivity());
         donHang = new DonHang();
-
         listView = view.findViewById(R.id.lvXacNhan);
         dao = new SanPhamDAO(getActivity());
-        gioHangDao = new GioHangDao(getActivity());
         tvGia = view.findViewById(R.id.tvtongtientt);
-        nddao = new TaiKhoanNDDAO(getActivity());
-        nguoiDungDAO = new NguoiDungDAO(getContext());
         toolbar = view.findViewById(R.id.toolbarXacNhan);
         edHoTen = view.findViewById(R.id.ed_hoten);
         edSDT = view.findViewById(R.id.ed_soDienThoai);
         edDiaChi = view.findViewById(R.id.ed_DiaChi);
         tv_tongtien = view.findViewById(R.id.tv_TongTienXN);
         tv_tongtien.setText(String.valueOf(tongtien));
-
         rdo1 = view.findViewById(R.id.rdottknt);
         rdo2 = view.findViewById(R.id.rdotknh);
         rdo3 = view.findViewById(R.id.rdovimomo);
-
-        Log.d("tongtien", "Tổng tiền: " + tongtien);
-
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        nddao = new TaiKhoanNDDAO(getActivity());
+        nguoiDungDAO = new NguoiDungDAO(getContext());
 
         SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
         String user = pref.getString("USERNAME", "");
         String pass = pref.getString("PASSWORD", "");
         matknd = nddao.getMatkndFromTaikhoannd(user, pass);
         mand = nguoiDungDAO.getMandByMatknd(matknd);
+
+        gioHangDao = new GioHangDao(getActivity());
+        ArrayList<SanPham> list1 = (ArrayList<SanPham>) gioHangDao.getSanPhamInGioHangByMatkd(matknd);
+
+
+        Log.d("tongtien", "Tổng tiền: " + tongtien);
+
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         list = (ArrayList<SanPham>) gioHangDao.getSanPhamInGioHangByMatkd(matknd);
         adapter = new SanPhamGioHangAdapter(getContext(), list, getActivity(), dao);
@@ -132,6 +131,8 @@ public class XacNhanDonHangFragment extends Fragment {
                     donHang.setMand(mand);
                     donHang.setMasp(sp.getMasp());
                     donHang.setTongtien(tongtien);
+                    Calendar calendar = Calendar.getInstance();
+                    Date currentDate = calendar.getTime();
                     donHang.setThoigiandathang(new Date());
                     donHang.setThoigianhoanthanh(new Date());
                     donHang.setTrangthai(1);
@@ -142,11 +143,14 @@ public class XacNhanDonHangFragment extends Fragment {
                     } else {
                         donHang.setPtttt(3);
                     }
-
                     long insert = donHangDAO.insert(donHang);
                     if (insert > 0){
                         Toast.makeText(getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
                     }
+                    for (SanPham sanPham : list1){
+                        gioHangDao.delete(String.valueOf(sanPham.getMasp()));
+                    }
+                    list1.clear();
                 }
 
                 DonMuaFragment fragment = new DonMuaFragment();

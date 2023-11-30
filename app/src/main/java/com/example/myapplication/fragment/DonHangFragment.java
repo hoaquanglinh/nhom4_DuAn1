@@ -6,6 +6,10 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -41,6 +45,7 @@ public class DonHangFragment extends Fragment {
     int matknd, mand;
     String diachi;
     int ptttt;
+    Toolbar toolbar;
     Date thoigiandathang;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,6 +72,12 @@ public class DonHangFragment extends Fragment {
         tvpttt3 = view.findViewById(R.id.tvpttt3);
         tvthoigiandathang = view.findViewById(R.id.tvThoiGianDatHang);
         tvthoigianhoanthanh = view.findViewById(R.id.tvThoiGianHoanThanh);
+        toolbar = view.findViewById(R.id.toolbardonhang);
+
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        activity.getSupportActionBar().setTitle("Đơn hàng");
 
         selectedImageUri = Uri.parse(item.getAnh());
         imageViewSP.setImageURI(selectedImageUri);
@@ -80,7 +91,9 @@ public class DonHangFragment extends Fragment {
             mauSacDAO = new MauSacDAO(getContext());
             MauSac mauSac = mauSacDAO.getID(String.valueOf(item.getMamau()));
             mauspct.setText("Màu: " + mauSac.getTenMau());
-            tvtongtien3.setText("Giá: " + giaviet + " đ");
+
+            Double tong = item.getGiasp() * item.getSoluong();
+            tvtongtien3.setText("Tổng thanh toán: " + numberFormat.format(tong) + " đ");
             tvsoluong.setText("x" + item.getSoluong());
         }
 
@@ -110,6 +123,17 @@ public class DonHangFragment extends Fragment {
         tvthoigiandathang.setText(formattedDate);
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().popBackStack();
+            }
+        });
     }
 
 }

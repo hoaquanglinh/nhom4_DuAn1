@@ -77,35 +77,51 @@ public class ChinhSuaThongTinFragment extends Fragment {
         view.findViewById(R.id.btnLuu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                item.setTen(edHoTen.getText().toString());
-
-                if(rdoNam.isChecked()){
-                    item.setGioiTinh("Nam");
-                }else if(rdoNu.isChecked()){
-                    item.setGioiTinh("Nữ");
+                if (edHoTen.getText().toString().trim().isEmpty() || edNamSinh.getText().toString().trim().isEmpty() || edDiaChi.getText().toString().trim().isEmpty() || edSDT.getText().toString().trim().isEmpty() || edEmail.getText().toString().trim().isEmpty()){
+                    Toast.makeText(getContext(), "Không được để trống thông tin", Toast.LENGTH_SHORT).show();
                 }else{
-                    item.setGioiTinh("Khác");
+                    try {
+                        int namsinh = Integer.parseInt(edNamSinh.getText().toString());
+
+                        if (!rdoNam.isChecked() && !rdoNu.isChecked() && !rdoKhac.isChecked()){
+                            Toast.makeText(getContext(), "Vui lòng chọn giới tính", Toast.LENGTH_SHORT).show();
+                        }else{
+                            item.setTen(edHoTen.getText().toString());
+
+                            if(rdoNam.isChecked()){
+                                item.setGioiTinh("Nam");
+                            }else if(rdoNu.isChecked()){
+                                item.setGioiTinh("Nữ");
+                            }else{
+                                item.setGioiTinh("Khác");
+                            }
+
+                            item.setNamSinh(namsinh);
+                            item.setDiaChi(edDiaChi.getText().toString());
+                            item.setSdt(edSDT.getText().toString());
+                            item.setEmail(edEmail.getText().toString());
+                            item.setMatknd(matknd);
+                        }
+
+                    }catch (NumberFormatException e){
+                        Toast.makeText(getContext(), "Năm sinh phải là sô", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
-                item.setNamSinh(Integer.parseInt(edNamSinh.getText().toString()));
-                item.setDiaChi(edDiaChi.getText().toString());
-                item.setSdt(edSDT.getText().toString());
-                item.setEmail(edEmail.getText().toString());
-                item.setMatknd(matknd);
-
                 if (!list.isEmpty()){
-                    if (dao.update(item)) {
-                        Toast.makeText(getContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
-                    }
+                    dao.update(item);
+//                    if () {
+//                        Toast.makeText(getContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        Toast.makeText(getContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
+//                    }
                 }else{
                     long insert = dao.insert(item);
-                    if (insert > 0) {
-                        Toast.makeText(getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
-                    }
+//                    if (insert > 0) {
+//                        Toast.makeText(getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        Toast.makeText(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
+//                    }
                 }
 
             }

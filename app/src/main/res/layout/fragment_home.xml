@@ -9,30 +9,28 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:elevation="4dp"
+        android:layout_height="47dp"
         android:layout_marginBottom="2dp"
+        android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
-        <!-- Thanh tìm kiếm -->
         <EditText
             android:id="@+id/searchEditText"
             android:layout_width="320dp"
             android:layout_height="40dp"
             android:background="@drawable/khung_seach"
-            android:paddingLeft="15dp"
-            android:drawablePadding="15dp"
             android:drawableLeft="@drawable/baseline_search_24"
-            android:hint="Tìm kiếm" />
+            android:drawablePadding="15dp"
+            android:hint="Tìm kiếm"
+            android:paddingLeft="15dp" />
 
-        <!-- Nút thông báo -->
         <ImageButton
             android:id="@+id/notificationButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="15dp"
-            android:src="@drawable/baseline_notifications_none_24"/>
+            android:src="@drawable/baseline_notifications_none_24" />
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView

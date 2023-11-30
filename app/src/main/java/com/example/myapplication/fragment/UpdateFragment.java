@@ -59,6 +59,7 @@ public class UpdateFragment extends Fragment {
     SanPhamDAO dao;
     ArrayList<SanPham> list;
     Uri selectedImageUri;
+    private boolean isImageSelected = false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,6 +154,7 @@ public class UpdateFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
             selectedImageUri = data.getData();
+            isImageSelected = true;
             Log.d("Image", "Image URI: " + selectedImageUri.toString());
             try {
                 InputStream inputStream = getContext().getContentResolver().openInputStream(selectedImageUri);
@@ -175,34 +177,40 @@ public class UpdateFragment extends Fragment {
         Hang selectedHang = (Hang) spmahang.getSelectedItem();
 
         if (TextUtils.isEmpty(tenSp) || TextUtils.isEmpty(giaSp) || TextUtils.isEmpty(khoHang) || TextUtils.isEmpty(moTa)) {
-            Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-            return;
+            Toast.makeText(getContext(), "Không được để trống thông tin", Toast.LENGTH_SHORT).show();
+        }else{
+            try {
+                Double giaSpInt = Double.parseDouble(giaSp);
+                int khoHangInt = Integer.parseInt(khoHang);
+                if(khoHangInt <= 0){
+                    Toast.makeText(getContext(), "kho hàng phải lớn hơn 0", Toast.LENGTH_SHORT).show();
+                }else{
+                    item.setTensp(tenSp);
+                    item.setGiasp(giaSpInt);
+                    item.setKhoHang(khoHangInt);
+                    item.setMota(moTa);
+                    item.setMamau(selectedMauSac.getMamau());
+                    item.setMahang(selectedHang.getMahang());
+                    String imagePath = getPathFromUri(selectedImageUri);
+                    item.setAnh(imagePath);
+
+                    if (dao.update(item)) {
+                        list.clear();
+                        list.addAll(dao.getAll());
+                        Toast.makeText(getContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.flContent, new ProductFragment())
+                                .commit();
+                    } else {
+                        Toast.makeText(getContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }catch (NumberFormatException e){
+                Toast.makeText(getContext(), "Giá và kho hàng phải là số", Toast.LENGTH_SHORT).show();
+            }
         }
 
-        Double giaSpInt = Double.parseDouble(giaSp);
-        int khoHangInt = Integer.parseInt(khoHang);
-
-        // Cập nhật thông tin sản phẩm
-        item.setTensp(tenSp);
-        item.setGiasp(giaSpInt);
-        item.setKhoHang(khoHangInt);
-        item.setMota(moTa);
-        item.setMamau(selectedMauSac.getMamau());
-        item.setMahang(selectedHang.getMahang());
-        String imagePath = getPathFromUri(selectedImageUri);
-        item.setAnh(imagePath);
-
-        if (dao.update(item)) {
-            list.clear();
-            list.addAll(dao.getAll());
-            Toast.makeText(getContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.flContent, new ProductFragment())
-                    .commit();
-        } else {
-            Toast.makeText(getContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
-        }
     }
     private String getPathFromUri(Uri contentUri) {
         String filePath;
