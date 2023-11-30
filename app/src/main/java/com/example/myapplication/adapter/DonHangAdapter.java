@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,12 +41,16 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
     MauSacDAO mauSacDAO;
     TextView tvtensp, tvgiasp, tvmau, tvsoluong;
     ImageView imageView;
-    int matknd;
+    int matknd, mand;
     TaiKhoanNDDAO nddao;
-    public DonHangAdapter(@NonNull Context context, ArrayList<SanPham> list, SanPhamDAO dao) {
+    NguoiDungDAO nguoiDungDAO;
+    DonHang donHang;
+    ArrayList<DonHang> listDH;
+    public DonHangAdapter(@NonNull Context context, ArrayList<SanPham> list, ArrayList<DonHang> listDH, SanPhamDAO dao) {
         super(context, 0, list);
         this.context = context;
         this.list = list;
+        this.listDH = listDH;
         this.dao = dao;
     }
 
@@ -60,10 +65,20 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
         }
 
         final SanPham item = list.get(position);
+        donHang = listDH.get(position);
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
 
         mauSacDAO = new MauSacDAO(context);
         nddao = new TaiKhoanNDDAO(context);
+        nguoiDungDAO = new NguoiDungDAO(context);
+        donHangDAO = new DonHangDAO(context);
+
+        SharedPreferences pref = getContext().getSharedPreferences("USER_FILE", MODE_PRIVATE);
+        String user = pref.getString("USERNAME", "");
+        String pass = pref.getString("PASSWORD", "");
+        nddao = new TaiKhoanNDDAO(context);
+        matknd = nddao.getMatkndFromTaikhoannd(user, pass);
+        mand = nguoiDungDAO.getMandByMatknd(matknd);
 
         if (item != null) {
             tvtensp = v.findViewById(R.id.tvTensp2);
@@ -82,23 +97,38 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
             imageView = v.findViewById(R.id.imageSP2);
             imageView.setImageURI(imageUri);
 
-            tvsoluong = v.findViewById(R.id.tvsoluong);
-            tvsoluong.setText(String.valueOf(item.getSoluong()));
+            tvsoluong = v.findViewById(R.id.tvsoluong2);
+            tvsoluong.setText("x"+item.getSoluong());
+            v.findViewById(R.id.btnHuyDonHang).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Delete");
+                    builder.setMessage("Bạn chắc chắn muốn hủy đơn hàng?");
+                    builder.setCancelable(true);
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            int id = donHang.getMadh();
+                            Log.d("linhh", "onClick: " + listDH.get(position));
+                            donHangDAO.delete(String.valueOf(id));
+                            list.clear();
+                            list.addAll(donHangDAO.getListSanPhamTrongDonHang(mand));
+                            notifyDataSetChanged();
+                            dialog.cancel();
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog alert = builder.create();
+                    builder.show();
+                }
+            });
 
-//            v.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    open(item);
-//                }
-//            });
-
-            SharedPreferences pref = getContext().getSharedPreferences("USER_FILE", MODE_PRIVATE);
-            String user = pref.getString("USERNAME", "");
-            String pass = pref.getString("PASSWORD", "");
-            nddao = new TaiKhoanNDDAO(context);
-            matknd = nddao.getMatkndFromTaikhoannd(user, pass);
-
-//            int id = list.get(position).getMasp();
 
         }
 

@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import com.example.myapplication.R;
 
 public class DBHelper extends SQLiteOpenHelper {
-    public static final String DB_NAME = "FastPhone12";
+    public static final String DB_NAME = "FastPhone16";
     public static final int DB_VERSION = 2;
 
     public DBHelper(@Nullable Context context) {
@@ -67,6 +67,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String createTableDonHang = "create table donhang (" +
                 "madh integer primary key autoincrement," +
                 "mand integer references nguoidung(mand)," +
+                "masp integer references sanpham(masp)," +
                 "trangthai integer not null," +
                 "tongtien doubler not null," +
                 "thoigiandathang date not null," +

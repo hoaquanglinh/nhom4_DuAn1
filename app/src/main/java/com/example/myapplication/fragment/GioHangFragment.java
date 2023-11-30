@@ -58,6 +58,7 @@ public class GioHangFragment extends Fragment implements SanPhamGioHangAdapter.O
         matknd = nddao.getMatkndFromTaikhoannd(user, pass);
 
         list = (ArrayList<SanPham>) gioHangDao.getSanPhamInGioHangByMatkd(matknd);
+        Log.d("linh", "onCreateView: sp " + list);
         adapter = new SanPhamGioHangAdapter(getContext(), list, getActivity(), dao);
 
         adapter.notifyDataSetChanged();

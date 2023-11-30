@@ -28,7 +28,7 @@ public class DonMuaFragment extends Fragment {
 
         CustomPagerAdapter adapter = new CustomPagerAdapter(getActivity());
         adapter.addFragment(new DangXuLyFragment(), "Đang xử lý");
-        adapter.addFragment(new HomeFragment(), "Đã giao");
+        adapter.addFragment(new DaGiaoFragment(), "Đã giao");
 
         viewPager.setAdapter(adapter);
 

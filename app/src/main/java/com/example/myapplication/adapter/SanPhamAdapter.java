@@ -134,7 +134,6 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
                     });
                     AlertDialog alert = builder.create();
                     builder.show();
-
                 }
             });
 
@@ -149,11 +148,8 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
         return v;
     }
     private void open(final SanPham sanPham) {
-        // Tạo Bundle và truyền thông tin sản phẩm vào Bundle
         Bundle bundle = new Bundle();
         bundle.putSerializable("sanPhamChiTiet", sanPham);
-
-        // Tạo Fragment và truyền Bundle vào Fragment
         ThongTinChiTietFragment thongTinChiTietFragment = new ThongTinChiTietFragment();
         thongTinChiTietFragment.setArguments(bundle);
 

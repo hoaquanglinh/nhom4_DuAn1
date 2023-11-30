@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.example.myapplication.DAO.SanPhamDAO;
 import com.example.myapplication.DAO.TaiKhoanNDDAO;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.DonHangAdapter;
+import com.example.myapplication.model.DonHang;
 import com.example.myapplication.model.SanPham;
 
 import java.util.ArrayList;
@@ -30,6 +32,8 @@ public class DangXuLyFragment extends Fragment {
     ArrayList<SanPham> list;
     TaiKhoanNDDAO nddao;
     NguoiDungDAO nguoiDungDAO;
+    DonHang donHang;
+    ArrayList<DonHang> listDH;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,11 +51,14 @@ public class DangXuLyFragment extends Fragment {
         int matknd = nddao.getMatkndFromTaikhoannd(user, pass);
         int mand = nguoiDungDAO.getMandByMatknd(matknd);
 
-//        list = (ArrayList<SanPham>) donHangDAO.getListSanPhamTrongDonHang(mand);
-//        adapter = new DonHangAdapter(getActivity(), list, dao);
-//        adapter.notifyDataSetChanged();
-//        listView.setAdapter(adapter);
+        list = (ArrayList<SanPham>) donHangDAO.getListSanPhamTrongDonHang(mand);
+        listDH = (ArrayList<DonHang>) donHangDAO.getAll();
+
+        adapter = new DonHangAdapter(getActivity(), list, listDH, dao);
+        adapter.notifyDataSetChanged();
+        listView.setAdapter(adapter);
 
         return view;
     }
+
 }

@@ -63,6 +63,7 @@ public class XacNhanDonHangFragment extends Fragment {
     TextView tv_tongtien;
     double tongtien;
     RadioButton rdo1, rdo2, rdo3;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -112,12 +113,12 @@ public class XacNhanDonHangFragment extends Fragment {
         listView.setAdapter(adapter);
 
         listNguoiDung = (ArrayList<NguoiDung>) nguoiDungDAO.getAllByMAtknd(matknd);
-        if (!listNguoiDung.isEmpty()){
+        if (!listNguoiDung.isEmpty()) {
             item = listNguoiDung.get(0);
             edHoTen.setText(item.getTen());
             edDiaChi.setText(item.getDiaChi());
             edSDT.setText(item.getSdt());
-        }else{
+        } else {
             edHoTen.setText("");
             edDiaChi.setText("");
             edSDT.setText("");
@@ -127,40 +128,39 @@ public class XacNhanDonHangFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 donHang = new DonHang();
-                donHang.setMand(mand);
-                donHang.setTongtien(tongtien);
-                LocalDateTime currentDateTime = LocalDateTime.now();
-                ZoneId zoneId = ZoneId.systemDefault();
-                Date date = Date.from(currentDateTime.atZone(zoneId).toInstant());
-                donHang.setThoigiandathang(date);
-                donHang.setThoigianhoanthanh(date);
-                donHang.setTrangthai(1);
-                if (rdo1.isChecked()){
-                    donHang.setPtttt(1);
-                }else if(rdo2.isChecked()){
-                    donHang.setPtttt(2);
-                }else{
-                    donHang.setPtttt(3);
+                for (SanPham sp : list) {
+                    donHang.setMand(mand);
+                    donHang.setMasp(sp.getMasp());
+                    donHang.setTongtien(tongtien);
+                    donHang.setThoigiandathang(new Date());
+                    donHang.setThoigianhoanthanh(new Date());
+                    donHang.setTrangthai(1);
+                    if (rdo1.isChecked()) {
+                        donHang.setPtttt(1);
+                    } else if (rdo2.isChecked()) {
+                        donHang.setPtttt(2);
+                    } else {
+                        donHang.setPtttt(3);
+                    }
+
+                    long insert = donHangDAO.insert(donHang);
+                    if (insert > 0){
+                        Toast.makeText(getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
-                long insert = donHangDAO.insert(donHang);
-                if (insert > 0) {
-                    Toast.makeText(getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
-
-                    DonMuaFragment fragment = new DonMuaFragment();
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.flContent, fragment);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-                } else {
-                    Toast.makeText(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
-                }
+                DonMuaFragment fragment = new DonMuaFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.flContent, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 
         return view;
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

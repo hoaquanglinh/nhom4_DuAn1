@@ -5,6 +5,7 @@ import java.util.Date;
 public class DonHang {
     private int madh;
     private int mand;
+    private int masp;
     private int trangthai;
     private Double tongtien;
     private Date thoigiandathang;
@@ -14,14 +15,23 @@ public class DonHang {
     public DonHang() {
     }
 
-    public DonHang(int madh, int mand, int trangthai, Double tongtien, Date thoigiandathang, Date thoigianhoanthanh, int ptttt) {
-        this.madh = madh;;
+    public DonHang(int madh, int mand, int masp, int trangthai, Double tongtien, Date thoigiandathang, Date thoigianhoanthanh, int ptttt) {
+        this.madh = madh;
         this.mand = mand;
+        this.masp = masp;
         this.trangthai = trangthai;
         this.tongtien = tongtien;
         this.thoigiandathang = thoigiandathang;
         this.thoigianhoanthanh = thoigianhoanthanh;
         this.ptttt = ptttt;
+    }
+
+    public int getMasp() {
+        return masp;
+    }
+
+    public void setMasp(int masp) {
+        this.masp = masp;
     }
 
     public int getMadh() {

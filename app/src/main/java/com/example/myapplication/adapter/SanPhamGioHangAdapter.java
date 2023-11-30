@@ -189,6 +189,7 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
                 @Override
                 public boolean onLongClick(View view) {
                     int id = list.get(position).getMasp();
+                    Log.d("linh", "onLongClick: id giohang " + id);
                     xoa(id);
                     return false;
                 }
