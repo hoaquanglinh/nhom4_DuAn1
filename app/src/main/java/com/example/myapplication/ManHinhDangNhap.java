@@ -23,6 +23,7 @@ public class ManHinhDangNhap extends AppCompatActivity {
     TaiKhoanNDDAO nddao;
     String strUser, strPass;
     int matk;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +56,6 @@ public class ManHinhDangNhap extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkLogin();
-                matk = nddao.getMatkndFromTaikhoannd(edUserName.getText().toString(), edPassword.getText().toString());
-                Log.d("123", "tkmd = "+matk);
             }
         });
     }
@@ -65,7 +64,6 @@ public class ManHinhDangNhap extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences("USER_FILE", MODE_PRIVATE);
         SharedPreferences.Editor edit = pref.edit();
         if (!status) {
-            // xoa trang thai luu truoc do
             edit.clear();
         } else {
             edit.putString("USERNAME", u);
@@ -86,14 +84,16 @@ public class ManHinhDangNhap extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Login thành công", Toast.LENGTH_SHORT).show();
                 rememberUser(strUser, strPass, chkRememberPass.isChecked());
 
-//                if(strUser.equalsIgnoreCase("admin")){
-//                    Intent intent = new Intent(getApplicationContext(), ManHinhQTV.class);
-//                    startActivity(intent);
-//                }else{
-                    Intent intent = new Intent(getApplicationContext(), ManHinhChinh.class);
-                    intent.putExtra("user", strUser);
-                    startActivity(intent);
-//                }
+                Intent intent = new Intent(getApplicationContext(), ManHinhChinh.class);
+                intent.putExtra("user", strUser);
+                intent.putExtra("pass", strPass);
+                startActivity(intent);
+
+                SharedPreferences pref = getSharedPreferences("USER_FILE", MODE_PRIVATE);
+                SharedPreferences.Editor edit = pref.edit();
+                edit.putString("USERNAME", strUser);
+                edit.putString("PASSWORD", strPass);
+
                 finish();
             } else {
                 Toast.makeText(this, "Tên đăng nhập hoặc mật khẩu không đúng", Toast.LENGTH_SHORT).show();

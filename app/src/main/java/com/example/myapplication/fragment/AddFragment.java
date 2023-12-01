@@ -125,12 +125,11 @@ public class AddFragment extends Fragment {
             }
         });
 
-        SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
-        String user = pref.getString("USERNAME", "");
-        String pass = pref.getString("PASSWORD", "");
+        Intent i = getActivity().getIntent();
+        String user = i.getStringExtra("user");
 
         nddao = new TaiKhoanNDDAO(getActivity());
-        int matknd = nddao.getMatkndFromTaikhoannd(user, pass);
+        int matknd = nddao.getMatkndFromTaikhoannd(user);
 
         view.findViewById(R.id.btnSaveSP).setOnClickListener(new View.OnClickListener() {
             @Override

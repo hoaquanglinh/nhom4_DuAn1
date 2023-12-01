@@ -2,6 +2,7 @@ package com.example.myapplication.fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -100,10 +101,9 @@ public class DonHangFragment extends Fragment {
         nguoiDungDAO = new NguoiDungDAO(getContext());
         nddao = new TaiKhoanNDDAO(getContext());
         donHangDAO = new DonHangDAO(getContext());
-        SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
-        String user = pref.getString("USERNAME", "");
-        String pass = pref.getString("PASSWORD", "");
-        matknd = nddao.getMatkndFromTaikhoannd(user, pass);
+        Intent i = getActivity().getIntent();
+        String user = i.getStringExtra("user");
+        matknd = nddao.getMatkndFromTaikhoannd(user);
         mand = nguoiDungDAO.getMandByMatknd(matknd);
         diachi = donHangDAO.getDiaChiByMand(mand);
         ptttt = donHangDAO.getPtttByMadh(donHang.getMadh());

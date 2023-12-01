@@ -2,6 +2,7 @@ package com.example.myapplication.fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -45,7 +46,7 @@ public class ThongTinChiTiet1Fragment extends Fragment {
     SanPham item;
     Toolbar toolbar;
     ImageView imageViewSP;
-    TextView tenspct, giaspct, tentknd, mauspct, hangspct, motaspct;
+    TextView tenspct, giaspct, tentknd, mauspct, hangspct, motaspct, khohang1;
     ImageButton ibnguoidung;
     MauSacDAO mauSacDAO;
     HangDAO hangDAO;
@@ -93,6 +94,7 @@ public class ThongTinChiTiet1Fragment extends Fragment {
         motaspct = view.findViewById(R.id.tvMotaSPCT1);
         imageViewSP = view.findViewById(R.id.imageViewSanPham1);
         ibnguoidung = view.findViewById(R.id.ibNguoiDung1);
+        khohang1 = view.findViewById(R.id.tvKhoHang1);
 
         imageViewSanPham = view.findViewById(R.id.imageViewSanPham1);
         selectedImageUri = Uri.parse(item.getAnh());
@@ -117,13 +119,14 @@ public class ThongTinChiTiet1Fragment extends Fragment {
             String giaviet = numberFormat.format(item.getGiasp());
             giaspct.setText("Giá: " + giaviet + " đ");
             motaspct.setText(item.getMota());
+
+            khohang1.setText("Kho hàng: " + item.getKhoHang());
         }
 
-        SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
-        String user = pref.getString("USERNAME", "");
-        String pass = pref.getString("PASSWORD", "");
+        Intent i = getActivity().getIntent();
+        String user = i.getStringExtra("user");
 
-        matknd = nddao.getMatkndFromTaikhoannd(user, pass);
+        matknd = nddao.getMatkndFromTaikhoannd(user);
 
         ArrayList<SanPham> listSPGH = (ArrayList<SanPham>) gioHangDao.getSanPhamInGioHangByMatkd(matknd);
 

@@ -2,10 +2,17 @@ package com.example.myapplication.fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,17 +35,24 @@ public class ChinhSuaThongTinFragment extends Fragment {
     TaiKhoanNDDAO nddao;
     NguoiDung item;
     ArrayList<NguoiDung> list;
+    Toolbar toolbar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chinh_sua_thong_tin, container, false);
 
-        SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
-        String user = pref.getString("USERNAME", "");
-        String pass = pref.getString("PASSWORD", "");
+        toolbar = view.findViewById(R.id.toolbarThongTin);
+
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        activity.getSupportActionBar().setTitle("Chỉnh sửa thông tin");
+
+        Intent i = getActivity().getIntent();
+        String user = i.getStringExtra("user");
         nddao = new TaiKhoanNDDAO(getActivity());
-        int matknd = nddao.getMatkndFromTaikhoannd(user, pass);
+        int matknd = nddao.getMatkndFromTaikhoannd(user);
 
         edHoTen = view.findViewById(R.id.edTenNguoiDung);
         edNamSinh = view.findViewById(R.id.edNamSinh);
@@ -110,23 +124,31 @@ public class ChinhSuaThongTinFragment extends Fragment {
 
                 if (!list.isEmpty()){
                     dao.update(item);
-//                    if () {
-//                        Toast.makeText(getContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        Toast.makeText(getContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
-//                    }
                 }else{
-                    long insert = dao.insert(item);
-//                    if (insert > 0) {
-//                        Toast.makeText(getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        Toast.makeText(getContext(), "Thêm thất bại", Toast.LENGTH_SHORT).show();
-//                    }
+                    dao.insert(item);
                 }
 
+                Toast.makeText(getContext(), "Chỉnh sửa thông tin thành công", Toast.LENGTH_SHORT).show();
+
+                PersonFragment fragment = new PersonFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.flContent, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 
         return view;
+    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().popBackStack();
+            }
+        });
     }
 }

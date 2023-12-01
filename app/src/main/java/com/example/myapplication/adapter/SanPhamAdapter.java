@@ -103,9 +103,9 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
 
             SharedPreferences pref = activity.getSharedPreferences("USER_FILE", MODE_PRIVATE);
             String user = pref.getString("USERNAME", "");
-            String pass = pref.getString("PASSWORD", "");
+
             nddao = new TaiKhoanNDDAO(context);
-            int matknd = nddao.getMatkndFromTaikhoannd(user, pass);
+            int matknd = nddao.getMatkndFromTaikhoannd(user);
             btnxoa.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -165,15 +165,12 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
     }
 
     private void openEditProductFragment(final SanPham sanPham) {
-        // Tạo Bundle và truyền thông tin sản phẩm vào Bundle
         Bundle bundle = new Bundle();
         bundle.putSerializable("sanPham", sanPham);
 
-        // Tạo Fragment và truyền Bundle vào Fragment
         UpdateFragment updateFragment = new UpdateFragment();
         updateFragment.setArguments(bundle);
 
-        // Gửi sự kiện tới FragmentActivity để thay thế Fragment hiện tại bằng Fragment chỉnh sửa
         if (activity instanceof FragmentActivity) {
             FragmentActivity fragmentActivity = (FragmentActivity) activity;
             FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();

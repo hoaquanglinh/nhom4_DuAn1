@@ -49,11 +49,10 @@ public class ProductFragment extends Fragment {
         nddao = new TaiKhoanNDDAO(getActivity());
         item = new SanPham();
 
-        SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
-        String user = pref.getString("USERNAME", "");
-        String pass = pref.getString("PASSWORD", "");
+        Intent i = getActivity().getIntent();
+        String user = i.getStringExtra("user");
 
-        matknd = nddao.getMatkndFromTaikhoannd(user, pass);
+        matknd = nddao.getMatkndFromTaikhoannd(user);
 
         capNhatlv();
         return view;

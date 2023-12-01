@@ -96,4 +96,14 @@ public class SanPhamDAO {
         values.put("soluong", soLuongMoi);;
         return db.update("sanpham", values, "masp=?", new String[]{String.valueOf(ma)});
     }
+
+    public List<SanPham> getAllExceptMAtknd(int matknd) {
+        List<SanPham> allSanPhamExceptMAtknd = new ArrayList<>();
+        for (SanPham sanPham : getAll()) {
+            if (sanPham.getMatknd() != matknd) {
+                allSanPhamExceptMAtknd.add(sanPham);
+            }
+        }
+        return allSanPhamExceptMAtknd;
+    }
 }

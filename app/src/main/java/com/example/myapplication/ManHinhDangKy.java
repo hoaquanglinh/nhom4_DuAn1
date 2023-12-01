@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class ManHinhDangKy extends AppCompatActivity {
     TaiKhoanNDDAO dao;
     TaiKhoanND tknd;
-    ArrayList<TaiKhoanND> list;
     EditText edTaiKhoan, edMatKhau, edReMatKhau;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +36,7 @@ public class ManHinhDangKy extends AppCompatActivity {
                 String mk = edMatKhau.getText().toString();
                 String remk = edReMatKhau.getText().toString();
 
-                if(tk.isEmpty() || mk.isEmpty() || remk.isEmpty()){
+                if(tk.trim().isEmpty() || mk.trim().isEmpty() || remk.trim().isEmpty()){
                     Toast.makeText(ManHinhDangKy.this, "Không được để trống thông tin", Toast.LENGTH_SHORT).show();
                 }else{
                     if(mk.equalsIgnoreCase(remk)){

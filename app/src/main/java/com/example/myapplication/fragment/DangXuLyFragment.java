@@ -2,6 +2,7 @@ package com.example.myapplication.fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -45,10 +46,9 @@ public class DangXuLyFragment extends Fragment {
         nddao = new TaiKhoanNDDAO(getActivity());
         nguoiDungDAO = new NguoiDungDAO(getActivity());
 
-        SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
-        String user = pref.getString("USERNAME", "");
-        String pass = pref.getString("PASSWORD", "");
-        int matknd = nddao.getMatkndFromTaikhoannd(user, pass);
+        Intent i = getActivity().getIntent();
+        String user = i.getStringExtra("user");
+        int matknd = nddao.getMatkndFromTaikhoannd(user);
         int mand = nguoiDungDAO.getMandByMatknd(matknd);
 
         list = (ArrayList<SanPham>) donHangDAO.getListSanPhamTrongDonHang(mand);

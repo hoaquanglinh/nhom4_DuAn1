@@ -46,8 +46,8 @@ public class ManHinhChinh extends AppCompatActivity {
         navigationView = findViewById(R.id.navigationView1);
         toolbar = findViewById(R.id.toolbarQTV);
 
-        SharedPreferences pref = getSharedPreferences("USER_FILE", MODE_PRIVATE);
-        String user = pref.getString("USERNAME", "");
+        Intent i = getIntent();
+        String user = i.getStringExtra("user");
 
         if(user.equals("admin")){
             bottomNavigationView.setVisibility(View.GONE);

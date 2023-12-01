@@ -43,7 +43,7 @@ public class ThongTinChiTietFragment extends Fragment {
     SanPham item;
     Toolbar toolbar;
     ImageView imageViewSP;
-    TextView tenspct, giaspct, tentknd, mauspct, hangspct, motaspct;
+    TextView tenspct, giaspct, tentknd, mauspct, hangspct, motaspct, khohang;
     ImageButton ibnguoidung;
     MauSacDAO mauSacDAO;
     HangDAO hangDAO;
@@ -84,6 +84,7 @@ public class ThongTinChiTietFragment extends Fragment {
         motaspct = view.findViewById(R.id.tvMotaSPCT);
         imageViewSP = view.findViewById(R.id.imageViewSanPham);
         ibnguoidung = view.findViewById(R.id.ibNguoiDung);
+        khohang = view.findViewById(R.id.tvKhoHang);
 
         imageViewSanPham = view.findViewById(R.id.imageViewSanPham);
         selectedImageUri = Uri.parse(item.getAnh());
@@ -108,6 +109,8 @@ public class ThongTinChiTietFragment extends Fragment {
             String giaviet = numberFormat.format(item.getGiasp());
             giaspct.setText("Giá: " + giaviet + " đ");
             motaspct.setText(item.getMota());
+
+            khohang.setText("Kho hàng: " + item.getKhoHang());
         }
 
         return view;

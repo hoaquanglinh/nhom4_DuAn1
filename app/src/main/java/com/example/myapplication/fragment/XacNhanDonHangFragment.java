@@ -2,6 +2,7 @@ package com.example.myapplication.fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,6 +66,9 @@ public class XacNhanDonHangFragment extends Fragment {
     TextView tv_tongtien;
     double tongtien;
     RadioButton rdo1, rdo2, rdo3;
+    private Handler handler;
+    private Runnable updateRunnable;
+    private long updateInterval = 3000;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -90,11 +95,11 @@ public class XacNhanDonHangFragment extends Fragment {
         nddao = new TaiKhoanNDDAO(getActivity());
         nguoiDungDAO = new NguoiDungDAO(getContext());
 
-        SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
-        String user = pref.getString("USERNAME", "");
-        String pass = pref.getString("PASSWORD", "");
-        matknd = nddao.getMatkndFromTaikhoannd(user, pass);
+        Intent i = getActivity().getIntent();
+        String user = i.getStringExtra("user");
+        matknd = nddao.getMatkndFromTaikhoannd(user);
         mand = nguoiDungDAO.getMandByMatknd(matknd);
+        Log.d("linh", "onCreateView: " + mand);
 
         gioHangDao = new GioHangDao(getActivity());
         ArrayList<SanPham> list1 = (ArrayList<SanPham>) gioHangDao.getSanPhamInGioHangByMatkd(matknd);
@@ -126,39 +131,55 @@ public class XacNhanDonHangFragment extends Fragment {
         view.findViewById(R.id.btnDatHang).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                donHang = new DonHang();
-                for (SanPham sp : list) {
-                    donHang.setMand(mand);
-                    donHang.setMasp(sp.getMasp());
-                    donHang.setTongtien(tongtien);
-                    Calendar calendar = Calendar.getInstance();
-                    Date currentDate = calendar.getTime();
-                    donHang.setThoigiandathang(new Date());
-                    donHang.setThoigianhoanthanh(new Date());
-                    donHang.setTrangthai(1);
-                    if (rdo1.isChecked()) {
-                        donHang.setPtttt(1);
-                    } else if (rdo2.isChecked()) {
-                        donHang.setPtttt(2);
-                    } else {
-                        donHang.setPtttt(3);
-                    }
-                    long insert = donHangDAO.insert(donHang);
-                    if (insert > 0){
-                        Toast.makeText(getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
-                    }
-                    for (SanPham sanPham : list1){
-                        gioHangDao.delete(String.valueOf(sanPham.getMasp()));
-                    }
-                    list1.clear();
-                }
+                if(edHoTen.getText().toString().trim().isEmpty()||edDiaChi.getText().toString().trim().isEmpty()||edSDT.getText().toString().trim().isEmpty()){
+                    Toast.makeText(getContext(), "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
+                }else{
+                    if (!rdo1.isChecked() && !rdo2.isChecked() && !rdo3.isChecked()){
+                        Toast.makeText(getActivity(), "Vui lòng chọn phương thức thanh toán", Toast.LENGTH_SHORT).show();
+                    }else{
+                        donHang = new DonHang();
+                        for (SanPham sp : list) {
+                            donHang.setMand(mand);
+                            Log.d("linh", "matknd: " + matknd);
+                            Log.d("linh", "mand: "+ mand);
+                            donHang.setMasp(sp.getMasp());
+                            donHang.setTongtien(tongtien);
+                            donHang.setThoigiandathang(new Date());
+                            donHang.setThoigianhoanthanh(new Date());
+                            donHang.setTrangthai(1);
+                            if (rdo1.isChecked()) {
+                                donHang.setPtttt(1);
+                            } else if (rdo2.isChecked()) {
+                                donHang.setPtttt(2);
+                            } else {
+                                donHang.setPtttt(3);
+                            }
+                            long insert = donHangDAO.insert(donHang);
+                            if (insert > 0){
+                                Toast.makeText(getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
+                            }
+                            for (SanPham sanPham : list1){
+                                gioHangDao.delete(String.valueOf(sanPham.getMasp()));
+                            }
+                            list1.clear();
+                        }
 
-                DonMuaFragment fragment = new DonMuaFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.flContent, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                        String hoten = edHoTen.getText().toString();
+                        String diachi = edDiaChi.getText().toString();
+                        String sdt = edSDT.getText().toString();
+
+                        Log.d("diachi", "onClick: " + hoten + diachi + sdt);
+
+                        nguoiDungDAO.updateAddressNamePhoneByMand(mand, diachi, hoten, sdt);
+
+                        DonMuaFragment fragment = new DonMuaFragment();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.flContent, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                    }
+                }
             }
         });
 

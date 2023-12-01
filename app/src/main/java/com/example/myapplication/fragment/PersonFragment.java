@@ -39,8 +39,9 @@ public class PersonFragment extends Fragment {
         });
         fragment = new ChinhSuaThongTinFragment();
 
-        SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
-        String user = pref.getString("USERNAME", "");
+        Intent i = getActivity().getIntent();
+        String user = i.getStringExtra("user");
+        String pass = i.getStringExtra("pass");
 
         tvTenNguoiDung.setText(user);
 
@@ -62,6 +63,18 @@ public class PersonFragment extends Fragment {
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.flContent, donMuaFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+
+        DoMatKhauFragment doMatKhauFragment = new DoMatKhauFragment();
+        view.findViewById(R.id.btnDoiMatKhau).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.flContent, doMatKhauFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }

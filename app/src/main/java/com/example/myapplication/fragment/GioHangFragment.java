@@ -2,6 +2,9 @@ package com.example.myapplication.fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -17,12 +20,15 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.DAO.GioHangDao;
+import com.example.myapplication.DAO.NguoiDungDAO;
 import com.example.myapplication.DAO.SanPhamDAO;
 import com.example.myapplication.DAO.TaiKhoanNDDAO;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.SanPhamGioHangAdapter;
+import com.example.myapplication.model.NguoiDung;
 import com.example.myapplication.model.SanPham;
 
 import java.text.NumberFormat;
@@ -38,6 +44,8 @@ public class GioHangFragment extends Fragment implements SanPhamGioHangAdapter.O
     private int matknd;
     TextView tvGia;
     XacNhanDonHangFragment fragment;
+    ArrayList<NguoiDung> listNguoiDung;
+    NguoiDungDAO nguoiDungDAO;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,12 +58,12 @@ public class GioHangFragment extends Fragment implements SanPhamGioHangAdapter.O
         tvGia = view.findViewById(R.id.tvTongTien);
 
         nddao = new TaiKhoanNDDAO(getActivity());
+        nguoiDungDAO = new NguoiDungDAO(getActivity());
 
-        SharedPreferences pref = getActivity().getSharedPreferences("USER_FILE", MODE_PRIVATE);
-        String user = pref.getString("USERNAME", "");
-        String pass = pref.getString("PASSWORD", "");
+        Intent i = getActivity().getIntent();
+        String user = i.getStringExtra("user");
 
-        matknd = nddao.getMatkndFromTaikhoannd(user, pass);
+        matknd = nddao.getMatkndFromTaikhoannd(user);
 
         list = (ArrayList<SanPham>) gioHangDao.getSanPhamInGioHangByMatkd(matknd);
         Log.d("linh", "onCreateView: sp " + list);
@@ -70,11 +78,16 @@ public class GioHangFragment extends Fragment implements SanPhamGioHangAdapter.O
         view.findViewById(R.id.btnDatHang).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.flContent, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                listNguoiDung = (ArrayList<NguoiDung>) nguoiDungDAO.getAllByMAtknd(matknd);
+                if (listNguoiDung.isEmpty()){
+                    thongbao();
+                }else{
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.flContent, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
             }
         });
 
@@ -88,5 +101,32 @@ public class GioHangFragment extends Fragment implements SanPhamGioHangAdapter.O
         Bundle bundle = new Bundle();
         bundle.putDouble("tongtien", gia);
         fragment.setArguments(bundle);
+    }
+
+    public void thongbao(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Thông báo");
+        builder.setMessage("Vui lòng nhập thông tin cá nhân trước khi đặt hàng");
+        builder.setCancelable(true);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ChinhSuaThongTinFragment fragment1 = new ChinhSuaThongTinFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.flContent, fragment1);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        builder.show();
     }
 }

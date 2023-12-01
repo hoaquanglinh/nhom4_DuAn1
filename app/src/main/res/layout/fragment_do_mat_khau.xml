@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.DoMatKhauFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbardoimk"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"/>
+
+        <LinearLayout
+            android:layout_marginTop="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp"
+                android:text="Đổi mật khẩu"
+                android:textColor="#444444"
+                android:textSize="35dp"
+                android:layout_gravity="center"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edPasswordCu"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:hint="Mật khẩu cũ"
+                    android:padding="15dp"
+                    android:background="@drawable/khung_button"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edPasswordDMK"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:hint="Mật khẩu"
+                    android:padding="15dp"
+                    android:background="@drawable/khung_button"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edRePasswordDMK"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:hint="Nhập lại mật khẩu"
+                    android:padding="15dp"
+                    android:background="@drawable/khung_button"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnDoiMK"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="đổi mật khẩu"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:textColor="@color/white"
+                android:background="@drawable/khung_button"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:backgroundTint="#444444"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -109,6 +109,17 @@
                 android:textSize="18dp" />
 
             <TextView
+                android:layout_marginTop="3dp"
+                android:id="@+id/tvKhoHang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="Kho hàng"
+                android:textColor="#333333"
+                android:textSize="18dp" />
+
+
+            <TextView
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

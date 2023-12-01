@@ -21,7 +21,6 @@ public class DonHangDAO {
     private SQLiteDatabase db;
     private Context context;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-
     public DonHangDAO(Context context) {
         this.context = context;
         DBHelper dbHelper = new DBHelper(context);

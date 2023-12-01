@@ -80,9 +80,8 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
 
         SharedPreferences pref = getContext().getSharedPreferences("USER_FILE", MODE_PRIVATE);
         String user = pref.getString("USERNAME", "");
-        String pass = pref.getString("PASSWORD", "");
         nddao = new TaiKhoanNDDAO(context);
-        matknd = nddao.getMatkndFromTaikhoannd(user, pass);
+        matknd = nddao.getMatkndFromTaikhoannd(user);
         mand = nguoiDungDAO.getMandByMatknd(matknd);
 
         if (item != null) {

@@ -9,7 +9,13 @@
             android:title="Quản lý màu"/>
         <item android:id="@+id/nav_hang"
             android:title="Quản lý hãng"/>
-        <item android:id="@+id/dangxuat"
-            android:title="Đăng xuất"/>
+        <item android:id="@+id/nav_quanlidonhang"
+            android:title="Quản lý đơn hàng"/>
+        <item android:title="Cài đặt">
+            <menu>
+                <item android:id="@+id/dangxuat"
+                    android:title="Đăng xuất"/>
+            </menu>
+        </item>
     </group>
 </menu>

@@ -50,6 +50,12 @@ public class TaiKhoanNDDAO {
         return list.get(0);
     }
 
+    public long updatePassByMaTKND(int maTKND, String newPass) {
+        ContentValues values = new ContentValues();
+        values.put("matkhaund", newPass);
+        return db.update("taikhoanND", values, "matknd = ?", new String[]{String.valueOf(maTKND)});
+    }
+
     // check login
     public int checkLogin(String id, String password) {
         String sql = "SELECT * FROM taikhoanND WHERE taikhoannd=? AND matkhaund=?";
@@ -59,10 +65,11 @@ public class TaiKhoanNDDAO {
         }
         return 1;
     }
+
     @SuppressLint("Range")
-    public int getMatkndFromTaikhoannd(String taikhoannd, String matkhaund) {
-        String sql = "SELECT matknd FROM taikhoannd WHERE taikhoannd=? AND matkhaund=?";
-        String[] selectionArgs = {taikhoannd, matkhaund};
+    public int getMatkndFromTaikhoannd(String tentaikhoan) {
+        String sql = "SELECT matknd FROM taikhoannd WHERE taikhoannd=?";
+        String[] selectionArgs = {tentaikhoan};
         Cursor cursor = db.rawQuery(sql, selectionArgs);
         if (cursor.moveToFirst()) {
             return cursor.getInt(cursor.getColumnIndex("matknd"));

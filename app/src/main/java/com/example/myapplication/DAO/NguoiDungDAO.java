@@ -96,4 +96,13 @@ public class NguoiDungDAO {
         return mand;
     }
 
+    public long updateAddressNamePhoneByMand(int mand, String diaChi, String hoTen, String soDienThoai) {
+        ContentValues values = new ContentValues();
+        values.put("diachi", diaChi);
+        values.put("ten", hoTen);
+        values.put("sdt", soDienThoai);
+
+        return db.update("nguoidung", values, "mand=?", new String[]{String.valueOf(mand)});
+    }
+
 }

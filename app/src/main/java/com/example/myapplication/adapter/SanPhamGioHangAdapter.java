@@ -111,12 +111,21 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
                 onItemSelectedListener.onItemSelected(tong);
             }
 
+            int id = list.get(position).getMasp();
+
             v.findViewById(R.id.btntang1).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    item.setSoluong(item.getSoluong() + 1);
-                    dao.updateSL(item.getMasp(), item.getSoluong());
-                    tong += item.getGiasp();
+                    if (item.getSoluong() >= item.getKhoHang()){
+                        Toast.makeText(context, "Số lượng không được lớn hơn kho hàng", Toast.LENGTH_SHORT).show();
+                        item.setSoluong(item.getKhoHang());
+                        notifyDataSetChanged();
+                    }else {
+                        item.setSoluong(item.getSoluong() + 1);
+                        dao.updateSL(item.getMasp(), item.getSoluong());
+                        tong += item.getGiasp();
+                    }
+                    notifyDataSetChanged();
                     if (onItemSelectedListener != null) {
                         onItemSelectedListener.onItemSelected(tong);
                     }
@@ -130,8 +139,6 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
                     item.setSoluong(item.getSoluong() - 1);
                     dao.updateSL(item.getMasp(), item.getSoluong());
                     if (item.getSoluong() == 0) {
-                        int id = list.get(position).getMasp();
-
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                         builder.setTitle("Delete");
                         builder.setMessage("Bạn có muốn xóa không?");
@@ -145,6 +152,9 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
                                 notifyDataSetChanged();
                                 dialog.cancel();
                                 Toast.makeText(getContext(), "Đã xóa", Toast.LENGTH_SHORT).show();
+                                item.setSoluong(1);
+                                dao.updateSL(id, item.getSoluong());
+                                notifyDataSetChanged();
                             }
                         });
                         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -181,17 +191,22 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
             });
             SharedPreferences pref = activity.getSharedPreferences("USER_FILE", MODE_PRIVATE);
             String user = pref.getString("USERNAME", "");
-            String pass = pref.getString("PASSWORD", "");
             nddao = new TaiKhoanNDDAO(context);
-            matknd = nddao.getMatkndFromTaikhoannd(user, pass);
+            matknd = nddao.getMatkndFromTaikhoannd(user);
 
             v.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
                     int id = list.get(position).getMasp();
-                    Log.d("linh", "onLongClick: id giohang " + id);
                     xoa(id);
                     return false;
+                }
+            });
+
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
                 }
             });
         }
@@ -245,8 +260,4 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
         builder.show();
     }
 
-    public void setMa(int ma) {
-        this.ma = ma;
-        notifyDataSetChanged();
-    }
 }
