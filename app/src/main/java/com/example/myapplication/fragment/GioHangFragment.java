@@ -66,7 +66,6 @@ public class GioHangFragment extends Fragment implements SanPhamGioHangAdapter.O
         matknd = nddao.getMatkndFromTaikhoannd(user);
 
         list = (ArrayList<SanPham>) gioHangDao.getSanPhamInGioHangByMatkd(matknd);
-        Log.d("linh", "onCreateView: sp " + list);
         adapter = new SanPhamGioHangAdapter(getContext(), list, getActivity(), dao);
 
         adapter.notifyDataSetChanged();
@@ -79,14 +78,18 @@ public class GioHangFragment extends Fragment implements SanPhamGioHangAdapter.O
             @Override
             public void onClick(View view) {
                 listNguoiDung = (ArrayList<NguoiDung>) nguoiDungDAO.getAllByMAtknd(matknd);
-                if (listNguoiDung.isEmpty()){
-                    thongbao();
+                if (listView == null){
+                    Toast.makeText(getContext(), "Bạn chưa có sản phẩm nào để thanh toán", Toast.LENGTH_SHORT).show();
                 }else{
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.flContent, fragment);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+                    if (listNguoiDung.isEmpty()){
+                        thongbao();
+                    }else{
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.flContent, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                    }
                 }
             }
         });

@@ -33,6 +33,7 @@ import com.example.myapplication.DAO.NguoiDungDAO;
 import com.example.myapplication.DAO.SanPhamDAO;
 import com.example.myapplication.DAO.TaiKhoanNDDAO;
 import com.example.myapplication.R;
+import com.example.myapplication.adapter.DonHangAdapter;
 import com.example.myapplication.adapter.SanPhamGioHangAdapter;
 import com.example.myapplication.model.DonHang;
 import com.example.myapplication.model.GioHang;
@@ -54,6 +55,7 @@ public class XacNhanDonHangFragment extends Fragment {
     SanPhamGioHangAdapter adapter;
     ArrayList<SanPham> list;
     TaiKhoanNDDAO nddao;
+    DonHangAdapter donHangAdapter;
     private int matknd, mand;
     TextView tvGia;
     Toolbar toolbar;
@@ -66,9 +68,6 @@ public class XacNhanDonHangFragment extends Fragment {
     TextView tv_tongtien;
     double tongtien;
     RadioButton rdo1, rdo2, rdo3;
-    private Handler handler;
-    private Runnable updateRunnable;
-    private long updateInterval = 3000;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -99,13 +98,9 @@ public class XacNhanDonHangFragment extends Fragment {
         String user = i.getStringExtra("user");
         matknd = nddao.getMatkndFromTaikhoannd(user);
         mand = nguoiDungDAO.getMandByMatknd(matknd);
-        Log.d("linh", "onCreateView: " + mand);
 
         gioHangDao = new GioHangDao(getActivity());
         ArrayList<SanPham> list1 = (ArrayList<SanPham>) gioHangDao.getSanPhamInGioHangByMatkd(matknd);
-
-
-        Log.d("tongtien", "Tổng tiền: " + tongtien);
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
@@ -137,11 +132,9 @@ public class XacNhanDonHangFragment extends Fragment {
                     if (!rdo1.isChecked() && !rdo2.isChecked() && !rdo3.isChecked()){
                         Toast.makeText(getActivity(), "Vui lòng chọn phương thức thanh toán", Toast.LENGTH_SHORT).show();
                     }else{
-                        donHang = new DonHang();
                         for (SanPham sp : list) {
+                            donHang = new DonHang();
                             donHang.setMand(mand);
-                            Log.d("linh", "matknd: " + matknd);
-                            Log.d("linh", "mand: "+ mand);
                             donHang.setMasp(sp.getMasp());
                             donHang.setTongtien(tongtien);
                             donHang.setThoigiandathang(new Date());
@@ -154,13 +147,13 @@ public class XacNhanDonHangFragment extends Fragment {
                             } else {
                                 donHang.setPtttt(3);
                             }
+
                             long insert = donHangDAO.insert(donHang);
                             if (insert > 0){
                                 Toast.makeText(getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
                             }
-                            for (SanPham sanPham : list1){
-                                gioHangDao.delete(String.valueOf(sanPham.getMasp()));
-                            }
+
+                            gioHangDao.deleteAll();
                             list1.clear();
                         }
 
@@ -182,7 +175,6 @@ public class XacNhanDonHangFragment extends Fragment {
                 }
             }
         });
-
         return view;
     }
 

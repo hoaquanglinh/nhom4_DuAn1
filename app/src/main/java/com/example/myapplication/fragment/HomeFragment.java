@@ -74,7 +74,6 @@ public class HomeFragment extends Fragment {
         slideList.add(new Slide(R.drawable.img_1));
         slideList.add(new Slide(R.drawable.img_2));
 
-        // Khởi tạo và thiết lập SlidePagerAdapter cho ViewPager
         slidePagerAdapter = new SlidePagerAdapter(getContext(), slideList);
         viewPager = rootView.findViewById(R.id.viewPager);
         viewPager.setAdapter(slidePagerAdapter);
@@ -183,7 +182,6 @@ public class HomeFragment extends Fragment {
 
     private String chuyenVeKhongDau(String string) {
         String boDau = Normalizer.normalize(string, Normalizer.Form.NFD);
-        // InCOMBINING_DIACRITICAL_MARKS
         Pattern pattern = Pattern.compile("\\p{InCOMBINING_DIACRITICAL_MARKS}+");
         return pattern.matcher(boDau).replaceAll("");
     }

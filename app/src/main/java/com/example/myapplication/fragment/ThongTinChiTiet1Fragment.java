@@ -15,6 +15,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +35,7 @@ import com.example.myapplication.DAO.SanPhamDAO;
 import com.example.myapplication.DAO.TaiKhoanNDDAO;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.SanPhamGioHangAdapter;
+import com.example.myapplication.adapter.SanPhamHomeAdapter;
 import com.example.myapplication.model.GioHang;
 import com.example.myapplication.model.Hang;
 import com.example.myapplication.model.MauSac;
@@ -59,6 +63,9 @@ public class ThongTinChiTiet1Fragment extends Fragment {
     SanPhamDAO dao;
     SanPhamGioHangAdapter adapter;
     GioHangFragment gioHangFragment;
+    RecyclerView recyclerView;
+    SanPhamHomeAdapter sanPhamHomeAdapter;
+    ArrayList<SanPham> list;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,10 +102,12 @@ public class ThongTinChiTiet1Fragment extends Fragment {
         imageViewSP = view.findViewById(R.id.imageViewSanPham1);
         ibnguoidung = view.findViewById(R.id.ibNguoiDung1);
         khohang1 = view.findViewById(R.id.tvKhoHang1);
+        recyclerView = view.findViewById(R.id.recyclerViewBaiDangKhac);
 
         imageViewSanPham = view.findViewById(R.id.imageViewSanPham1);
         selectedImageUri = Uri.parse(item.getAnh());
         imageViewSanPham.setImageURI(selectedImageUri);
+
 
         if (item != null) {
             tenspct.setText(item.getTensp());
@@ -125,8 +134,21 @@ public class ThongTinChiTiet1Fragment extends Fragment {
 
         Intent i = getActivity().getIntent();
         String user = i.getStringExtra("user");
-
         matknd = nddao.getMatkndFromTaikhoannd(user);
+
+        list = (ArrayList<SanPham>) dao.getAllExceptMAtknd(matknd);
+        ArrayList<SanPham> list1 = new ArrayList<>();
+        for (SanPham sanPham: list){
+            if (sanPham.getMasp() != item.getMasp()){
+                list1.add(sanPham);
+            }
+        }
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        sanPhamHomeAdapter = new SanPhamHomeAdapter(getContext(), getActivity(), list1);
+        recyclerView.setAdapter(sanPhamHomeAdapter);
 
         ArrayList<SanPham> listSPGH = (ArrayList<SanPham>) gioHangDao.getSanPhamInGioHangByMatkd(matknd);
 

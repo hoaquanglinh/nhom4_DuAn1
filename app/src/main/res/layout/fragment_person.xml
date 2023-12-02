@@ -61,6 +61,7 @@
         android:layout_margin="5dp"
         android:background="@drawable/khung_dangnhap"/>
     <TextView
+        android:id="@+id/tvLichSuMua"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:text="Lịch sử mua"

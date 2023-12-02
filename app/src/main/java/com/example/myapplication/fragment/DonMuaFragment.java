@@ -67,4 +67,10 @@ public class DonMuaFragment extends Fragment {
             }
         });
     }
+
+    public void chuyenDenTabHai() {
+        if (viewPager != null) {
+            viewPager.setCurrentItem(1); // 1 là chỉ mục của tab thứ hai
+        }
+    }
 }

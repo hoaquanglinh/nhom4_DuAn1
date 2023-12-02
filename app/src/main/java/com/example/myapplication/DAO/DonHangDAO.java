@@ -48,6 +48,13 @@ public class DonHangDAO {
         return getData(sql);
     }
 
+    public int updateTrangThai(int madh, int trangthai) {
+        ContentValues values = new ContentValues();
+        values.put("trangthai", trangthai);
+
+        return db.update("donhang", values, "madh = ?", new String[]{String.valueOf(madh)});
+    }
+
     @SuppressLint("Range")
     public String getDiaChiByMand(int mand) {
         String diaChi = "";
@@ -147,4 +154,31 @@ public class DonHangDAO {
         return sanPhamList;
     }
 
+    @SuppressLint("Range")
+    public List<SanPham> getListSanPhamByTrangThai(int mand, int trangthai) {
+        List<SanPham> sanPhamList = new ArrayList<>();
+
+        String query = "SELECT sanpham.* " +
+                "FROM donhang " +
+                "INNER JOIN sanpham ON donhang.masp = sanpham.masp " +
+                "WHERE donhang.mand = ? AND donhang.trangthai = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(mand), String.valueOf(trangthai)});
+
+        while (cursor.moveToNext()) {
+            SanPham sanPham = new SanPham();
+            sanPham.setMasp(Integer.parseInt(cursor.getString(cursor.getColumnIndex("masp"))));
+            sanPham.setMamau(Integer.parseInt(cursor.getString(cursor.getColumnIndex("mamau"))));
+            sanPham.setMahang(Integer.parseInt(cursor.getString(cursor.getColumnIndex("mahang"))));
+            sanPham.setMatknd(Integer.parseInt(cursor.getString(cursor.getColumnIndex("matknd"))));
+            sanPham.setTensp(cursor.getString(cursor.getColumnIndex("tensp")));
+            sanPham.setGiasp(Double.parseDouble(cursor.getString(cursor.getColumnIndex("gia"))));
+            sanPham.setKhoHang(Integer.parseInt(cursor.getString(cursor.getColumnIndex("khohang"))));
+            sanPham.setMota(cursor.getString(cursor.getColumnIndex("mota")));
+            sanPham.setSoluong(Integer.parseInt(cursor.getString(cursor.getColumnIndex("soluong"))));
+            sanPham.setAnh(cursor.getString(cursor.getColumnIndex("anh")));
+            sanPhamList.add(sanPham);
+        }
+        return sanPhamList;
+    }
 }

@@ -92,7 +92,6 @@ public class ManHinhDangNhap extends AppCompatActivity {
                 SharedPreferences pref = getSharedPreferences("USER_FILE", MODE_PRIVATE);
                 SharedPreferences.Editor edit = pref.edit();
                 edit.putString("USERNAME", strUser);
-                edit.putString("PASSWORD", strPass);
 
                 finish();
             } else {

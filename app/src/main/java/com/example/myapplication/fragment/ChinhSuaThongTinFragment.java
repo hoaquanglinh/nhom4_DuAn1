@@ -115,27 +115,24 @@ public class ChinhSuaThongTinFragment extends Fragment {
                             item.setSdt(edSDT.getText().toString());
                             item.setEmail(edEmail.getText().toString());
                             item.setMatknd(matknd);
-                        }
 
+                            if (!list.isEmpty()){
+                                dao.update(item);
+                            }else{
+                                dao.insert(item);
+                            }
+                            Toast.makeText(getContext(), "Chỉnh sửa thông tin thành công", Toast.LENGTH_SHORT).show();
+                            PersonFragment fragment = new PersonFragment();
+                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.flContent, fragment);
+                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
+                        }
                     }catch (NumberFormatException e){
                         Toast.makeText(getContext(), "Năm sinh phải là sô", Toast.LENGTH_SHORT).show();
                     }
                 }
-
-                if (!list.isEmpty()){
-                    dao.update(item);
-                }else{
-                    dao.insert(item);
-                }
-
-                Toast.makeText(getContext(), "Chỉnh sửa thông tin thành công", Toast.LENGTH_SHORT).show();
-
-                PersonFragment fragment = new PersonFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.flContent, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
             }
         });
 

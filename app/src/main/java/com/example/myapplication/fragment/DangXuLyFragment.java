@@ -1,14 +1,10 @@
 package com.example.myapplication.fragment;
 
-import static android.content.Context.MODE_PRIVATE;
-
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +29,8 @@ public class DangXuLyFragment extends Fragment {
     ArrayList<SanPham> list;
     TaiKhoanNDDAO nddao;
     NguoiDungDAO nguoiDungDAO;
-    DonHang donHang;
     ArrayList<DonHang> listDH;
+    DonHang donHang;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,10 +49,19 @@ public class DangXuLyFragment extends Fragment {
 
         list = (ArrayList<SanPham>) donHangDAO.getListSanPhamTrongDonHang(mand);
         listDH = (ArrayList<DonHang>) donHangDAO.getAll();
+        donHang = new DonHang();
+
+//        ArrayList<SanPham> list1 = new ArrayList<>();
+//        for (DonHang dh : listDH) {
+//            if (dh.getTrangthai() != 2) {
+//                ArrayList<SanPham> sanPhams = (ArrayList<SanPham>) donHangDAO.getListSanPhamTrongDonHang(mand);
+//                list1.addAll(sanPhams);
+//            }
+//        }
 
         adapter = new DonHangAdapter(getActivity(), list, listDH, dao);
-        adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
         return view;
     }

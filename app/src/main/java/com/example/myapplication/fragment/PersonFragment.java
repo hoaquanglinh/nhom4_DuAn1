@@ -10,6 +10,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,6 +78,13 @@ public class PersonFragment extends Fragment {
                 fragmentTransaction.replace(R.id.flContent, doMatKhauFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+            }
+        });
+
+        view.findViewById(R.id.tvLichSuMua).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 

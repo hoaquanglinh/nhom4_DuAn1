@@ -2,13 +2,15 @@ package com.example.myapplication.adapter;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.app.Activity;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,7 +32,6 @@ import com.example.myapplication.DAO.SanPhamDAO;
 import com.example.myapplication.DAO.TaiKhoanNDDAO;
 import com.example.myapplication.R;
 import com.example.myapplication.fragment.DonHangFragment;
-import com.example.myapplication.fragment.ThongTinChiTietFragment;
 import com.example.myapplication.model.DonHang;
 import com.example.myapplication.model.MauSac;
 import com.example.myapplication.model.SanPham;
@@ -51,6 +51,7 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
     TaiKhoanNDDAO nddao;
     NguoiDungDAO nguoiDungDAO;
     ArrayList<DonHang> listDH;
+    private Handler handler;
     public DonHangAdapter(@NonNull Context context, ArrayList<SanPham> list, ArrayList<DonHang> listDH, SanPhamDAO dao) {
         super(context, 0, list);
         this.context = context;
@@ -103,6 +104,9 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
 
             tvsoluong = v.findViewById(R.id.tvsoluong2);
             tvsoluong.setText("x"+item.getSoluong());
+
+            int id = donHang.getMadh();
+
             v.findViewById(R.id.btnHuyDonHang).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -113,7 +117,7 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            int id = donHang.getMadh();
+                            Log.d("madh", "ma don hang "+ id);
                             donHangDAO.delete(String.valueOf(id));
                             list.clear();
                             list.addAll(donHangDAO.getListSanPhamTrongDonHang(mand));
@@ -132,6 +136,36 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
                 }
             });
 
+            int trangthai = donHang.getTrangthai();
+            handler = new Handler();
+            if (trangthai == 1) {
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        int madh = donHang.getMadh();
+                        int trangthaiMoi = 2;
+                        donHangDAO.updateTrangThai(madh, trangthaiMoi);
+                        donHang.setTrangthai(trangthaiMoi);
+                        notifyDataSetChanged();
+                    }
+                }, 60*60*24*1000);
+            }
+
+            if (donHang.getTrangthai()==2) {
+                tvtensp.setVisibility(View.GONE);
+                tvmau.setVisibility(View.GONE);
+                tvgiasp.setVisibility(View.GONE);
+                imageView.setVisibility(View.GONE);
+                tvsoluong.setVisibility(View.GONE);
+                v.findViewById(R.id.btnHuyDonHang).setVisibility(View.GONE);
+            } else {
+                tvtensp.setVisibility(View.VISIBLE);
+                tvmau.setVisibility(View.VISIBLE);
+                tvgiasp.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.VISIBLE);
+                tvsoluong.setVisibility(View.VISIBLE);
+                v.findViewById(R.id.btnHuyDonHang).setVisibility(View.VISIBLE);
+            }
         }
 
         v.setOnClickListener(new View.OnClickListener() {
@@ -140,7 +174,6 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
                 open(item, donHang);
             }
         });
-
         return v;
     }
 

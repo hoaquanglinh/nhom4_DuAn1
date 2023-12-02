@@ -32,6 +32,10 @@ public class GioHangDao {
         return db.delete("giohang", "masp = ?", new String[]{String.valueOf(id)});
     }
 
+    public long deleteAll() {
+        return db.delete("giohang", null, null);
+    }
+
     @SuppressLint("Range")
     private List<GioHang> getData(String sql, String... selectionArgs) {
         List<GioHang> list = new ArrayList<>();
