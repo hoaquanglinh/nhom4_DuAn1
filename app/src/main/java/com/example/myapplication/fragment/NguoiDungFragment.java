@@ -15,7 +15,6 @@ public class NguoiDungFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_nguoi_dung, container, false);
 
-
         return view;
     }
 }

@@ -181,4 +181,31 @@ public class DonHangDAO {
         }
         return sanPhamList;
     }
+
+    @SuppressLint("Range")
+    public List<SanPham> getSanPhamByMadh() {
+        List<SanPham> listSanPham = new ArrayList<>();
+        String query = "SELECT sanpham.* " +
+                "FROM donhang " +
+                "INNER JOIN sanpham ON donhang.masp = sanpham.masp";
+        Cursor cursor = db.rawQuery(query, null);
+
+        while (cursor.moveToNext()) {
+            SanPham sanPham = new SanPham();
+            sanPham.setMasp(Integer.parseInt(cursor.getString(cursor.getColumnIndex("masp"))));
+            sanPham.setMamau(Integer.parseInt(cursor.getString(cursor.getColumnIndex("mamau"))));
+            sanPham.setMahang(Integer.parseInt(cursor.getString(cursor.getColumnIndex("mahang"))));
+            sanPham.setMatknd(Integer.parseInt(cursor.getString(cursor.getColumnIndex("matknd"))));
+            sanPham.setTensp(cursor.getString(cursor.getColumnIndex("tensp")));
+            sanPham.setGiasp(Double.parseDouble(cursor.getString(cursor.getColumnIndex("gia"))));
+            sanPham.setKhoHang(Integer.parseInt(cursor.getString(cursor.getColumnIndex("khohang"))));
+            sanPham.setMota(cursor.getString(cursor.getColumnIndex("mota")));
+            sanPham.setSoluong(Integer.parseInt(cursor.getString(cursor.getColumnIndex("soluong"))));
+            sanPham.setAnh(cursor.getString(cursor.getColumnIndex("anh")));
+            listSanPham.add(sanPham);
+        }
+
+        cursor.close();
+        return listSanPham;
+    }
 }

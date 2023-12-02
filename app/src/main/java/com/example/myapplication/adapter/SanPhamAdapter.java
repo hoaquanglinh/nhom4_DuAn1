@@ -90,22 +90,23 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
             Uri imageUri = Uri.parse(item.getAnh());
             imageView = v.findViewById(R.id.imageSP);
             imageView.setImageURI(imageUri);
-
             btnxoa = v.findViewById(R.id.btnXoa);
-
-            v.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    openEditProductFragment(item);
-                    return false;
-                }
-            });
-
             SharedPreferences pref = activity.getSharedPreferences("USER_FILE", MODE_PRIVATE);
             String user = pref.getString("USERNAME", "");
-
             nddao = new TaiKhoanNDDAO(context);
             int matknd = nddao.getMatkndFromTaikhoannd(user);
+
+
+            if (!user.equals("admin")){
+                v.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        openEditProductFragment(item);
+                        return false;
+                    }
+                });
+            }
+
             btnxoa.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -120,7 +121,11 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
                             int id = list.get(position).getMasp();
                             dao.delete(String.valueOf(id));
                             list.clear();
-                            list.addAll(dao.getAllByMAtknd(matknd));
+                            if(user.equals("admin")){
+                                list.addAll(dao.getAll());
+                            }else{
+                                list.addAll(dao.getAllByMAtknd(matknd));
+                            }
                             notifyDataSetChanged();
                             dialog.cancel();
                             Toast.makeText(getContext(), "Đã xóa", Toast.LENGTH_SHORT).show();

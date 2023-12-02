@@ -47,22 +47,18 @@ public class DangXuLyFragment extends Fragment {
         int matknd = nddao.getMatkndFromTaikhoannd(user);
         int mand = nguoiDungDAO.getMandByMatknd(matknd);
 
-        list = (ArrayList<SanPham>) donHangDAO.getListSanPhamTrongDonHang(mand);
-        listDH = (ArrayList<DonHang>) donHangDAO.getAll();
-        donHang = new DonHang();
-
-//        ArrayList<SanPham> list1 = new ArrayList<>();
-//        for (DonHang dh : listDH) {
-//            if (dh.getTrangthai() != 2) {
-//                ArrayList<SanPham> sanPhams = (ArrayList<SanPham>) donHangDAO.getListSanPhamTrongDonHang(mand);
-//                list1.addAll(sanPhams);
-//            }
-//        }
+        list = new ArrayList<>();
+        if (!user.equals("admin")){
+            list = (ArrayList<SanPham>) donHangDAO.getListSanPhamTrongDonHang(mand);
+            listDH = (ArrayList<DonHang>) donHangDAO.getAll();
+        }else{
+            list = (ArrayList<SanPham>) donHangDAO.getSanPhamByMadh();
+            listDH = (ArrayList<DonHang>) donHangDAO.getAll();
+        }
 
         adapter = new DonHangAdapter(getActivity(), list, listDH, dao);
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-
         return view;
     }
 

@@ -40,7 +40,13 @@ public class QuanLyNguoiDungFragment extends Fragment {
     }
     void capNhatLv() {
         list = (ArrayList<TaiKhoanND>) dao.getAll();
-        adapter = new TaiKhoanAdapter(getActivity(), this, list);
+        ArrayList<TaiKhoanND> list1 = new ArrayList<>();
+        for (TaiKhoanND tk: list){
+            if(!tk.getTaiKhoanND().equals("admin")){
+                list1.add(tk);
+            }
+        }
+        adapter = new TaiKhoanAdapter(getActivity(), this, list1);
         lvTaiKhoan.setAdapter(adapter);
     }
 

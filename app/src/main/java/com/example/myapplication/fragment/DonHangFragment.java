@@ -80,10 +80,10 @@ public class DonHangFragment extends Fragment {
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         activity.getSupportActionBar().setTitle("Đơn hàng");
 
-        selectedImageUri = Uri.parse(item.getAnh());
-        imageViewSP.setImageURI(selectedImageUri);
-
         if(item != null){
+            selectedImageUri = Uri.parse(item.getAnh());
+            imageViewSP.setImageURI(selectedImageUri);
+
             tenspct.setText(item.getTensp());
             tvsoluong.setText(String.valueOf(item.getSoluong()));
             String giaviet = numberFormat.format(item.getGiasp());

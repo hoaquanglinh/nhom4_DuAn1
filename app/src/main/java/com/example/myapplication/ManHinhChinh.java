@@ -18,6 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.myapplication.fragment.AddFragment;
+import com.example.myapplication.fragment.DonHangFragment;
+import com.example.myapplication.fragment.DonMuaFragment;
 import com.example.myapplication.fragment.GioHangFragment;
 import com.example.myapplication.fragment.HangFragment;
 import com.example.myapplication.fragment.HomeFragment;
@@ -74,6 +76,8 @@ public class ManHinhChinh extends AppCompatActivity {
                         fragment = new QuanLyNguoiDungFragment();
                     }else if(item.getItemId() == R.id.nav_hang){
                         fragment = new HangFragment();
+                    }else if(item.getItemId() == R.id.nav_quanlidonhang){
+                        fragment = new DonMuaFragment();
                     }
                     else{
                         Intent intent = new Intent(ManHinhChinh.this, ManHinhDangNhap.class);

@@ -2,19 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item android:id="@+id/nav_sanpham"
-            android:title="Quản lý sản phẩm"/>
+            android:title="Quản lý sản phẩm"
+            android:icon="@drawable/baseline_smartphone_24" />
         <item android:id="@+id/nav_thanhvien"
-            android:title="Quản lý thành viên"/>
+            android:title="Quản lý thành viên"
+            android:icon="@drawable/baseline_groups_2_24"/>
         <item android:id="@+id/nav_mau"
-            android:title="Quản lý màu"/>
+            android:title="Quản lý màu"
+            android:icon="@drawable/baseline_color_lens_24"/>
         <item android:id="@+id/nav_hang"
-            android:title="Quản lý hãng"/>
+            android:title="Quản lý hãng"
+            android:icon="@drawable/baseline_vertical_split_24"/>
         <item android:id="@+id/nav_quanlidonhang"
-            android:title="Quản lý đơn hàng"/>
+            android:title="Quản lý đơn hàng"
+            android:icon="@drawable/list"/>
         <item android:title="Cài đặt">
             <menu>
                 <item android:id="@+id/dangxuat"
-                    android:title="Đăng xuất"/>
+                    android:title="Đăng xuất"
+                    android:icon="@drawable/baseline_logout_24"/>
             </menu>
         </item>
     </group>

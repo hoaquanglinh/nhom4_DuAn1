@@ -34,12 +34,12 @@
             android:id="@+id/btnThemMau"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:text="Thêm"/>
+            android:text="Lưu"/>
         <Button
             android:id="@+id/btnHuyMau"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:layout_marginLeft="40dp"
-            android:text="xóa"/>
+            android:text="Hủy"/>
     </LinearLayout>
 </LinearLayout>

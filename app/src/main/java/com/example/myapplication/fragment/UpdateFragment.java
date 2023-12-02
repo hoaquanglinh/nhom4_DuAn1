@@ -113,6 +113,9 @@ public class UpdateFragment extends Fragment {
         spmahang.setAdapter(hangSpinerAdapter);
         spmahang.setSelection(getHangPosition(item.getMahang()));
 
+        Intent i = getActivity().getIntent();
+        String user = i.getStringExtra("user");
+
         imageUd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,9 +205,11 @@ public class UpdateFragment extends Fragment {
                         fragmentManager.beginTransaction()
                                 .replace(R.id.flContent, new ProductFragment())
                                 .commit();
-                    } else {
+                    }else {
                         Toast.makeText(getContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
                     }
+
+
                 }
             }catch (NumberFormatException e){
                 Toast.makeText(getContext(), "Giá và kho hàng phải là số", Toast.LENGTH_SHORT).show();

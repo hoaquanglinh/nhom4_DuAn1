@@ -1,5 +1,6 @@
 package com.example.myapplication.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,13 @@ public class DonMuaFragment extends Fragment {
         viewPager = view.findViewById(R.id.view_pager);
         toolbar = view.findViewById(R.id.toolbarDonMua);
 
+        Intent i = getActivity().getIntent();
+        String user = i.getStringExtra("user");
+
+        if (user.equals("admin")){
+            toolbar.setVisibility(View.GONE);
+        }
+
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -64,13 +72,9 @@ public class DonMuaFragment extends Fragment {
                 fragmentTransaction.replace(R.id.flContent, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+//                getFragmentManager().popBackStack();
             }
         });
     }
 
-    public void chuyenDenTabHai() {
-        if (viewPager != null) {
-            viewPager.setCurrentItem(1); // 1 là chỉ mục của tab thứ hai
-        }
-    }
 }
