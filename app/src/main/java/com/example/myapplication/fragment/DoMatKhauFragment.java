@@ -61,8 +61,8 @@ public class DoMatKhauFragment extends Fragment {
                 if(mk.trim().isEmpty() || remk.trim().isEmpty() || mkcu.isEmpty()){
                     Toast.makeText(getActivity(), "Không được để trống thông tin", Toast.LENGTH_SHORT).show();
                 }else{
-                    if(mk.equalsIgnoreCase(remk)){
-                        if(!mkcu.equals(pass)){
+                    if(mk.equals(remk)){
+                        if(mkcu.equals(pass)){
                             if(nddao.updatePassByMaTKND(matknd, mk) > 0){
                                 Toast.makeText(getActivity(), "Cập nhật mật khẩu thành công", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getActivity(), ManHinhDangNhap.class);

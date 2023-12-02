@@ -55,7 +55,6 @@ public class XacNhanDonHangFragment extends Fragment {
     SanPhamGioHangAdapter adapter;
     ArrayList<SanPham> list;
     TaiKhoanNDDAO nddao;
-    DonHangAdapter donHangAdapter;
     private int matknd, mand;
     TextView tvGia;
     Toolbar toolbar;
@@ -147,12 +146,10 @@ public class XacNhanDonHangFragment extends Fragment {
                             } else {
                                 donHang.setPtttt(3);
                             }
-
                             long insert = donHangDAO.insert(donHang);
                             if (insert > 0){
                                 Toast.makeText(getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
                             }
-
                             gioHangDao.deleteAll();
                             list1.clear();
                         }
@@ -160,15 +157,23 @@ public class XacNhanDonHangFragment extends Fragment {
                         String hoten = edHoTen.getText().toString();
                         String diachi = edDiaChi.getText().toString();
                         String sdt = edSDT.getText().toString();
-
-                        Log.d("diachi", "onClick: " + hoten + diachi + sdt);
-
                         nguoiDungDAO.updateAddressNamePhoneByMand(mand, diachi, hoten, sdt);
 
-                        DonMuaFragment fragment = new DonMuaFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("sdt", sdt);
+                        bundle.putString("hoten", hoten);
+                        bundle.putString("diachi", diachi);
+                        DonHangFragment donHangFragment = new DonHangFragment();
+                        donHangFragment.setArguments(bundle);
+
+                        Log.d("bundle", "budle; " + bundle.toString());
+
+                        DonMuaFragment donMuaFragment = new DonMuaFragment();
+                        donMuaFragment.setArguments(bundle);
+
                         FragmentManager fragmentManager = getFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.flContent, fragment);
+                        fragmentTransaction.replace(R.id.flContent, donMuaFragment);
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
                     }
@@ -188,4 +193,5 @@ public class XacNhanDonHangFragment extends Fragment {
             }
         });
     }
+
 }

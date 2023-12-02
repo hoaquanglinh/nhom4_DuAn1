@@ -45,7 +45,7 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
     DonHangDAO donHangDAO;
     SanPhamDAO dao;
     MauSacDAO mauSacDAO;
-    TextView tvtensp, tvgiasp, tvmau, tvsoluong;
+    TextView tvtensp, tvgiasp, tvmau, tvsoluong, tvtongtien;
     ImageView imageView;
     int matknd, mand;
     TaiKhoanNDDAO nddao;
@@ -105,8 +105,10 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
             tvsoluong = v.findViewById(R.id.tvsoluong2);
             tvsoluong.setText("x"+item.getSoluong());
 
-            int id = donHang.getMadh();
+            tvtongtien = v.findViewById(R.id.tvtongtien2);
+            tvtongtien.setText(numberFormat.format(item.getSoluong()*item.getGiasp()) + "đ");
 
+            int id = donHang.getMadh();
             v.findViewById(R.id.btnHuyDonHang).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -72,7 +72,6 @@ public class DonMuaFragment extends Fragment {
                 fragmentTransaction.replace(R.id.flContent, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-//                getFragmentManager().popBackStack();
             }
         });
     }

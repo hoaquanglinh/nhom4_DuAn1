@@ -100,6 +100,46 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Họ tên"
+            android:textSize="19dp"
+            android:textStyle="bold"
+            android:textColor="#444444"/>
+        <TextView
+            android:id="@+id/tvhoten3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            android:layout_marginBottom="10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Số điện thoại"
+            android:textSize="19dp"
+            android:textStyle="bold"
+            android:textColor="#444444"/>
+        <TextView
+            android:id="@+id/tvsdt3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            android:layout_marginBottom="10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="Địa chỉ nhận hàng"
             android:textSize="19dp"
             android:textStyle="bold"
@@ -108,7 +148,9 @@
             android:id="@+id/tvdiachi3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16dp"/>
+            android:textSize="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
 
         <View
             android:layout_width="match_parent"
@@ -127,7 +169,9 @@
             android:id="@+id/tvpttt3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16dp"/>
+            android:textSize="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
 
         <View
             android:layout_width="match_parent"
@@ -152,7 +196,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
             <TextView
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"

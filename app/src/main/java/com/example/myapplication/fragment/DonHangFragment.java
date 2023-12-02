@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ import java.util.Locale;
 
 public class DonHangFragment extends Fragment {
     SanPham item;
-    TextView tenspct, giaspct, mauspct, tvtongtien3, tvdiachi3, tvpttt3 , tvsoluong, tvthoigiandathang, tvthoigianhoanthanh;
+    TextView tenspct, giaspct, mauspct, tvtongtien3, tvdiachi3, tvpttt3 , tvsoluong, tvthoigiandathang, tvthoigianhoanthanh, hoten, sdt;
     ImageView imageViewSP;
     Uri selectedImageUri;
     MauSacDAO mauSacDAO;
@@ -44,16 +45,24 @@ public class DonHangFragment extends Fragment {
     TaiKhoanNDDAO nddao;
     DonHangDAO donHangDAO;
     int matknd, mand;
-    String diachi;
     int ptttt;
     Toolbar toolbar;
     Date thoigiandathang;
+    private String sdt3;
+    private String hoten3;
+    private String diachi;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             item = (SanPham) getArguments().getSerializable("chitietspdonhang");
             donHang = (DonHang) getArguments().getSerializable("donhang");
+            hoten3 = getArguments().getString("hoten");
+            diachi = getArguments().getString("diachi");
+            sdt3 = getArguments().getString("sdt");
+            Log.d("bundle", getArguments().toString());
         }
     }
 
@@ -62,6 +71,8 @@ public class DonHangFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_don_hang, container, false);
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
+
+        Log.d("linh", "Ten: " + diachi + hoten3 + sdt3);
 
         imageViewSP = view.findViewById(R.id.imageSP3);
         tenspct = view.findViewById(R.id.tvTensp3);
@@ -74,6 +85,9 @@ public class DonHangFragment extends Fragment {
         tvthoigiandathang = view.findViewById(R.id.tvThoiGianDatHang);
         tvthoigianhoanthanh = view.findViewById(R.id.tvThoiGianHoanThanh);
         toolbar = view.findViewById(R.id.toolbardonhang);
+        hoten = view.findViewById(R.id.tvhoten3);
+        sdt = view.findViewById(R.id.tvsdt3);
+
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
@@ -101,15 +115,20 @@ public class DonHangFragment extends Fragment {
         nguoiDungDAO = new NguoiDungDAO(getContext());
         nddao = new TaiKhoanNDDAO(getContext());
         donHangDAO = new DonHangDAO(getContext());
-        Intent i = getActivity().getIntent();
-        String user = i.getStringExtra("user");
-        matknd = nddao.getMatkndFromTaikhoannd(user);
-        mand = nguoiDungDAO.getMandByMatknd(matknd);
-        diachi = donHangDAO.getDiaChiByMand(mand);
+
+//        Intent i = getActivity().getIntent();
+//        String user = i.getStringExtra("user");
+//        matknd = nddao.getMatkndFromTaikhoannd(user);
+//        mand = nguoiDungDAO.getMandByMatknd(matknd);
+//        diachi = donHangDAO.getDiaChiByMand(mand);
+
         ptttt = donHangDAO.getPtttByMadh(donHang.getMadh());
         thoigiandathang = donHangDAO.getThoiGianDatHangByMadh(donHang.getMadh());
 
         tvdiachi3.setText(diachi);
+        hoten.setText(hoten3);
+        sdt.setText(sdt3);
+
         if (ptttt == 1){
             tvpttt3.setText("Thanh toán khi nhận hàng");
         }else if(ptttt == 2){
