@@ -49,27 +49,17 @@ public class DonHangDAO {
         return getData(sql);
     }
 
+    public List<DonHang> getAllByMand(int mand) {
+        String sql = "SELECT * FROM donhang WHERE mand = ?";
+        String[] selectionArgs = {String.valueOf(mand)};
+        return getData(sql, selectionArgs);
+    }
+
     public int updateTrangThai(int madh, int trangthai) {
         ContentValues values = new ContentValues();
         values.put("trangthai", trangthai);
 
         return db.update("donhang", values, "madh = ?", new String[]{String.valueOf(madh)});
-    }
-
-    @SuppressLint("Range")
-    public String getDiaChiByMand(int mand) {
-        String diaChi = "";
-        String query = "SELECT nguoidung.diachi " +
-                "FROM donhang " +
-                "INNER JOIN nguoidung ON donhang.mand = nguoidung.mand " +
-                "WHERE donhang.mand = ?";
-        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(mand)});
-
-        if (cursor.moveToFirst()) {
-            diaChi = cursor.getString(cursor.getColumnIndex("diachi"));
-        }
-        cursor.close();
-        return diaChi;
     }
     @SuppressLint("Range")
     public int getPtttByMadh(int madh) {

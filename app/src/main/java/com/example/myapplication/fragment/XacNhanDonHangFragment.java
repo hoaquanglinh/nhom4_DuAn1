@@ -69,6 +69,7 @@ public class XacNhanDonHangFragment extends Fragment {
     TextView tv_tongtien;
     double tongtien;
     RadioButton rdo1, rdo2, rdo3;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -128,12 +129,12 @@ public class XacNhanDonHangFragment extends Fragment {
         view.findViewById(R.id.btnDatHang).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(edHoTen.getText().toString().trim().isEmpty()||edDiaChi.getText().toString().trim().isEmpty()||edSDT.getText().toString().trim().isEmpty()){
+                if (edHoTen.getText().toString().trim().isEmpty() || edDiaChi.getText().toString().trim().isEmpty() || edSDT.getText().toString().trim().isEmpty()) {
                     Toast.makeText(getContext(), "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
-                }else{
-                    if (!rdo1.isChecked() && !rdo2.isChecked() && !rdo3.isChecked()){
+                } else {
+                    if (!rdo1.isChecked() && !rdo2.isChecked() && !rdo3.isChecked()) {
                         Toast.makeText(getActivity(), "Vui lòng chọn phương thức thanh toán", Toast.LENGTH_SHORT).show();
-                    }else{
+                    } else {
                         for (SanPham sp : list) {
                             donHang = new DonHang();
                             donHang.setMand(mand);
@@ -151,16 +152,18 @@ public class XacNhanDonHangFragment extends Fragment {
                                 donHang.setPtttt(3);
                             }
                             long insert = donHangDAO.insert(donHang);
-                            if (insert > 0){
+                            if (insert > 0) {
+                                Log.d("insert", "onClick: " + insert);
                                 Toast.makeText(getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
                             }
                             gioHangDao.deleteAll();
-                            list1.clear();
+                            Log.d("donhang", "onClick: " + donHang.getMadh());
                         }
-                        for (SanPham sanPham: list){
+                        for (SanPham sanPham : list) {
                             sanPham.setSoluong(1);
                             sanPhamDAO.updateSL(sanPham.getMasp(), 1);
                         }
+
                         String hoten = edHoTen.getText().toString();
                         String diachi = edDiaChi.getText().toString();
                         String sdt = edSDT.getText().toString();

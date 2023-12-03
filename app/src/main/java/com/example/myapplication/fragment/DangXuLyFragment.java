@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,10 +48,9 @@ public class DangXuLyFragment extends Fragment {
         int matknd = nddao.getMatkndFromTaikhoannd(user);
         int mand = nguoiDungDAO.getMandByMatknd(matknd);
 
-        list = new ArrayList<>();
         if (!user.equals("admin")){
             list = (ArrayList<SanPham>) donHangDAO.getListSanPhamTrongDonHang(mand);
-            listDH = (ArrayList<DonHang>) donHangDAO.getAll();
+            listDH = (ArrayList<DonHang>) donHangDAO.getAllByMand(mand);
         }else{
             list = (ArrayList<SanPham>) donHangDAO.getSanPhamByMadh();
             listDH = (ArrayList<DonHang>) donHangDAO.getAll();

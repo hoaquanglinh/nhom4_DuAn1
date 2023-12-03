@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 
 public class DBHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "FastPhone32";
-    public static final int DB_VERSION = 2;
+    public static final int DB_VERSION = 3;
 
     public DBHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -80,11 +80,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS nguoidung");
         db.execSQL("DROP TABLE IF EXISTS taikhoanND");
-        db.execSQL("DROP TABLE IF EXISTS taikhoanQTV");
+        db.execSQL("DROP TABLE IF EXISTS giohang");
         db.execSQL("DROP TABLE IF EXISTS mausac");
         db.execSQL("DROP TABLE IF EXISTS hang");
         db.execSQL("DROP TABLE IF EXISTS sanpham");
-        db.execSQL("DROP TABLE IF EXISTS createTableDonViVanChuyen");
+        db.execSQL("DROP TABLE IF EXISTS donhang");
 
         // Tạo lại các bảng mới
         onCreate(db);
