@@ -12,11 +12,12 @@ public class DonHang implements Serializable {
     private Date thoigiandathang;
     private Date thoigianhoanthanh;
     private int ptttt;
+    private int soluongmua;
 
     public DonHang() {
     }
 
-    public DonHang(int madh, int mand, int masp, int trangthai, Double tongtien, Date thoigiandathang, Date thoigianhoanthanh, int ptttt) {
+    public DonHang(int madh, int mand, int masp, int trangthai, Double tongtien, Date thoigiandathang, Date thoigianhoanthanh, int ptttt, int soluongmua) {
         this.madh = madh;
         this.mand = mand;
         this.masp = masp;
@@ -25,6 +26,15 @@ public class DonHang implements Serializable {
         this.thoigiandathang = thoigiandathang;
         this.thoigianhoanthanh = thoigianhoanthanh;
         this.ptttt = ptttt;
+        this.soluongmua = soluongmua;
+    }
+
+    public int getSoluongmua() {
+        return soluongmua;
+    }
+
+    public void setSoluongmua(int soluongmua) {
+        this.soluongmua = soluongmua;
     }
 
     public int getMasp() {

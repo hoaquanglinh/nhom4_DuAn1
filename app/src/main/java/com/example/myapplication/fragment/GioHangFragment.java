@@ -1,23 +1,18 @@
 package com.example.myapplication.fragment;
 
-import static android.content.Context.MODE_PRIVATE;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -100,7 +95,6 @@ public class GioHangFragment extends Fragment implements SanPhamGioHangAdapter.O
     @Override
     public void onItemSelected(double gia) {
         tvGia.setText(numberFormat.format(gia)+ " đ");
-
         Bundle bundle = new Bundle();
         bundle.putDouble("tongtien", gia);
         fragment.setArguments(bundle);

@@ -103,10 +103,10 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
             imageView.setImageURI(imageUri);
 
             tvsoluong = v.findViewById(R.id.tvsoluong2);
-            tvsoluong.setText("x"+item.getSoluong());
+            tvsoluong.setText("x"+donHang.getSoluongmua());
 
             tvtongtien = v.findViewById(R.id.tvtongtien2);
-            tvtongtien.setText(numberFormat.format(item.getSoluong()*item.getGiasp()) + "đ");
+            tvtongtien.setText(numberFormat.format(donHang.getSoluongmua()*item.getGiasp()) + "đ");
 
             int id = donHang.getMadh();
             v.findViewById(R.id.btnHuyDonHang).setOnClickListener(new View.OnClickListener() {

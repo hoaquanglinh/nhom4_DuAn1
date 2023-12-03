@@ -138,8 +138,8 @@ public class XacNhanDonHangFragment extends Fragment {
                             donHang = new DonHang();
                             donHang.setMand(mand);
                             donHang.setMasp(sp.getMasp());
-                            Log.d("linh", "masp: " + sp.getMasp());
-                            donHang.setTongtien(tongtien);
+                            donHang.setSoluongmua(sp.getSoluong());
+                            donHang.setTongtien(sp.getGiasp() * donHang.getSoluongmua());
                             donHang.setThoigiandathang(new Date());
                             donHang.setThoigianhoanthanh(new Date());
                             donHang.setTrangthai(1);
@@ -157,20 +157,14 @@ public class XacNhanDonHangFragment extends Fragment {
                             gioHangDao.deleteAll();
                             list1.clear();
                         }
-
+                        for (SanPham sanPham: list){
+                            sanPham.setSoluong(1);
+                            sanPhamDAO.updateSL(sanPham.getMasp(), 1);
+                        }
                         String hoten = edHoTen.getText().toString();
                         String diachi = edDiaChi.getText().toString();
                         String sdt = edSDT.getText().toString();
                         nguoiDungDAO.updateAddressNamePhoneByMand(mand, diachi, hoten, sdt);
-
-//                        Bundle bundle = new Bundle();
-//                        bundle.putString("sdt", sdt);
-//                        bundle.putString("hoten", hoten);
-//                        bundle.putString("diachi", diachi);
-//                        DonHangFragment donHangFragment = new DonHangFragment();
-//                        donHangFragment.setArguments(bundle);
-//
-//                        Log.d("bundle", "budle; " + bundle.toString());
 
                         DonMuaFragment donMuaFragment = new DonMuaFragment();
                         donMuaFragment.setArguments(bundle);

@@ -49,9 +49,6 @@ public class DonHangFragment extends Fragment {
     int ptttt;
     Toolbar toolbar;
     Date thoigiandathang;
-    private String sdt3;
-    private String hoten3;
-    private String diachi;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

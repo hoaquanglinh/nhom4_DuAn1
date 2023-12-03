@@ -50,9 +50,6 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
     GioHangDao gioHangDao;
     double tong;
     int matknd;
-    int ma;
-    private ArrayList<Integer> selectedItems = new ArrayList<>();
-
     public SanPhamGioHangAdapter(@NonNull Context context, ArrayList<SanPham> list, Activity activity, SanPhamDAO dao) {
         super(context, 0, list);
         this.context = context;

@@ -33,6 +33,7 @@ public class DonHangDAO {
         values.put("masp", obj.getMasp());
         values.put("trangthai", obj.getTrangthai());
         values.put("tongtien", obj.getTongtien());
+        values.put("soluongmua", obj.getSoluongmua());
         values.put("thoigiandathang", sdf.format(obj.getThoigiandathang()));
         values.put("thoigianhoanthanh", sdf.format(obj.getThoigianhoanthanh()));
         values.put("ptttt", obj.getPtttt());
@@ -110,6 +111,7 @@ public class DonHangDAO {
             donHang.setMasp(Integer.parseInt(cursor.getString(cursor.getColumnIndex("masp"))));
             donHang.setTrangthai(Integer.parseInt(cursor.getString(cursor.getColumnIndex("trangthai"))));
             donHang.setTongtien(Double.parseDouble(cursor.getString(cursor.getColumnIndex("mand"))));
+            donHang.setSoluongmua(Integer.parseInt(cursor.getString(cursor.getColumnIndex("soluongmua"))));
             try {
                 donHang.setThoigiandathang(sdf.parse(cursor.getString((cursor.getColumnIndex("thoigiandathang")))));
             } catch (ParseException e) {
