@@ -208,4 +208,27 @@ public class DonHangDAO {
         cursor.close();
         return listSanPham;
     }
+
+    @SuppressLint("Range")
+    public NguoiDung getThongTinNguoiDungByMaDH(int madh) {
+        NguoiDung nguoiDung = null;
+        String query = "SELECT nguoidung.* " +
+                "FROM donhang " +
+                "INNER JOIN nguoidung ON donhang.mand = nguoidung.mand " +
+                "WHERE donhang.madh = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(madh)});
+
+        if (cursor.moveToFirst()) {
+            String ten = cursor.getString(cursor.getColumnIndex("ten"));
+            String gioitinh = cursor.getString(cursor.getColumnIndex("gioitinh"));
+            Integer namsinh = Integer.parseInt(cursor.getString(cursor.getColumnIndex("namsinh")));
+            String diachi = cursor.getString(cursor.getColumnIndex("diachi"));
+            String sdt = cursor.getString(cursor.getColumnIndex("sdt"));
+            String email = cursor.getString(cursor.getColumnIndex("email"));
+
+            nguoiDung = new NguoiDung(ten, gioitinh, diachi, sdt, email, namsinh);
+        }
+        cursor.close();
+        return nguoiDung;
+    }
 }

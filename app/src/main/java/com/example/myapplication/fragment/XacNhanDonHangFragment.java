@@ -40,6 +40,7 @@ import com.example.myapplication.model.GioHang;
 import com.example.myapplication.model.NguoiDung;
 import com.example.myapplication.model.SanPham;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -58,6 +59,7 @@ public class XacNhanDonHangFragment extends Fragment {
     private int matknd, mand;
     TextView tvGia;
     Toolbar toolbar;
+    SanPhamDAO sanPhamDAO;
     NguoiDungDAO nguoiDungDAO;
     ArrayList<NguoiDung> listNguoiDung;
     NguoiDung item;
@@ -75,7 +77,7 @@ public class XacNhanDonHangFragment extends Fragment {
         if (bundle != null) {
             tongtien = bundle.getDouble("tongtien");
         }
-
+        NumberFormat numberFormat = NumberFormat.getNumberInstance();
         donHangDAO = new DonHangDAO(getActivity());
         donHang = new DonHang();
         listView = view.findViewById(R.id.lvXacNhan);
@@ -86,7 +88,7 @@ public class XacNhanDonHangFragment extends Fragment {
         edSDT = view.findViewById(R.id.ed_soDienThoai);
         edDiaChi = view.findViewById(R.id.ed_DiaChi);
         tv_tongtien = view.findViewById(R.id.tv_TongTienXN);
-        tv_tongtien.setText(String.valueOf(tongtien));
+        tv_tongtien.setText(numberFormat.format(tongtien) + "đ");
         rdo1 = view.findViewById(R.id.rdottknt);
         rdo2 = view.findViewById(R.id.rdotknh);
         rdo3 = view.findViewById(R.id.rdovimomo);
@@ -98,6 +100,7 @@ public class XacNhanDonHangFragment extends Fragment {
         matknd = nddao.getMatkndFromTaikhoannd(user);
         mand = nguoiDungDAO.getMandByMatknd(matknd);
 
+        sanPhamDAO = new SanPhamDAO(getActivity());
         gioHangDao = new GioHangDao(getActivity());
         ArrayList<SanPham> list1 = (ArrayList<SanPham>) gioHangDao.getSanPhamInGioHangByMatkd(matknd);
 
@@ -135,6 +138,7 @@ public class XacNhanDonHangFragment extends Fragment {
                             donHang = new DonHang();
                             donHang.setMand(mand);
                             donHang.setMasp(sp.getMasp());
+                            Log.d("linh", "masp: " + sp.getMasp());
                             donHang.setTongtien(tongtien);
                             donHang.setThoigiandathang(new Date());
                             donHang.setThoigianhoanthanh(new Date());
@@ -159,14 +163,14 @@ public class XacNhanDonHangFragment extends Fragment {
                         String sdt = edSDT.getText().toString();
                         nguoiDungDAO.updateAddressNamePhoneByMand(mand, diachi, hoten, sdt);
 
-                        Bundle bundle = new Bundle();
-                        bundle.putString("sdt", sdt);
-                        bundle.putString("hoten", hoten);
-                        bundle.putString("diachi", diachi);
-                        DonHangFragment donHangFragment = new DonHangFragment();
-                        donHangFragment.setArguments(bundle);
-
-                        Log.d("bundle", "budle; " + bundle.toString());
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("sdt", sdt);
+//                        bundle.putString("hoten", hoten);
+//                        bundle.putString("diachi", diachi);
+//                        DonHangFragment donHangFragment = new DonHangFragment();
+//                        donHangFragment.setArguments(bundle);
+//
+//                        Log.d("bundle", "budle; " + bundle.toString());
 
                         DonMuaFragment donMuaFragment = new DonMuaFragment();
                         donMuaFragment.setArguments(bundle);

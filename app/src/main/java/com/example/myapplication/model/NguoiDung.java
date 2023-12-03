@@ -19,6 +19,15 @@ public class NguoiDung {
         this.mand = mand;
     }
 
+    public NguoiDung(String ten, String gioiTinh, String diaChi, String sdt, String email, int namSinh) {
+        this.ten = ten;
+        this.gioiTinh = gioiTinh;
+        this.diaChi = diaChi;
+        this.sdt = sdt;
+        this.email = email;
+        this.namSinh = namSinh;
+    }
+
     public String getTen() {
         return ten;
     }

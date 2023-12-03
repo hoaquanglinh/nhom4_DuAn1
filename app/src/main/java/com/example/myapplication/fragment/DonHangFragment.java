@@ -27,6 +27,7 @@ import com.example.myapplication.DAO.TaiKhoanNDDAO;
 import com.example.myapplication.R;
 import com.example.myapplication.model.DonHang;
 import com.example.myapplication.model.MauSac;
+import com.example.myapplication.model.NguoiDung;
 import com.example.myapplication.model.SanPham;
 
 import java.text.NumberFormat;
@@ -59,9 +60,6 @@ public class DonHangFragment extends Fragment {
         if (getArguments() != null) {
             item = (SanPham) getArguments().getSerializable("chitietspdonhang");
             donHang = (DonHang) getArguments().getSerializable("donhang");
-            hoten3 = getArguments().getString("hoten");
-            diachi = getArguments().getString("diachi");
-            sdt3 = getArguments().getString("sdt");
             Log.d("bundle", getArguments().toString());
         }
     }
@@ -71,8 +69,6 @@ public class DonHangFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_don_hang, container, false);
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
-
-        Log.d("linh", "Ten: " + diachi + hoten3 + sdt3);
 
         imageViewSP = view.findViewById(R.id.imageSP3);
         tenspct = view.findViewById(R.id.tvTensp3);
@@ -116,18 +112,15 @@ public class DonHangFragment extends Fragment {
         nddao = new TaiKhoanNDDAO(getContext());
         donHangDAO = new DonHangDAO(getContext());
 
-//        Intent i = getActivity().getIntent();
-//        String user = i.getStringExtra("user");
-//        matknd = nddao.getMatkndFromTaikhoannd(user);
-//        mand = nguoiDungDAO.getMandByMatknd(matknd);
-//        diachi = donHangDAO.getDiaChiByMand(mand);
-
         ptttt = donHangDAO.getPtttByMadh(donHang.getMadh());
         thoigiandathang = donHangDAO.getThoiGianDatHangByMadh(donHang.getMadh());
 
-        tvdiachi3.setText(diachi);
-        hoten.setText(hoten3);
-        sdt.setText(sdt3);
+        NguoiDung nd = donHangDAO.getThongTinNguoiDungByMaDH(donHang.getMadh());
+
+        tvdiachi3.setText(nd.getDiaChi());
+        hoten.setText(nd.getTen());
+        sdt.setText(nd.getSdt());
+
 
         if (ptttt == 1){
             tvpttt3.setText("Thanh toán khi nhận hàng");
