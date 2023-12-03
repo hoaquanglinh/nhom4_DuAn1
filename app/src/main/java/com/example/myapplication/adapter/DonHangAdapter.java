@@ -159,6 +159,7 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
                 tvgiasp.setVisibility(View.GONE);
                 imageView.setVisibility(View.GONE);
                 tvsoluong.setVisibility(View.GONE);
+                tvtongtien.setVisibility(View.GONE);
                 v.findViewById(R.id.btnHuyDonHang).setVisibility(View.GONE);
             } else {
                 tvtensp.setVisibility(View.VISIBLE);
@@ -166,6 +167,7 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
                 tvgiasp.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.VISIBLE);
                 tvsoluong.setVisibility(View.VISIBLE);
+                tvtongtien.setVisibility(View.VISIBLE);
                 v.findViewById(R.id.btnHuyDonHang).setVisibility(View.VISIBLE);
             }
         }
