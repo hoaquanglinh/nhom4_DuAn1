@@ -141,7 +141,9 @@ public class XacNhanDonHangFragment extends Fragment {
                             donHang.setMasp(sp.getMasp());
                             donHang.setSoluongmua(sp.getSoluong());
                             donHang.setTongtien(sp.getGiasp() * donHang.getSoluongmua());
-                            donHang.setThoigiandathang(new Date());
+                            Calendar calendar = Calendar.getInstance();
+                            Date currentTime = calendar.getTime();
+                            donHang.setThoigiandathang(currentTime);
                             donHang.setThoigianhoanthanh(new Date());
                             donHang.setTrangthai(1);
                             if (rdo1.isChecked()) {

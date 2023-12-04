@@ -7,15 +7,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 public class DBHelper extends SQLiteOpenHelper {
-    public static final String DB_NAME = "FastPhone32";
-    public static final int DB_VERSION = 3;
+    public static final String DB_NAME = "FastPhone34";
+    public static final int DB_VERSION = 4;
 
     public DBHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
     @Override
-
     public void onCreate(SQLiteDatabase db) {
         String createTableNguoiDung = "create table nguoidung (" +
                 "mand integer primary key autoincrement, " +
@@ -39,11 +38,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String createTableMau = "create table mausac(mamau bigint primary key, tenmau text not null)";
         db.execSQL(createTableMau);
-        db.execSQL("insert into mausac values (-16711936, 'Xanh'), (-65536, 'Đỏ'),(-7829368, 'Xám'),(-16777216, 'Đen'), (-1, 'Trắng')");
+        db.execSQL("insert into mausac values (-16711936, 'Xanh lá'), (-65536, 'Đỏ'),(-7829368, 'Xám'),(-16777216, 'Đen'), (-1, 'Trắng'), (-65281, 'Tím'), (-23296, 'Cam'), (-8388480, 'Tím')");
 
         String createTableHang = "create table hang(mahang integer primary key autoincrement, tenhang text not null)";
         db.execSQL(createTableHang);
-        db.execSQL("insert into hang values (1, 'SamSung'), (2, 'iphone'),(3, 'Xiaomi'),(4, 'Realme'), (5, 'Nokia')");
+        db.execSQL("insert into hang values (1, 'SamSung'), (2, 'iphone'),(3, 'Xiaomi'),(4, 'Realme'), (5, 'Nokia'), (6, 'Oppo'), (7, 'Huewai'), (8, 'OnePlus'), (10, 'Motorola')");
 
         String createTableSanPham = "create table sanpham (" +
                 "masp integer primary key autoincrement, " +

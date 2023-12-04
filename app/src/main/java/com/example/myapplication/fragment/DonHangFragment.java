@@ -118,7 +118,6 @@ public class DonHangFragment extends Fragment {
         hoten.setText(nd.getTen());
         sdt.setText(nd.getSdt());
 
-
         if (ptttt == 1){
             tvpttt3.setText("Thanh toán khi nhận hàng");
         }else if(ptttt == 2){
