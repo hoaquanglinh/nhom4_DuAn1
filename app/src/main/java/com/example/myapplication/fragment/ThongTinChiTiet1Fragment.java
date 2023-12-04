@@ -1,6 +1,7 @@
 package com.example.myapplication.fragment;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.content.Intent.getIntent;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -108,6 +109,14 @@ public class ThongTinChiTiet1Fragment extends Fragment {
         selectedImageUri = Uri.parse(item.getAnh());
         imageViewSanPham.setImageURI(selectedImageUri);
 
+        Intent i = getActivity().getIntent();
+        String user = i.getStringExtra("user");
+
+        if (user.equals("admin")){
+            view.findViewById(R.id.btnGioHang).setVisibility(View.GONE);
+            view.findViewById(R.id.btnMuaNgay).setVisibility(View.GONE);
+            view.findViewById(R.id.btngoidien).setVisibility(View.GONE);
+        }
 
         if (item != null) {
             tenspct.setText(item.getTensp());
@@ -132,8 +141,6 @@ public class ThongTinChiTiet1Fragment extends Fragment {
             khohang1.setText("Kho hàng: " + item.getKhoHang());
         }
 
-        Intent i = getActivity().getIntent();
-        String user = i.getStringExtra("user");
         matknd = nddao.getMatkndFromTaikhoannd(user);
 
         list = (ArrayList<SanPham>) dao.getAllExceptMAtknd(matknd);

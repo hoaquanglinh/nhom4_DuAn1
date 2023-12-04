@@ -42,7 +42,6 @@ public class PersonFragment extends Fragment {
 
         Intent i = getActivity().getIntent();
         String user = i.getStringExtra("user");
-        String pass = i.getStringExtra("pass");
 
         tvTenNguoiDung.setText(user);
 

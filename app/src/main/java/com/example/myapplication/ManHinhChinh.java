@@ -37,8 +37,6 @@ public class ManHinhChinh extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     NavigationView navigationView;
     Toolbar toolbar;
-    public int sl;
-    GioHangFragment gioHangFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +76,8 @@ public class ManHinhChinh extends AppCompatActivity {
                         fragment = new HangFragment();
                     }else if(item.getItemId() == R.id.nav_quanlidonhang){
                         fragment = new DonMuaFragment();
+                    }else if(item.getItemId() == R.id.nav_trangchu){
+                        fragment = new HomeFragment();
                     }
                     else{
                         Intent intent = new Intent(ManHinhChinh.this, ManHinhDangNhap.class);
@@ -92,13 +92,11 @@ public class ManHinhChinh extends AppCompatActivity {
                         ft.replace(R.id.flContent, fragment);
                         ft.commit();
                     }
-
                     return true;
                 }
             });
 
-            // Hiển thị màn hình Home khi vào ứng dụng
-            fragment = new QuanLySPFragment();
+            fragment = new HomeFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.replace(R.id.flContent, fragment);

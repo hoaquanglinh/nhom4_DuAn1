@@ -52,10 +52,8 @@ public class HomeFragment extends Fragment {
     HangDAO hangDAO;
     TaiKhoanNDDAO nddao;
     SearchView searchView;
-    Toolbar toolbar;
     public HomeFragment() {
     }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +66,7 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         Toolbar toolbar = rootView.findViewById(R.id.toolbarHome);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        // Khởi tạo danh sách các Slide
+
         List<Slide> slideList = new ArrayList<>();
         slideList.add(new Slide(R.drawable.img));
         slideList.add(new Slide(R.drawable.img_1));
@@ -115,7 +113,13 @@ public class HomeFragment extends Fragment {
 
         recyclerView = rootView.findViewById(R.id.recyclerView);
         dao = new SanPhamDAO(getActivity());
-        list = (ArrayList<SanPham>) dao.getAllExceptMAtknd(matknd);
+
+        if (user.equals("admin")){
+            list = (ArrayList<SanPham>) dao.getAll();
+        }else{
+            list = (ArrayList<SanPham>) dao.getAllExceptMAtknd(matknd);
+        }
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
