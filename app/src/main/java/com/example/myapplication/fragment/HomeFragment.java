@@ -116,6 +116,7 @@ public class HomeFragment extends Fragment {
 
         if (user.equals("admin")){
             list = (ArrayList<SanPham>) dao.getAll();
+            requireActivity().findViewById(R.id.navigation).setVisibility(View.GONE);
         }else{
             list = (ArrayList<SanPham>) dao.getAllExceptMAtknd(matknd);
         }
