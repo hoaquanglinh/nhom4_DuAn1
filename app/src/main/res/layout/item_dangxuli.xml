@@ -6,6 +6,7 @@
     android:padding="15dp">
 
     <LinearLayout
+        android:id="@+id/linearDangxyly"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

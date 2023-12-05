@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -51,6 +52,7 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
     TaiKhoanNDDAO nddao;
     NguoiDungDAO nguoiDungDAO;
     ArrayList<DonHang> listDH;
+    LinearLayout linearLayout;
     private Handler handler;
     public DonHangAdapter(@NonNull Context context, ArrayList<SanPham> list, ArrayList<DonHang> listDH, SanPhamDAO dao) {
         super(context, 0, list);
@@ -72,6 +74,7 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
 
         final SanPham item = list.get(position);
         final DonHang donHang = listDH.get(position);
+        linearLayout = v.findViewById(R.id.linearDangxyly);
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
 
         mauSacDAO = new MauSacDAO(context);

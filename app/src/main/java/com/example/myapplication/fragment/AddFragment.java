@@ -139,7 +139,7 @@ public class AddFragment extends Fragment {
                 String khohangStr = edKhohang.getText().toString();
                 String motasp = edMota.getText().toString();
 
-                if (tensp.isEmpty() || giaStr.isEmpty() || khohangStr.isEmpty()) {
+                if (tensp.trim().isEmpty() || giaStr.trim().isEmpty() || khohangStr.trim().isEmpty() || motasp.trim().isEmpty()) {
                     Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                 }else{
                     if (!isImageSelected) {

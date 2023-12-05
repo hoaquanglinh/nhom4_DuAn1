@@ -28,9 +28,9 @@ public class PersonFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_person, container, false);
         tvTenNguoiDung = view.findViewById(R.id.tvTenNguoiDung);
+        requireActivity().findViewById(R.id.navigation).setVisibility(View.VISIBLE);
         view.findViewById(R.id.btnDangXuat).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,14 +79,12 @@ public class PersonFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
-
         view.findViewById(R.id.tvLichSuMua).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
             }
         });
-
         return view;
     }
 }

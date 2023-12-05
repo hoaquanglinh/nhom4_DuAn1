@@ -16,8 +16,6 @@ public class ChiTietDonMuaFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chi_tiet_don_mua, container, false);
 
-
-
         return view;
     }
 }

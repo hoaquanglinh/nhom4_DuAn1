@@ -12,6 +12,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,7 +48,6 @@ public class DonHangFragment extends Fragment {
     NguoiDungDAO nguoiDungDAO;
     TaiKhoanNDDAO nddao;
     DonHangDAO donHangDAO;
-    int matknd, mand;
     int ptttt;
     Toolbar toolbar;
     Date thoigiandathang;
@@ -130,6 +132,13 @@ public class DonHangFragment extends Fragment {
         String formattedDate = dateFormat.format(thoigiandathang);
         tvthoigiandathang.setText(formattedDate);
 
+        view.findViewById(R.id.l12).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openttct(item);
+            }
+        });
+
         return view;
     }
 
@@ -144,4 +153,19 @@ public class DonHangFragment extends Fragment {
         });
     }
 
+    private void openttct(final SanPham sanPham) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("sanPhamChiTiet", sanPham);
+        ThongTinChiTietFragment thongTinChiTietFragment = new ThongTinChiTietFragment();
+        thongTinChiTietFragment.setArguments(bundle);
+
+        if (getActivity() instanceof FragmentActivity) {
+            FragmentActivity fragmentActivity = (FragmentActivity) getActivity();
+            FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.flContent, thongTinChiTietFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+    }
 }

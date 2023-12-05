@@ -31,7 +31,6 @@ public class DangXuLyFragment extends Fragment {
     TaiKhoanNDDAO nddao;
     NguoiDungDAO nguoiDungDAO;
     ArrayList<DonHang> listDH;
-    DonHang donHang;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -51,6 +50,9 @@ public class DangXuLyFragment extends Fragment {
         if (!user.equals("admin")){
             list = (ArrayList<SanPham>) donHangDAO.getListSanPhamTrongDonHang(mand);
             listDH = (ArrayList<DonHang>) donHangDAO.getAllByMand(mand);
+            for(DonHang dh: listDH){
+                Log.d("madh", "madh: " + dh.getMadh());
+            }
         }else{
             list = (ArrayList<SanPham>) donHangDAO.getSanPhamByMadh();
             listDH = (ArrayList<DonHang>) donHangDAO.getAll();

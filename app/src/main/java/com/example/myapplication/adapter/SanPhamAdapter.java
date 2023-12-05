@@ -120,10 +120,11 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
                         public void onClick(DialogInterface dialog, int which) {
                             int id = list.get(position).getMasp();
                             dao.delete(String.valueOf(id));
-                            list.clear();
                             if(user.equals("admin")){
+                                list.clear();
                                 list.addAll(dao.getAll());
                             }else{
+                                list.clear();
                                 list.addAll(dao.getAllByMAtknd(matknd));
                             }
                             notifyDataSetChanged();
