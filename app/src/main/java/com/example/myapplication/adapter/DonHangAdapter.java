@@ -39,6 +39,7 @@ import com.example.myapplication.model.SanPham;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class DonHangAdapter extends ArrayAdapter<SanPham> {
     private Context context;
@@ -119,13 +120,30 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
                     builder.setTitle("Delete");
                     builder.setMessage("Bạn chắc chắn muốn hủy đơn hàng?");
                     builder.setCancelable(true);
+                    final int deletedId = donHang.getMadh();
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Log.d("madh", "ma don hang "+ id);
-                            donHangDAO.delete(String.valueOf(id));
-                            list.clear();
-                            list.addAll(donHangDAO.getListSanPhamTrongDonHang(mand));
+                            Log.d("madh", "ma don hang "+ deletedId);
+                            donHangDAO.delete(String.valueOf(deletedId));
+
+                            if (user.equals("admin")){
+                                list.clear();
+                                list.addAll(donHangDAO.getSanPhamByMadh());
+                            }else{
+                                list.clear();
+                                list.addAll(donHangDAO.getListSanPhamTrongDonHang(mand));
+                            }
+
+                            Iterator<DonHang> iterator = listDH.iterator();
+                            while (iterator.hasNext()) {
+                                DonHang donHang = iterator.next();
+                                if (donHang.getMadh() == deletedId) {
+                                    iterator.remove();
+                                    break;
+                                }
+                            }
+
                             notifyDataSetChanged();
                             dialog.cancel();
                         }

@@ -106,4 +106,33 @@ public class SanPhamDAO {
         }
         return allSanPhamExceptMAtknd;
     }
+
+    @SuppressLint("Range")
+    public List<SanPham> getListSanPhamTheoTongSoLuongMua() {
+        List<SanPham> sanPhamList = new ArrayList<>();
+        String query = "SELECT sanpham.*, SUM(donhang.soluongmua) AS tongluongmua " +
+                "FROM sanpham " +
+                "LEFT JOIN (SELECT masp, SUM(soluongmua) AS soluongmua FROM donhang GROUP BY masp) AS donhang ON sanpham.masp = donhang.masp " +
+                "GROUP BY sanpham.masp " +
+                "ORDER BY tongluongmua DESC";
+        Cursor cursor = db.rawQuery(query, null);
+
+        while (cursor.moveToNext()) {
+            SanPham obj = new SanPham();
+            obj.setMasp(Integer.parseInt(cursor.getString(cursor.getColumnIndex("masp"))));
+            obj.setMamau(Integer.parseInt(cursor.getString(cursor.getColumnIndex("mamau"))));
+            obj.setMahang(Integer.parseInt(cursor.getString(cursor.getColumnIndex("mahang"))));
+            obj.setMatknd(Integer.parseInt(cursor.getString(cursor.getColumnIndex("matknd"))));
+            obj.setTensp(cursor.getString(cursor.getColumnIndex("tensp")));
+            obj.setGiasp(Double.parseDouble(cursor.getString(cursor.getColumnIndex("gia"))));
+            obj.setKhoHang(Integer.parseInt(cursor.getString(cursor.getColumnIndex("khohang"))));
+            obj.setMota(cursor.getString(cursor.getColumnIndex("mota")));
+            obj.setSoluong(Integer.parseInt(cursor.getString(cursor.getColumnIndex("soluong"))));
+            obj.setAnh(cursor.getString(cursor.getColumnIndex("anh")));
+            sanPhamList.add(obj);
+        }
+
+        cursor.close();
+        return sanPhamList;
+    }
 }

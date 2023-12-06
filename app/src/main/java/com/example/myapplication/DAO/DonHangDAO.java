@@ -58,7 +58,6 @@ public class DonHangDAO {
     public int updateTrangThai(int madh, int trangthai) {
         ContentValues values = new ContentValues();
         values.put("trangthai", trangthai);
-
         return db.update("donhang", values, "madh = ?", new String[]{String.valueOf(madh)});
     }
     @SuppressLint("Range")
