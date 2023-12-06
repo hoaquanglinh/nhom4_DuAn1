@@ -96,7 +96,6 @@ public class SanPhamAdapter extends ArrayAdapter<SanPham> {
             nddao = new TaiKhoanNDDAO(context);
             int matknd = nddao.getMatkndFromTaikhoannd(user);
 
-
             if (!user.equals("admin")){
                 v.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override

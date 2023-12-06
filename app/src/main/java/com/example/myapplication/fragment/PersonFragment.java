@@ -56,13 +56,25 @@ public class PersonFragment extends Fragment {
             }
         });
 
-        DonMuaFragment donMuaFragment = new DonMuaFragment();
+        DangXuLyFragment dangXuLyFragment = new DangXuLyFragment();
         view.findViewById(R.id.tvDonMua).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.flContent, donMuaFragment);
+                fragmentTransaction.replace(R.id.flContent, dangXuLyFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+
+        DonBanFragment donBanFragment = new DonBanFragment();
+        view.findViewById(R.id.tvDonBan).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.flContent, donBanFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }

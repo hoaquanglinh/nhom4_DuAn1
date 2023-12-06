@@ -60,28 +60,31 @@
 
             </RelativeLayout>
 
-
             <TextView
                 android:id="@+id/tvMau2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginRight="80dp"
                 android:layout_marginBottom="10dp"
                 android:text="mausp"
                 android:textSize="16dp" />
 
             <TextView
-                android:id="@+id/tvtongtien2"
+                android:id="@+id/tvtrangthai2"
+                android:text="trang thai"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="giá"
-                android:textColor="#E53935"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                android:gravity="right"/>
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </LinearLayout>
-
+    <TextView
+        android:id="@+id/tvtongtien2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="giá"
+        android:textColor="#E53935"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:gravity="right"/>
     <Button
         android:id="@+id/btnHuyDonHang"
         android:layout_width="150dp"

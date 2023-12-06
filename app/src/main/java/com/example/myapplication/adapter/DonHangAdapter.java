@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,7 +48,7 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
     DonHangDAO donHangDAO;
     SanPhamDAO dao;
     MauSacDAO mauSacDAO;
-    TextView tvtensp, tvgiasp, tvmau, tvsoluong, tvtongtien;
+    TextView tvtensp, tvgiasp, tvmau, tvsoluong, tvtongtien, tvTrangThai;
     ImageView imageView;
     int matknd, mand;
     TaiKhoanNDDAO nddao;
@@ -112,86 +113,71 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
             tvtongtien = v.findViewById(R.id.tvtongtien2);
             tvtongtien.setText(numberFormat.format(donHang.getSoluongmua()*item.getGiasp()) + "đ");
 
-            int id = donHang.getMadh();
-            v.findViewById(R.id.btnHuyDonHang).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Delete");
-                    builder.setMessage("Bạn chắc chắn muốn hủy đơn hàng?");
-                    builder.setCancelable(true);
-                    final int deletedId = donHang.getMadh();
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Log.d("madh", "ma don hang "+ deletedId);
-                            donHangDAO.delete(String.valueOf(deletedId));
-
-                            if (user.equals("admin")){
-                                list.clear();
-                                list.addAll(donHangDAO.getSanPhamByMadh());
-                            }else{
-                                list.clear();
-                                list.addAll(donHangDAO.getListSanPhamTrongDonHang(mand));
-                            }
-
-                            Iterator<DonHang> iterator = listDH.iterator();
-                            while (iterator.hasNext()) {
-                                DonHang donHang = iterator.next();
-                                if (donHang.getMadh() == deletedId) {
-                                    iterator.remove();
-                                    break;
-                                }
-                            }
-
-                            notifyDataSetChanged();
-                            dialog.cancel();
-                        }
-                    });
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-                    AlertDialog alert = builder.create();
-                    builder.show();
-                }
-            });
-
-            int trangthai = donHang.getTrangthai();
-            handler = new Handler();
-            if (trangthai == 1) {
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        int madh = donHang.getMadh();
-                        int trangthaiMoi = 2;
-                        donHangDAO.updateTrangThai(madh, trangthaiMoi);
-                        donHang.setTrangthai(trangthaiMoi);
-                        notifyDataSetChanged();
-                    }
-                }, 60*60*24*1000);
-            }
-
-            if (donHang.getTrangthai()==2) {
-                tvtensp.setVisibility(View.GONE);
-                tvmau.setVisibility(View.GONE);
-                tvgiasp.setVisibility(View.GONE);
-                imageView.setVisibility(View.GONE);
-                tvsoluong.setVisibility(View.GONE);
-                tvtongtien.setVisibility(View.GONE);
-                v.findViewById(R.id.btnHuyDonHang).setVisibility(View.GONE);
-            } else {
-                tvtensp.setVisibility(View.VISIBLE);
-                tvmau.setVisibility(View.VISIBLE);
-                tvgiasp.setVisibility(View.VISIBLE);
-                imageView.setVisibility(View.VISIBLE);
-                tvsoluong.setVisibility(View.VISIBLE);
-                tvtongtien.setVisibility(View.VISIBLE);
+            tvTrangThai = v.findViewById(R.id.tvtrangthai2);
+            if (donHang.getTrangthai() == 1){
+                tvTrangThai.setText("Trạng thái: Đang xử lý");
+                tvTrangThai.setTextColor(Color.RED);
                 v.findViewById(R.id.btnHuyDonHang).setVisibility(View.VISIBLE);
+
+            }else if(donHang.getTrangthai() == 2){
+                tvTrangThai.setText("Trạng thái: Đã giao");
+                tvTrangThai.setTextColor(Color.GREEN);
+                v.findViewById(R.id.btnHuyDonHang).setVisibility(View.GONE);
             }
         }
+
+        if (matknd == donHangDAO.getMatkndInSanPhamByMadh(donHang.getMadh())){
+            tvTrangThai.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showStatusSpinner(view, donHang);
+                    notifyDataSetChanged();
+                }
+            });
+        }
+
+        v.findViewById(R.id.btnHuyDonHang).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Delete");
+                builder.setMessage("Bạn chắc chắn muốn hủy đơn hàng?");
+                builder.setCancelable(true);
+                final int deletedId = donHang.getMadh();
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d("madh", "ma don hang "+ deletedId);
+                        donHangDAO.delete(String.valueOf(deletedId));
+                        if (user.equals("admin")){
+                            list.clear();
+                            list.addAll(donHangDAO.getSanPhamByMadh());
+                        }else{
+                            list.clear();
+                            list.addAll(donHangDAO.getListSanPhamTrongDonHang(mand));
+                        }
+                        Iterator<DonHang> iterator = listDH.iterator();
+                        while (iterator.hasNext()) {
+                            DonHang donHang = iterator.next();
+                            if (donHang.getMadh() == deletedId) {
+                                iterator.remove();
+                                break;
+                            }
+                        }
+                        notifyDataSetChanged();
+                        dialog.cancel();
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                builder.show();
+            }
+        });
 
         v.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,4 +204,40 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
             fragmentTransaction.commit();
         }
     }
+
+    private void showStatusSpinner(View view, DonHang donHang) {
+        final String[] statusOptions = {"Đang xử lý", "Đã giao"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Chọn trạng thái");
+        builder.setItems(statusOptions, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String selectedStatus = statusOptions[which];
+                updateStatus(selectedStatus, donHang);
+            }
+        });
+        builder.show();
+    }
+
+    private void updateStatus(String selectedStatus, DonHang donHang) {
+        int newStatus;
+        if (selectedStatus.equals("Đang xử lý")) {
+            newStatus = 1;
+        } else {
+            newStatus = 2;
+        }
+
+        int madh = donHang.getMadh();
+        donHangDAO.updateTrangThai(madh, newStatus);
+
+        if (newStatus == 1) {
+            tvTrangThai.setText("Trạng thái: Đang xử lý");
+            tvTrangThai.setTextColor(Color.RED);
+        } else if (newStatus == 2) {
+            tvTrangThai.setText("Trạng thái: Đã giao");
+            tvTrangThai.setTextColor(Color.GREEN);
+        }
+    }
+
 }

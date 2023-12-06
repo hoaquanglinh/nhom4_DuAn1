@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.myapplication.fragment.AddFragment;
+import com.example.myapplication.fragment.DangXuLyFragment;
 import com.example.myapplication.fragment.DonHangFragment;
 import com.example.myapplication.fragment.DonMuaFragment;
 import com.example.myapplication.fragment.GioHangFragment;
@@ -75,7 +76,7 @@ public class ManHinhChinh extends AppCompatActivity {
                     }else if(item.getItemId() == R.id.nav_hang){
                         fragment = new HangFragment();
                     }else if(item.getItemId() == R.id.nav_quanlidonhang){
-                        fragment = new DonMuaFragment();
+                        fragment = new DangXuLyFragment();
                     }else if(item.getItemId() == R.id.nav_trangchu){
                         fragment = new HomeFragment();
                     }

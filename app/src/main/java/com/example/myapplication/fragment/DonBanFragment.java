@@ -26,53 +26,42 @@ import com.example.myapplication.model.SanPham;
 
 import java.util.ArrayList;
 
-public class DangXuLyFragment extends Fragment {
+public class DonBanFragment extends Fragment {
     ListView listView;
     DonHangDAO donHangDAO;
     SanPhamDAO dao;
     DonHangAdapter adapter;
     ArrayList<SanPham> list;
     TaiKhoanNDDAO nddao;
-    NguoiDungDAO nguoiDungDAO;
     ArrayList<DonHang> listDH;
+    int matknd;
     Toolbar toolbar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dang_xu_ly, container, false);
-        listView = view.findViewById(R.id.lvDangXuLy);
-        toolbar = view.findViewById(R.id.toolbarDangXuLy);
-
-        dao = new SanPhamDAO(getActivity());
-        donHangDAO = new DonHangDAO(getContext());
-        nddao = new TaiKhoanNDDAO(getActivity());
-        nguoiDungDAO = new NguoiDungDAO(getActivity());
-
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_don_ban, container, false);
+        toolbar = view.findViewById(R.id.toolbarDonban);
+        nddao = new TaiKhoanNDDAO(getContext());
+        listView = view.findViewById(R.id.lvDonBan);
+        donHangDAO = new DonHangDAO(getActivity());
         Intent i = getActivity().getIntent();
         String user = i.getStringExtra("user");
-        int matknd = nddao.getMatkndFromTaikhoannd(user);
-        int mand = nguoiDungDAO.getMandByMatknd(matknd);
+        matknd = nddao.getMatkndFromTaikhoannd(user);
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        activity.getSupportActionBar().setTitle("Đơn mua");
+        activity.getSupportActionBar().setTitle("Đơn bán");
 
-        if (!user.equals("admin")){
-            list = (ArrayList<SanPham>) donHangDAO.getListSanPhamTrongDonHang(mand);
-            listDH = (ArrayList<DonHang>) donHangDAO.getAllByMand(mand);
-            for(DonHang dh: listDH){
-                Log.d("madh", "madh: " + dh.getMadh());
-            }
-        }else{
-            toolbar.setVisibility(View.GONE);
-            list = (ArrayList<SanPham>) donHangDAO.getSanPhamByMadh();
-            listDH = (ArrayList<DonHang>) donHangDAO.getAll();
+        list = (ArrayList<SanPham>) donHangDAO.getListSanPhamByMatknd(matknd);
+        listDH = (ArrayList<DonHang>) donHangDAO.getAllByMatknd(matknd);
+
+        for (DonHang dh : listDH) {
+            Log.d("madh", "madh: " + dh.getMadh());
         }
-
         adapter = new DonHangAdapter(getActivity(), list, listDH, dao);
         listView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
         return view;
     }
 
@@ -86,5 +75,4 @@ public class DangXuLyFragment extends Fragment {
             }
         });
     }
-
 }

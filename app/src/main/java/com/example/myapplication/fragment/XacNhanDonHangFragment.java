@@ -161,6 +161,8 @@ public class XacNhanDonHangFragment extends Fragment {
                             gioHangDao.deleteAll();
                             Log.d("donhang", "onClick: " + donHang.getMadh());
                         }
+
+
                         for (SanPham sanPham : list) {
                             sanPham.setSoluong(1);
                             sanPhamDAO.updateSL(sanPham.getMasp(), 1);
@@ -181,6 +183,8 @@ public class XacNhanDonHangFragment extends Fragment {
                         fragmentTransaction.commit();
                     }
                 }
+
+
             }
         });
         return view;
