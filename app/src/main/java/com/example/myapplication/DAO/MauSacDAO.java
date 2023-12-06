@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import com.example.myapplication.database.DBHelper;
 import com.example.myapplication.model.Hang;
@@ -34,8 +35,21 @@ public class MauSacDAO {
         return db.update("mausac", values, "mamau = ?", new String[]{String.valueOf(obj.getMamau())});
     }
 
-    public long delete(String id) {
-        return db.delete("mausac", "mamau = ?", new String[]{String.valueOf(id)});
+    public void delete(Context context, String id) {
+        ContentValues values = new ContentValues();
+        Cursor cursor = db.rawQuery("select * from sanpham where mamau = ?", new String[]{String.valueOf(id)});
+
+        if (cursor.getCount() != 0){
+            Toast.makeText(context, "Xóa không thành công do màu có trong sản phẩm", Toast.LENGTH_SHORT).show();
+        }else{
+            long check = db.delete("mausac", "mamau = ?", new String[]{String.valueOf(id)});
+
+            if (check > 0){
+                Toast.makeText(context, "Xóa thành công", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(context, "Xóa thất bại", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     public List<MauSac> getAll() {

@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.myapplication.DAO.MauSacDAO;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.MauAdapter;
+import com.example.myapplication.model.Hang;
 import com.example.myapplication.model.MauSac;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -75,7 +76,13 @@ public class QuanLyMauFragment extends Fragment {
     }
     void capNhatlv() {
         list = (ArrayList<MauSac>) dao.getAll();
-        adapter = new MauAdapter(getActivity(), list, dao,this);
+        ArrayList<MauSac> list1 = new ArrayList<>();
+        for (MauSac mauSac: list){
+            if(mauSac.getMamau() != 1){
+                list1.add(mauSac);
+            }
+        }
+        adapter = new MauAdapter(getActivity(), list1, dao,this);
         listView.setAdapter(adapter);
     }
 
@@ -88,19 +95,15 @@ public class QuanLyMauFragment extends Fragment {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                dao.delete(Id);
+                dao.delete(getContext(), Id);
                 capNhatlv();
                 dialog.cancel();
-                Toast.makeText(getContext(), "Đã xóa", Toast.LENGTH_SHORT).show();
-
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
-                Toast.makeText(getContext(), "Không xóa", Toast.LENGTH_SHORT).show();
-
             }
         });
         AlertDialog alert = builder.create();

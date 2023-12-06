@@ -3,6 +3,7 @@ package com.example.myapplication.fragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -23,16 +24,11 @@ import android.widget.Toast;
 
 import com.example.myapplication.DAO.HangDAO;
 import com.example.myapplication.R;
-import com.example.myapplication.adapter.HangAdapter;
 import com.example.myapplication.adapter.HangChiTietAdapter;
 import com.example.myapplication.model.Hang;
-import com.example.myapplication.model.MauSac;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class HangFragment extends Fragment {
     private ListView listView;
@@ -76,7 +72,13 @@ public class HangFragment extends Fragment {
 
     public void CapNhatlv() {
         list = (ArrayList<Hang>) dao.getAll();
-        adapter = new HangChiTietAdapter(getContext(), list, dao);
+        ArrayList<Hang> list1 = new ArrayList<>();
+        for (Hang hang: list){
+            if(hang.getMahang() != 1){
+                list1.add(hang);
+            }
+        }
+        adapter = new HangChiTietAdapter(getActivity(), list1, dao, this);
         listView.setAdapter(adapter);
     }
 
@@ -122,5 +124,29 @@ public class HangFragment extends Fragment {
             }
         });
         dialog.show();
+    }
+
+    public void xoaHang(final String id){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Delete");
+        builder.setMessage("Bạn có muốn xóa không?");
+        builder.setCancelable(true);
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dao.delete(getActivity(), id);
+                CapNhatlv();
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        builder.show();
     }
 }

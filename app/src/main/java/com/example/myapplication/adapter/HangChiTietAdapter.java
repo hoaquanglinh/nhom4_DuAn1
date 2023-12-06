@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import com.example.myapplication.DAO.HangDAO;
 import com.example.myapplication.DAO.MauSacDAO;
 import com.example.myapplication.R;
+import com.example.myapplication.fragment.HangFragment;
 import com.example.myapplication.fragment.QuanLyMauFragment;
 import com.example.myapplication.model.Hang;
 import com.example.myapplication.model.MauSac;
@@ -28,11 +29,13 @@ public class HangChiTietAdapter extends ArrayAdapter<Hang> {
     ArrayList<Hang> list;
     HangDAO dao;
     TextView tvmahang, tvtenhang;
-    public HangChiTietAdapter(@NonNull Context context, ArrayList<Hang> list, HangDAO dao) {
+    HangFragment fragment;;
+    public HangChiTietAdapter(@NonNull Context context, ArrayList<Hang> list, HangDAO dao, HangFragment fragment) {
         super(context, 0, list);
         this.context = context;
         this.list = list;
         this.dao = dao;
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -63,31 +66,7 @@ public class HangChiTietAdapter extends ArrayAdapter<Hang> {
         v.findViewById(R.id.btnDelete_hang).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Delete");
-                builder.setMessage("Bạn có muốn xóa không?");
-                builder.setCancelable(true);
-
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        int id = list.get(position).getMahang();
-                        dao.delete(String.valueOf(id));
-                        list.clear();
-                        list.addAll(dao.getAll());
-                        notifyDataSetChanged();
-                        dialog.cancel();
-                        Toast.makeText(getContext(), "Đã xóa", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                AlertDialog alert = builder.create();
-                builder.show();
+                fragment.xoaHang(String.valueOf(item.getMahang()));
             }
         });
 

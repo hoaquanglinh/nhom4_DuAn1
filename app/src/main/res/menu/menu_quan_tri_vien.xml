@@ -8,7 +8,7 @@
             android:title="Quản lý sản phẩm"
             android:icon="@drawable/baseline_smartphone_24" />
         <item android:id="@+id/nav_thanhvien"
-            android:title="Quản lý thành viên"
+            android:title="Quản lý tài khoản"
             android:icon="@drawable/baseline_groups_2_24"/>
         <item android:id="@+id/nav_mau"
             android:title="Quản lý màu"
