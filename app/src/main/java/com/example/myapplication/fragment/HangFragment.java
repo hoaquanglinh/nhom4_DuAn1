@@ -72,13 +72,13 @@ public class HangFragment extends Fragment {
 
     public void CapNhatlv() {
         list = (ArrayList<Hang>) dao.getAll();
-        ArrayList<Hang> list1 = new ArrayList<>();
-        for (Hang hang: list){
-            if(hang.getMahang() != 1){
-                list1.add(hang);
-            }
-        }
-        adapter = new HangChiTietAdapter(getActivity(), list1, dao, this);
+//        ArrayList<Hang> list1 = new ArrayList<>();
+//        for (Hang hang: list){
+//            if(hang.getMahang() != 1){
+//                list1.add(hang);
+//            }
+//        }
+        adapter = new HangChiTietAdapter(getActivity(), list, dao, this);
         listView.setAdapter(adapter);
     }
 

@@ -42,6 +42,7 @@ import com.example.myapplication.model.SanPham;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 
 public class DonHangAdapter extends ArrayAdapter<SanPham> {
@@ -136,6 +137,7 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
         }else if(donHang.getTrangthai() == 2){
             tvTrangThai.setText("Trạng thái: Đã giao");
             tvTrangThai.setTextColor(Color.GREEN);
+            donHangDAO.updatengay(donHang.getMadh(), new Date());
             v.findViewById(R.id.btnHuyDonHang).setVisibility(View.GONE);
         }
 
@@ -161,13 +163,23 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
                     public void onClick(DialogInterface dialog, int which) {
                         Log.d("madh", "ma don hang "+ deletedId);
                         donHangDAO.delete(String.valueOf(deletedId));
+
                         if (user.equals("admin")){
                             list.clear();
                             list.addAll(donHangDAO.getSanPhamByMadh());
+                            notifyDataSetChanged();
                         }else{
-                            list.clear();
-                            list.addAll(donHangDAO.getListSanPhamTrongDonHang(mand));
+                            if(matknd == donHangDAO.getMatkndInSanPhamByMadh(donHang.getMadh())){
+                                list.clear();
+                                list.addAll(donHangDAO.getListSanPhamByMatknd(matknd));
+                                notifyDataSetChanged();
+                            }else{
+                                list.clear();
+                                list.addAll(donHangDAO.getListSanPhamTrongDonHang(mand));
+                                notifyDataSetChanged();
+                            }
                         }
+
                         Iterator<DonHang> iterator = listDH.iterator();
                         while (iterator.hasNext()) {
                             DonHang donHang = iterator.next();
@@ -176,7 +188,6 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
                                 break;
                             }
                         }
-                        notifyDataSetChanged();
                         dialog.cancel();
                     }
                 });

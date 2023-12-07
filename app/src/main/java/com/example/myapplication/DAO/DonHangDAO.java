@@ -73,7 +73,6 @@ public class DonHangDAO {
     @SuppressLint("Range")
     public int getMatkndInSanPhamByMadh(int madh) {
         int matknd = 0;
-
         String sql = "SELECT DISTINCT sanpham.matknd " +
                 "FROM donhang " +
                 "INNER JOIN sanpham ON donhang.masp = sanpham.masp " +
@@ -102,19 +101,11 @@ public class DonHangDAO {
         cursor.close();
         return pttt;
     }
-    @SuppressLint("Range")
-    public Date getThoiGianDatHangByMadh(int madh) {
-        Date thoigiandathang = null;
-        String query = "SELECT thoigiandathang " +
-                "FROM donhang " +
-                "WHERE madh = ?";
-        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(madh)});
-        if (cursor.moveToFirst()) {
-            long timestamp = cursor.getLong(cursor.getColumnIndex("thoigiandathang"));
-            thoigiandathang = new Date(timestamp);
-        }
-        cursor.close();
-        return thoigiandathang;
+
+    public long updatengay(int madh, Date thoigianhoanthanh) {
+        ContentValues values = new ContentValues();
+        values.put("thoigianhoanthanh", sdf.format(thoigianhoanthanh));;
+        return db.update("donhang", values, "madh=?", new String[]{String.valueOf(madh)});
     }
 
     @SuppressLint("Range")
@@ -183,34 +174,6 @@ public class DonHangDAO {
                 "WHERE sanpham.matknd = ?";
 
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(matknd)});
-
-        while (cursor.moveToNext()) {
-            SanPham sanPham = new SanPham();
-            sanPham.setMasp(Integer.parseInt(cursor.getString(cursor.getColumnIndex("masp"))));
-            sanPham.setMamau(Integer.parseInt(cursor.getString(cursor.getColumnIndex("mamau"))));
-            sanPham.setMahang(Integer.parseInt(cursor.getString(cursor.getColumnIndex("mahang"))));
-            sanPham.setMatknd(Integer.parseInt(cursor.getString(cursor.getColumnIndex("matknd"))));
-            sanPham.setTensp(cursor.getString(cursor.getColumnIndex("tensp")));
-            sanPham.setGiasp(Double.parseDouble(cursor.getString(cursor.getColumnIndex("gia"))));
-            sanPham.setKhoHang(Integer.parseInt(cursor.getString(cursor.getColumnIndex("khohang"))));
-            sanPham.setMota(cursor.getString(cursor.getColumnIndex("mota")));
-            sanPham.setSoluong(Integer.parseInt(cursor.getString(cursor.getColumnIndex("soluong"))));
-            sanPham.setAnh(cursor.getString(cursor.getColumnIndex("anh")));
-            sanPhamList.add(sanPham);
-        }
-        return sanPhamList;
-    }
-
-    @SuppressLint("Range")
-    public List<SanPham> getListSanPhamByTrangThai(int mand, int trangthai) {
-        List<SanPham> sanPhamList = new ArrayList<>();
-
-        String query = "SELECT sanpham.* " +
-                "FROM donhang " +
-                "INNER JOIN sanpham ON donhang.masp = sanpham.masp " +
-                "WHERE donhang.mand = ? AND donhang.trangthai = ?";
-
-        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(mand), String.valueOf(trangthai)});
 
         while (cursor.moveToNext()) {
             SanPham sanPham = new SanPham();

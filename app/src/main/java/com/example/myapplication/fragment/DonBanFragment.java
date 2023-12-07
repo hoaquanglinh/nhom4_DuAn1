@@ -45,6 +45,7 @@ public class DonBanFragment extends Fragment {
         nddao = new TaiKhoanNDDAO(getContext());
         listView = view.findViewById(R.id.lvDonBan);
         donHangDAO = new DonHangDAO(getActivity());
+
         Intent i = getActivity().getIntent();
         String user = i.getStringExtra("user");
         matknd = nddao.getMatkndFromTaikhoannd(user);

@@ -76,13 +76,13 @@ public class QuanLyMauFragment extends Fragment {
     }
     void capNhatlv() {
         list = (ArrayList<MauSac>) dao.getAll();
-        ArrayList<MauSac> list1 = new ArrayList<>();
-        for (MauSac mauSac: list){
-            if(mauSac.getMamau() != 1){
-                list1.add(mauSac);
-            }
-        }
-        adapter = new MauAdapter(getActivity(), list1, dao,this);
+//        ArrayList<MauSac> list1 = new ArrayList<>();
+//        for (MauSac mauSac: list){
+//            if(mauSac.getMamau() != 1){
+//                list1.add(mauSac);
+//            }
+//        }
+        adapter = new MauAdapter(getActivity(), list, dao,this);
         listView.setAdapter(adapter);
     }
 

@@ -142,7 +142,6 @@ public class XacNhanDonHangFragment extends Fragment {
                             donHang.setSoluongmua(sp.getSoluong());
                             donHang.setTongtien(sp.getGiasp() * donHang.getSoluongmua());
 
-                            Log.d("date", "onClick: " + new Date());
                             donHang.setThoigiandathang(new Date());
                             donHang.setThoigianhoanthanh(new Date());
 

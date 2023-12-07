@@ -1,9 +1,5 @@
 package com.example.myapplication.fragment;
 
-import static android.content.Context.MODE_PRIVATE;
-
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -21,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.myapplication.DAO.DonHangDAO;
@@ -50,6 +47,7 @@ public class DonHangFragment extends Fragment {
     DonHangDAO donHangDAO;
     int ptttt;
     Toolbar toolbar;
+    LinearLayout linearLayout;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,9 +122,16 @@ public class DonHangFragment extends Fragment {
             tvpttt3.setText("Thanh toán qua ví momo");
         }
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:ss:mm dd/MM/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
         String formattedDate = dateFormat.format(donHang.getThoigiandathang());
         tvthoigiandathang.setText(formattedDate);
+
+        if (donHang.getTrangthai() == 1){
+            view.findViewById(R.id.l13).setVisibility(View.GONE);
+        }else{
+            view.findViewById(R.id.l13).setVisibility(View.VISIBLE);
+            tvthoigianhoanthanh.setText(dateFormat.format(donHang.getThoigianhoanthanh()));
+        }
 
         view.findViewById(R.id.l12).setOnClickListener(new View.OnClickListener() {
             @Override
