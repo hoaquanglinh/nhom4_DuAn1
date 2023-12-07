@@ -65,7 +65,6 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         Toolbar toolbar = rootView.findViewById(R.id.toolbarHome);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         List<Slide> slideList = new ArrayList<>();
         slideList.add(new Slide(R.drawable.img));
@@ -76,7 +75,6 @@ public class HomeFragment extends Fragment {
         viewPager = rootView.findViewById(R.id.viewPager);
         viewPager.setAdapter(slidePagerAdapter);
 
-        // Kết nối TabLayout với ViewPager
         TabLayout tabLayout = rootView.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -110,6 +108,9 @@ public class HomeFragment extends Fragment {
         String user = i.getStringExtra("user");
         nddao = new TaiKhoanNDDAO(getActivity());
         int matknd = nddao.getMatkndFromTaikhoannd(user);
+
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar.setTitle("Trang chủ");
 
         recyclerView = rootView.findViewById(R.id.recyclerView);
         dao = new SanPhamDAO(getActivity());

@@ -20,7 +20,8 @@ import com.example.myapplication.ManHinhDangNhap;
 import com.example.myapplication.R;
 import com.example.myapplication.model.TaiKhoanND;
 
-public class DoMatKhauFragment extends Fragment {
+public class
+DoMatKhauFragment extends Fragment {
     EditText matkhau, rematkhau, matkhaucu;
     TaiKhoanNDDAO nddao;
     TaiKhoanND tknd;

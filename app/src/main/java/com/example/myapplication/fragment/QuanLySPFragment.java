@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -39,12 +40,14 @@ public class QuanLySPFragment extends Fragment  {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_quan_ly_s_p, container, false);
-
         toolbar = view.findViewById(R.id.toolbarQLSP);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar.setTitle("Quản lý sản phẩm");
         listView = view.findViewById(R.id.lvQLSP);
         dao = new SanPhamDAO(getActivity());
 

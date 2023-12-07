@@ -33,6 +33,7 @@ public class ManHinhChinh extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     NavigationView navigationView;
     Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +75,7 @@ public class ManHinhChinh extends AppCompatActivity {
                         fragment = new DangXuLyFragment();
                     }else if(item.getItemId() == R.id.nav_trangchu){
                         fragment = new HomeFragment();
-                    }
-                    else{
+                    } else{
                         Intent intent = new Intent(ManHinhChinh.this, ManHinhDangNhap.class);
                         startActivity(intent);
                     }
@@ -131,7 +131,6 @@ public class ManHinhChinh extends AppCompatActivity {
                 }
             });
 
-            // Hiển thị màn hình Home khi vào ứng dụng
             fragment = new HomeFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();

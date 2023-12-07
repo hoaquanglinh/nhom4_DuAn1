@@ -16,6 +16,13 @@ public class SanPham implements Serializable {
     public SanPham() {
     }
 
+    public SanPham(int masp, String tensp, Double giasp, int soluong) {
+        this.masp = masp;
+        this.tensp = tensp;
+        this.giasp = giasp;
+        this.soluong = soluong;
+    }
+
     public SanPham(int masp, int mamau, int mahang, int matknd, String tensp, Double giasp, int khoHang, String mota, int soluong, String anh) {
         this.masp = masp;
         this.mamau = mamau;
