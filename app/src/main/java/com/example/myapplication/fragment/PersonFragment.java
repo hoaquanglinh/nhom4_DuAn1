@@ -91,10 +91,15 @@ public class PersonFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
+        LichSuMuaHangFragment lichSuMuaHangFragment = new LichSuMuaHangFragment();
         view.findViewById(R.id.tvLichSuMua).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.flContent, lichSuMuaHangFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
         return view;

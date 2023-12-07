@@ -79,6 +79,7 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
 
         final SanPham item = list.get(position);
         final DonHang donHang = listDH.get(position);
+
         linearLayout = v.findViewById(R.id.linearDangxyly);
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
 

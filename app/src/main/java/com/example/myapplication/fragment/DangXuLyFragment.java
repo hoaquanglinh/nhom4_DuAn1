@@ -63,9 +63,6 @@ public class DangXuLyFragment extends Fragment {
         if (!user.equals("admin")){
             list = (ArrayList<SanPham>) donHangDAO.getListSanPhamTrongDonHang(mand);
             listDH = (ArrayList<DonHang>) donHangDAO.getAllByMand(mand);
-            for(DonHang dh: listDH){
-                Log.d("madh", "madh: " + dh.getMadh());
-            }
         }else{
             toolbar.setVisibility(View.GONE);
             list = (ArrayList<SanPham>) donHangDAO.getSanPhamByMadh();

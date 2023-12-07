@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -50,6 +51,8 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
     GioHangDao gioHangDao;
     double tong;
     int matknd;
+    Button tang, giam;
+    int ma;
     public SanPhamGioHangAdapter(@NonNull Context context, ArrayList<SanPham> list, Activity activity, SanPhamDAO dao) {
         super(context, 0, list);
         this.context = context;
@@ -110,14 +113,23 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
 
             int id = list.get(position).getMasp();
 
-            v.findViewById(R.id.btntang1).setOnClickListener(new View.OnClickListener() {
+            tang = v.findViewById(R.id.btntang1);
+            giam = v.findViewById(R.id.btngiam1);
+
+            if (ma == 2){
+                tang.setEnabled(false);
+                giam.setEnabled(false);
+            }
+
+            Log.d("ma", "getView: " + ma);
+            tang.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (item.getSoluong() >= item.getKhoHang()){
+                    if (item.getSoluong() >= item.getKhoHang()) {
                         Toast.makeText(context, "Số lượng không được lớn hơn kho hàng", Toast.LENGTH_SHORT).show();
                         item.setSoluong(item.getKhoHang());
                         notifyDataSetChanged();
-                    }else {
+                    } else {
                         item.setSoluong(item.getSoluong() + 1);
                         dao.updateSL(item.getMasp(), item.getSoluong());
                         tong += item.getGiasp();
@@ -129,8 +141,7 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
                     notifyDataSetChanged();
                 }
             });
-
-            v.findViewById(R.id.btngiam1).setOnClickListener(new View.OnClickListener() {
+            giam.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     item.setSoluong(item.getSoluong() - 1);
@@ -256,5 +267,7 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
         AlertDialog alert = builder.create();
         builder.show();
     }
-
+    public void setMa(int ma) {
+        this.ma = ma;
+    }
 }

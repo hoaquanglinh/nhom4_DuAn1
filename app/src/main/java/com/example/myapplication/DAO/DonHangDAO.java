@@ -241,4 +241,33 @@ public class DonHangDAO {
         cursor.close();
         return nguoiDung;
     }
+    @SuppressLint("Range")
+    public SanPham getSanPhamByMadh(int madh) {
+        SanPham sanPham = null;
+
+        String query = "SELECT sanpham.* " +
+                "FROM donhang " +
+                "INNER JOIN sanpham ON donhang.masp = sanpham.masp " +
+                "WHERE donhang.madh = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(madh)});
+
+        if (cursor.moveToFirst()) {
+            sanPham = new SanPham();
+            sanPham.setMasp(cursor.getInt(cursor.getColumnIndex("masp")));
+            sanPham.setMamau(cursor.getInt(cursor.getColumnIndex("mamau")));
+            sanPham.setMahang(cursor.getInt(cursor.getColumnIndex("mahang")));
+            sanPham.setMatknd(cursor.getInt(cursor.getColumnIndex("matknd")));
+            sanPham.setTensp(cursor.getString(cursor.getColumnIndex("tensp")));
+            sanPham.setGiasp(cursor.getDouble(cursor.getColumnIndex("gia")));
+            sanPham.setKhoHang(cursor.getInt(cursor.getColumnIndex("khohang")));
+            sanPham.setMota(cursor.getString(cursor.getColumnIndex("mota")));
+            sanPham.setSoluong(cursor.getInt(cursor.getColumnIndex("soluong")));
+            sanPham.setAnh(cursor.getString(cursor.getColumnIndex("anh")));
+        }
+
+        cursor.close();
+        return sanPham;
+    }
+    
 }

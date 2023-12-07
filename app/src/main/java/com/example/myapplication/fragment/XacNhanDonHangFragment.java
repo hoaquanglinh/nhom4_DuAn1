@@ -112,6 +112,7 @@ public class XacNhanDonHangFragment extends Fragment {
         list = (ArrayList<SanPham>) gioHangDao.getSanPhamInGioHangByMatkd(matknd);
         adapter = new SanPhamGioHangAdapter(getContext(), list, getActivity(), dao);
         adapter.notifyDataSetChanged();
+        adapter.setMa(2);
         listView.setAdapter(adapter);
 
         listNguoiDung = (ArrayList<NguoiDung>) nguoiDungDAO.getAllByMAtknd(matknd);
@@ -133,6 +134,7 @@ public class XacNhanDonHangFragment extends Fragment {
                     Toast.makeText(getContext(), "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
                 } else {
                     if (!rdo1.isChecked() && !rdo2.isChecked() && !rdo3.isChecked()) {
+
                         Toast.makeText(getActivity(), "Vui lòng chọn phương thức thanh toán", Toast.LENGTH_SHORT).show();
                     } else {
                         for (SanPham sp : list) {
@@ -140,11 +142,10 @@ public class XacNhanDonHangFragment extends Fragment {
                             donHang.setMand(mand);
                             donHang.setMasp(sp.getMasp());
                             donHang.setSoluongmua(sp.getSoluong());
-                            donHang.setTongtien(sp.getGiasp() * donHang.getSoluongmua());
-
+                            tongtien = sp.getGiasp() * donHang.getSoluongmua();
+                            donHang.setTongtien(tongtien);
                             donHang.setThoigiandathang(new Date());
                             donHang.setThoigianhoanthanh(new Date());
-
                             donHang.setTrangthai(1);
                             if (rdo1.isChecked()) {
                                 donHang.setPtttt(1);
@@ -180,6 +181,7 @@ public class XacNhanDonHangFragment extends Fragment {
                     }
                 }
             }
+
         });
         return view;
     }
