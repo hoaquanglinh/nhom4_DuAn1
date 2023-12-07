@@ -141,10 +141,11 @@ public class XacNhanDonHangFragment extends Fragment {
                             donHang.setMasp(sp.getMasp());
                             donHang.setSoluongmua(sp.getSoluong());
                             donHang.setTongtien(sp.getGiasp() * donHang.getSoluongmua());
-                            Calendar calendar = Calendar.getInstance();
-                            Date currentTime = calendar.getTime();
-                            donHang.setThoigiandathang(currentTime);
+
+                            Log.d("date", "onClick: " + new Date());
+                            donHang.setThoigiandathang(new Date());
                             donHang.setThoigianhoanthanh(new Date());
+
                             donHang.setTrangthai(1);
                             if (rdo1.isChecked()) {
                                 donHang.setPtttt(1);
@@ -153,6 +154,7 @@ public class XacNhanDonHangFragment extends Fragment {
                             } else {
                                 donHang.setPtttt(3);
                             }
+
                             long insert = donHangDAO.insert(donHang);
                             if (insert > 0) {
                                 Log.d("insert", "onClick: " + insert);
@@ -161,30 +163,23 @@ public class XacNhanDonHangFragment extends Fragment {
                             gioHangDao.deleteAll();
                             Log.d("donhang", "onClick: " + donHang.getMadh());
                         }
-
-
                         for (SanPham sanPham : list) {
                             sanPham.setSoluong(1);
                             sanPhamDAO.updateSL(sanPham.getMasp(), 1);
                         }
-
                         String hoten = edHoTen.getText().toString();
                         String diachi = edDiaChi.getText().toString();
                         String sdt = edSDT.getText().toString();
                         nguoiDungDAO.updateAddressNamePhoneByMand(mand, diachi, hoten, sdt);
 
-                        DonMuaFragment donMuaFragment = new DonMuaFragment();
-                        donMuaFragment.setArguments(bundle);
-
+                        DangXuLyFragment dangXuLyFragment = new DangXuLyFragment();
                         FragmentManager fragmentManager = getFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.flContent, donMuaFragment);
+                        fragmentTransaction.replace(R.id.flContent, dangXuLyFragment);
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
                     }
                 }
-
-
             }
         });
         return view;

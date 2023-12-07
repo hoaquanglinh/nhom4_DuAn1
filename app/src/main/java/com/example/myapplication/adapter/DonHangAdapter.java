@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,6 +40,7 @@ import com.example.myapplication.model.MauSac;
 import com.example.myapplication.model.SanPham;
 
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -55,7 +57,7 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
     NguoiDungDAO nguoiDungDAO;
     ArrayList<DonHang> listDH;
     LinearLayout linearLayout;
-    private Handler handler;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
     public DonHangAdapter(@NonNull Context context, ArrayList<SanPham> list, ArrayList<DonHang> listDH, SanPhamDAO dao) {
         super(context, 0, list);
         this.context = context;
@@ -109,21 +111,32 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
 
             tvsoluong = v.findViewById(R.id.tvsoluong2);
             tvsoluong.setText("x"+donHang.getSoluongmua());
+        }else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("Thông báo");
+            builder.setMessage("Không tìm thấy thông tin sản phẩm");
+            builder.setPositiveButton("Đóng", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
 
-            tvtongtien = v.findViewById(R.id.tvtongtien2);
-            tvtongtien.setText(numberFormat.format(donHang.getSoluongmua()*item.getGiasp()) + "đ");
+        tvtongtien = v.findViewById(R.id.tvtongtien2);
+        tvtongtien.setText(numberFormat.format(donHang.getSoluongmua()*item.getGiasp()) + "đ");
 
-            tvTrangThai = v.findViewById(R.id.tvtrangthai2);
-            if (donHang.getTrangthai() == 1){
-                tvTrangThai.setText("Trạng thái: Đang xử lý");
-                tvTrangThai.setTextColor(Color.RED);
-                v.findViewById(R.id.btnHuyDonHang).setVisibility(View.VISIBLE);
-
-            }else if(donHang.getTrangthai() == 2){
-                tvTrangThai.setText("Trạng thái: Đã giao");
-                tvTrangThai.setTextColor(Color.GREEN);
-                v.findViewById(R.id.btnHuyDonHang).setVisibility(View.GONE);
-            }
+        tvTrangThai = v.findViewById(R.id.tvtrangthai2);
+        if (donHang.getTrangthai() == 1){
+            tvTrangThai.setText("Trạng thái: Đang xử lý");
+            tvTrangThai.setTextColor(Color.RED);
+            v.findViewById(R.id.btnHuyDonHang).setVisibility(View.VISIBLE);
+        }else if(donHang.getTrangthai() == 2){
+            tvTrangThai.setText("Trạng thái: Đã giao");
+            tvTrangThai.setTextColor(Color.GREEN);
+            v.findViewById(R.id.btnHuyDonHang).setVisibility(View.GONE);
         }
 
         if (matknd == donHangDAO.getMatkndInSanPhamByMadh(donHang.getMadh())){
@@ -131,7 +144,6 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
                 @Override
                 public void onClick(View view) {
                     showStatusSpinner(view, donHang);
-                    notifyDataSetChanged();
                 }
             });
         }
@@ -229,14 +241,17 @@ public class DonHangAdapter extends ArrayAdapter<SanPham> {
         }
 
         int madh = donHang.getMadh();
-        donHangDAO.updateTrangThai(madh, newStatus);
+        donHang.setTrangthai(newStatus);
+        donHangDAO.updateTrangThai(madh, donHang.getTrangthai());
 
         if (newStatus == 1) {
             tvTrangThai.setText("Trạng thái: Đang xử lý");
             tvTrangThai.setTextColor(Color.RED);
+            notifyDataSetChanged();
         } else if (newStatus == 2) {
             tvTrangThai.setText("Trạng thái: Đã giao");
             tvTrangThai.setTextColor(Color.GREEN);
+            notifyDataSetChanged();
         }
     }
 

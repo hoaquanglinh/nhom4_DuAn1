@@ -50,8 +50,6 @@ public class DonHangFragment extends Fragment {
     DonHangDAO donHangDAO;
     int ptttt;
     Toolbar toolbar;
-    Date thoigiandathang;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,8 +110,6 @@ public class DonHangFragment extends Fragment {
         donHangDAO = new DonHangDAO(getContext());
 
         ptttt = donHangDAO.getPtttByMadh(donHang.getMadh());
-        thoigiandathang = donHangDAO.getThoiGianDatHangByMadh(donHang.getMadh());
-
         NguoiDung nd = donHangDAO.getThongTinNguoiDungByMaDH(donHang.getMadh());
 
         tvdiachi3.setText(nd.getDiaChi());
@@ -128,8 +124,8 @@ public class DonHangFragment extends Fragment {
             tvpttt3.setText("Thanh toán qua ví momo");
         }
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy", new Locale("vi", "VN"));
-        String formattedDate = dateFormat.format(thoigiandathang);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:ss:mm dd/MM/yyyy");
+        String formattedDate = dateFormat.format(donHang.getThoigiandathang());
         tvthoigiandathang.setText(formattedDate);
 
         view.findViewById(R.id.l12).setOnClickListener(new View.OnClickListener() {

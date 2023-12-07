@@ -11,16 +11,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.myapplication.fragment.AddFragment;
 import com.example.myapplication.fragment.DangXuLyFragment;
-import com.example.myapplication.fragment.DonHangFragment;
-import com.example.myapplication.fragment.DonMuaFragment;
 import com.example.myapplication.fragment.GioHangFragment;
 import com.example.myapplication.fragment.HangFragment;
 import com.example.myapplication.fragment.HomeFragment;
@@ -29,7 +25,6 @@ import com.example.myapplication.fragment.ProductFragment;
 import com.example.myapplication.fragment.QuanLyMauFragment;
 import com.example.myapplication.fragment.QuanLyNguoiDungFragment;
 import com.example.myapplication.fragment.QuanLySPFragment;
-import com.example.myapplication.fragment.ThongTinChiTietFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 

@@ -20,7 +20,7 @@ import java.util.List;
 public class DonHangDAO {
     private SQLiteDatabase db;
     private Context context;
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
     public DonHangDAO(Context context) {
         this.context = context;
         DBHelper dbHelper = new DBHelper(context);
