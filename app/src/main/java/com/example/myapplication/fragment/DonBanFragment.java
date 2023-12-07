@@ -56,11 +56,9 @@ public class DonBanFragment extends Fragment {
         activity.getSupportActionBar().setTitle("Đơn bán");
 
         list = (ArrayList<SanPham>) donHangDAO.getListSanPhamByMatknd(matknd);
+        Log.d("donban", "don ban: " + list);
         listDH = (ArrayList<DonHang>) donHangDAO.getAllByMatknd(matknd);
 
-        for (DonHang dh : listDH) {
-            Log.d("madh", "madh: " + dh.getMadh());
-        }
         adapter = new DonHangAdapter(getActivity(), list, listDH, dao);
         listView.setAdapter(adapter);
         return view;

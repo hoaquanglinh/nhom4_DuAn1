@@ -51,7 +51,6 @@ public class DonHangFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             item = (SanPham) getArguments().getSerializable("chitietspdonhang");
             donHang = (DonHang) getArguments().getSerializable("donhang");

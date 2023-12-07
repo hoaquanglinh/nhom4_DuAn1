@@ -183,7 +183,6 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
 
                     if (onItemSelectedListener != null) {
                         onItemSelectedListener.onItemSelected(tong);
-
                     }
                     notifyDataSetChanged();
                 }
@@ -207,6 +206,7 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
                 public boolean onLongClick(View view) {
                     int id = list.get(position).getMasp();
                     xoa(id);
+                    notifyDataSetChanged();
                     return false;
                 }
             });
@@ -226,11 +226,9 @@ public class SanPhamGioHangAdapter extends ArrayAdapter<SanPham> {
         Bundle bundle = new Bundle();
         bundle.putSerializable("sanPhamChiTiet", sanPham);
 
-        // Tạo Fragment và truyền Bundle vào Fragment
         ThongTinChiTietFragment thongTinChiTietFragment = new ThongTinChiTietFragment();
         thongTinChiTietFragment.setArguments(bundle);
 
-        // Gửi sự kiện tới FragmentActivity để thay thế Fragment hiện tại bằng Fragment chỉnh sửa
         if (activity instanceof FragmentActivity) {
             FragmentActivity fragmentActivity = (FragmentActivity) activity;
             FragmentManager fragmentManager = fragmentActivity.getSupportFragmentManager();
