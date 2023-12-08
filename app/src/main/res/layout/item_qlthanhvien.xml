@@ -15,7 +15,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:orientation="vertical">
@@ -59,7 +59,6 @@
                     android:id="@+id/txt_TenTaiKhoan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Phạm Minh Hiếu"
                     android:textSize="20dp" />
 
             </LinearLayout>
@@ -97,6 +96,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/baseline_delete_24" />
+            android:background="@drawable/baseline_delete_24"
+            android:gravity="end" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
+
