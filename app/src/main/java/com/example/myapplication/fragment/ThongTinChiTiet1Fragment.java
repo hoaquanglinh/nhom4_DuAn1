@@ -67,6 +67,7 @@ public class ThongTinChiTiet1Fragment extends Fragment {
     RecyclerView recyclerView;
     SanPhamHomeAdapter sanPhamHomeAdapter;
     ArrayList<SanPham> list;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +75,7 @@ public class ThongTinChiTiet1Fragment extends Fragment {
             item = (SanPham) getArguments().getSerializable("sanPhamChiTiet");
         }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -112,12 +114,6 @@ public class ThongTinChiTiet1Fragment extends Fragment {
         Intent i = getActivity().getIntent();
         String user = i.getStringExtra("user");
 
-        if (user.equals("admin")){
-            view.findViewById(R.id.btnGioHang).setVisibility(View.GONE);
-            view.findViewById(R.id.btnMuaNgay).setVisibility(View.GONE);
-            view.findViewById(R.id.btngoidien).setVisibility(View.GONE);
-        }
-
         if (item != null) {
             tenspct.setText(item.getTensp());
             giaspct.setText(String.valueOf(item.getGiasp()));
@@ -143,10 +139,17 @@ public class ThongTinChiTiet1Fragment extends Fragment {
 
         matknd = nddao.getMatkndFromTaikhoannd(user);
 
-        list = (ArrayList<SanPham>) dao.getAllExceptMAtknd(matknd);
+        Log.d("matknd", "onCreateView: " + matknd + "matknd: " + dao.getMaTKNDByMaSP(item.getMasp()));
+
+        if (user.equals("admin") || matknd == dao.getMaTKNDByMaSP(item.getMasp())) {
+            view.findViewById(R.id.btnGioHang).setVisibility(View.GONE);
+            view.findViewById(R.id.btnMuaNgay).setVisibility(View.GONE);
+        }
+
+        list = (ArrayList<SanPham>) dao.getListSanPhamTheoTongSoLuongMua();
         ArrayList<SanPham> list1 = new ArrayList<>();
-        for (SanPham sanPham: list){
-            if (sanPham.getMasp() != item.getMasp()){
+        for (SanPham sanPham : list) {
+            if (sanPham.getMasp() != item.getMasp()) {
                 list1.add(sanPham);
             }
         }
@@ -158,12 +161,9 @@ public class ThongTinChiTiet1Fragment extends Fragment {
         recyclerView.setAdapter(sanPhamHomeAdapter);
 
         ArrayList<SanPham> listSPGH = (ArrayList<SanPham>) gioHangDao.getSanPhamInGioHangByMatkd(matknd);
-
         for (SanPham product : listSPGH) {
-            if (product.getMatknd() != matknd) {
-                dao.updateSL(product.getMasp(), 1);
-                break;
-            }
+            dao.updateSL(product.getMasp(), 1);
+            break;
         }
 
         view.findViewById(R.id.btnGioHang).setOnClickListener(new View.OnClickListener() {
@@ -239,6 +239,7 @@ public class ThongTinChiTiet1Fragment extends Fragment {
         });
         return view;
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

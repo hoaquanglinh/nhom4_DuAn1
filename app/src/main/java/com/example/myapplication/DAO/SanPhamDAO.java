@@ -135,4 +135,20 @@ public class SanPhamDAO {
         cursor.close();
         return sanPhamList;
     }
+
+    @SuppressLint("Range")
+    public int getMaTKNDByMaSP(int masp) {
+        String sql = "SELECT matknd FROM sanpham WHERE masp = ?";
+        String[] selectionArgs = {String.valueOf(masp)};
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        if (cursor.moveToFirst()) {
+            int matknd = cursor.getInt(cursor.getColumnIndex("matknd"));
+            cursor.close();
+            return matknd;
+        } else {
+            cursor.close();
+            return -1;
+        }
+    }
+
 }

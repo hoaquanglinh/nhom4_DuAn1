@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -119,7 +120,7 @@ public class HomeFragment extends Fragment {
             list = (ArrayList<SanPham>) dao.getListSanPhamTheoTongSoLuongMua();
             requireActivity().findViewById(R.id.navigation).setVisibility(View.GONE);
         }else{
-            list = (ArrayList<SanPham>) dao.getAllExceptMAtknd(matknd);
+            list = (ArrayList<SanPham>) dao.getListSanPhamTheoTongSoLuongMua();
         }
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
@@ -128,23 +129,16 @@ public class HomeFragment extends Fragment {
         hangAdapter.setOnButtonClickListener(new HangAdapter.OnButtonClickListener() {
             @Override
             public void onButtonClick(int position, int maHang) {
-                ArrayList<SanPham> listSP = new ArrayList<SanPham>();
-                listSP = (ArrayList<SanPham>) dao.getAllByMaHang(maHang);
-                ArrayList<SanPham> listSPVjp = new ArrayList<>();
-                for (SanPham sanPham : listSP) {
-                    if (sanPham.getMatknd() != matknd) {
-                        listSPVjp.add(sanPham);
-                    }
-                }
                 list.clear();
-                list.addAll(listSPVjp);
+                list.addAll(dao.getAllByMaHang(maHang));
+                Log.d("mahang", "onButtonClick: " + list);
                 adapter.notifyDataSetChanged();
             }
         });
 
         adapter = new SanPhamHomeAdapter(getContext(), getActivity(), list);
         recyclerView.setAdapter(adapter);
-
+        adapter.notifyDataSetChanged();
         return rootView;
     }
 

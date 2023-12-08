@@ -162,20 +162,14 @@
     <LinearLayout
         android:id="@+id/layoutduoi"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="43dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
         android:visibility="visible">
 
         <Button
-            android:id="@+id/btngoidien"
-            android:layout_width="110dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/goidien"/>
-
-        <Button
             android:id="@+id/btnGioHang"
-            android:layout_width="110dp"
+            android:layout_width="170dp"
             android:layout_height="match_parent"
             android:background="@drawable/giohang"/>
 
